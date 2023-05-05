@@ -16,7 +16,6 @@ document.addEventListener("mousemove", function (event) {
         event.pageY - window.scrollY
     );
     if(hoverElement == document.body || hoverElement == document.documentElement){
-        console.log("stop run")
         overlay.style.display = "none";
         return;
     }
@@ -32,3 +31,9 @@ document.addEventListener("mousemove", function (event) {
     overlay.style.height = boundingClientRect.height + "px";
     overlay.style.width = boundingClientRect.width + "px";
 });
+
+
+
+document.addEventListener("click", function(event){
+    console.log(selectedElement);
+})
