@@ -6,7 +6,7 @@
 
     position: absolute;
     box-sizing: border-box;
-    
+
     z-index: 1000000;
 
     top: 15px;
@@ -16,3 +16,42 @@
     outline: 2px solid rgb(180, 180, 180);
     border-radius: 5px;
 }
+
+#autocontrol-window-wrapper {
+    position: relative;
+    z-index: 10000000;
+}
+
+#autocontrol-window {
+    position: absolute;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    width: 300px;
+    z-index: 10000000;
+}
+#autocontrol-window header {
+    font-size: 0.8em;
+    padding: 5px 10px;
+    box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.2543144461965935);
+    background-color: skyblue;
+}
+
+#autocontrol-window-content {
+    padding: 20px;
+    text-align: center;
+}
+
+#autocontrol-window-close-button {
+    float: right;
+    outline: 0;
+    border: 0;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: transparent;
+}
+#autocontrol-window-close-button
+
