@@ -60,6 +60,10 @@ function generateApp() {
     document.addEventListener("click", function (event) {
         console.log(selectedElement);
     });
+
+    chrome.runtime.onMessage.addListener(function(request, sender){
+        console.log(request.message);
+    })
 }
 
 generateApp();

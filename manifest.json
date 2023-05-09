@@ -14,5 +14,9 @@
             "js": ["js/content.js"],
             "css": ["css/content.css"]
         }
-    ]
+    ],
+    "action": {},
+    "background": {
+        "service_worker": "background.js"
+    }
 }
