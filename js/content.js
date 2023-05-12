@@ -4,7 +4,6 @@ var appContainer = null;
 var selectedElement = null;
 var overlay = null;
 
-
 function generateApp() {
     appContainer = document.createElement("div");
 
@@ -83,9 +82,9 @@ function setSelectedElement() {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
-    var firstChild = document.body.children[0]
+    var firstChild = document.body.children[0];
     var lastChildIndex = firstChild.children.length - 1;
-    if(firstChild.children[lastChildIndex].id != "autocontrol-window"){
+    if (firstChild.children[lastChildIndex].id != "autocontrol-window") {
         generateApp();
     }
 });
