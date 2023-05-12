@@ -53,5 +53,13 @@
     font-weight: bold;
     background-color: transparent;
 }
-#autocontrol-window-close-button
 
+#autocontrol-add-element-button {
+    border: 0;
+    outline: 0;
+
+    width: 100%;
+    font-size: 20px;
+    padding: 10px;
+    background-color: rgb(165, 165, 165);
+}

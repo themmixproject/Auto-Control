@@ -21,7 +21,8 @@ function generateApp() {
         "Auto Control" +
         "<button id='autocontrol-window-close-button'>X</button>" +
         "</header>" +
-        "<div id='autocontrol-window-content'>content" +
+        "<div id='autocontrol-window-content'>" +
+        "<button id='autocontrol-add-element-button'>Add Element</button>" +
         "</div>";
 
     overlay = document.getElementsByClassName("autocontrol-overlay")[0];
