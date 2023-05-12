@@ -7,6 +7,13 @@ var overlay = null;
 appContainer = document.createElement("div");
 
 function generateApp() {
+    if (document.body.children.length > 0) {
+        var firstChild = document.body.children[0];
+        document.body.insertBefore(appContainer, firstChild);
+    } else {
+        document.body.appendChild(appContainer);
+    }
+
     appContainer.innerHTML +=
         "<div class='autocontrol-overlay'></div>" +
         "<div id='autocontrol-window'>" +
