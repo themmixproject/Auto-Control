@@ -1,3 +1,6 @@
+
+// check out power automate tool
+
 console.log("hello world!");
 
 var appContainer = null;
@@ -6,6 +9,7 @@ var overlay = null;
 
 function generateApp() {
     appContainer = document.createElement("div");
+    appContainer.style.display = "block";
 
     if (document.body.children.length > 0) {
         var firstChild = document.body.children[0];
@@ -41,6 +45,10 @@ function generateApp() {
         });
 
     document.addEventListener("click", setSelectedElement);
+
+    document.getElementById("autocontrol-add-element-button").addEventListener("click", function(){
+        console.log("Add element!");
+    })
 }
 
 function moveOverlayToElement(event) {
@@ -62,6 +70,7 @@ function moveOverlayToElement(event) {
         hoverElement == document.documentElement ||
         isWindow
     ) {
+        selectedElement = null;
         overlay.style.display = "none";
         return;
     }
@@ -89,3 +98,4 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         generateApp();
     }
 });
+
