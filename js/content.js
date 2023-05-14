@@ -1,11 +1,10 @@
-
-// check out power automate tool
-
 console.log("hello world!");
 
 var appContainer = null;
 var selectedElement = null;
 var overlay = null;
+var selectorsContainer = null;
+var selectorIsDisplayed = false;
 
 function generateApp() {
     appContainer = document.createElement("div");
@@ -19,7 +18,9 @@ function generateApp() {
     }
 
     appContainer.innerHTML +=
-        "<div class='autocontrol-overlay'></div>" +
+        "<div id='autocontrol-selectors-container'>" +
+        "<div class='autocontrol-selector'></div>" +
+        "</div>" +
         "<div id='autocontrol-window'>" +
         "<header id='autocontrol-window-header'>" +
         "Auto Control" +
@@ -29,31 +30,61 @@ function generateApp() {
         "<button id='autocontrol-add-element-button'>Add Element</button>" +
         "</div>";
 
-    overlay = document.getElementsByClassName("autocontrol-overlay")[0];
-    document.addEventListener("mousemove", moveOverlayToElement);
+    elementSelector = document.getElementsByClassName(
+        "autocontrol-selector"
+    )[0];
+
 
     document
         .getElementById("autocontrol-window-close-button")
-        .addEventListener("click", function () {
-            document.removeEventListener("click", setSelectedElement);
-            document.removeEventListener("mousemove", moveOverlayToElement);
-            document.body.removeChild(appContainer);
+        .addEventListener("click", closeApp);
 
-            selectedElement = null;
-            appContainer = null;
-            overlay = null;
-        });
+    var addElementButton = document.getElementById(
+        "autocontrol-add-element-button"
+    );
+    addElementButton.addEventListener("click", function () {
+        if (selectorIsDisplayed) {
+            document.removeEventListener("mousemove", moveOverlayToElement)
+            document.removeEventListener("click", selectElement);
 
-    document.addEventListener("click", setSelectedElement);
+            addElementButton.innerHTML = "Add Element";
+        } else {
+            document.addEventListener("click", selectElement);
+            document.addEventListener("mousemove", moveOverlayToElement)
 
-    document.getElementById("autocontrol-add-element-button").addEventListener("click", function(){
-        console.log("Add element!");
-    })
+            addElementButton.innerHTML = "Cancel";
+        }
+
+        selectorIsDisplayed = !selectorIsDisplayed;
+    });
+}
+
+function selectElement() {
+    if (selectedElement != null) {
+        console.log(selectedElement);
+    }
 }
 
 function moveOverlayToElement(event) {
-    overlay.style.display = "none";
+    elementSelector.style.display = "none";
 
+    var hoverElement = getHoverElement(event);
+    if (hoverElement == null) {
+        selectedElement = null;
+        return;
+    }
+
+    selectedElement = hoverElement;
+    elementSelector.style.display = "";
+
+    var boundingClientRect = hoverElement.getBoundingClientRect();
+    elementSelector.style.top = boundingClientRect.top + window.scrollY + "px";
+    elementSelector.style.left = boundingClientRect.left + "px";
+    elementSelector.style.height = boundingClientRect.height + "px";
+    elementSelector.style.width = boundingClientRect.width + "px";
+}
+
+function getHoverElement(event) {
     var hoverElement = document.elementFromPoint(
         event.pageX - window.scrollX,
         event.pageY - window.scrollY
@@ -70,25 +101,20 @@ function moveOverlayToElement(event) {
         hoverElement == document.documentElement ||
         isWindow
     ) {
-        selectedElement = null;
-        overlay.style.display = "none";
-        return;
+        return null;
+    } else {
+        return hoverElement;
     }
-
-    overlay.style.display = "";
-    selectedElement = hoverElement;
-
-    var boundingClientRect = hoverElement.getBoundingClientRect();
-
-    overlay.style.top = boundingClientRect.top + window.scrollY + "px";
-    overlay.style.left = boundingClientRect.left + "px";
-
-    overlay.style.height = boundingClientRect.height + "px";
-    overlay.style.width = boundingClientRect.width + "px";
 }
 
-function setSelectedElement() {
-    console.log(selectedElement);
+function closeApp() {
+    document.removeEventListener("click", selectElement);
+    document.removeEventListener("mousemove", moveOverlayToElement);
+    document.body.removeChild(appContainer);
+
+    selectedElement = null;
+    appContainer = null;
+    overlay = null;
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
@@ -98,4 +124,3 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         generateApp();
     }
 });
-

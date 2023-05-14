@@ -1,4 +1,4 @@
-.autocontrol-overlay {
+.autocontrol-selector {
     margin: 0;
     padding: 0;
     border-radius: 0;
@@ -43,6 +43,15 @@
 #autocontrol-window-content {
     padding: 20px;
     text-align: center;
+}
+
+#autocontrol-window button {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #autocontrol-window-close-button {
