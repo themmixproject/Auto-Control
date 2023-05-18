@@ -34,34 +34,51 @@ function generateApp() {
         "autocontrol-selector"
     )[0];
 
-
     document
         .getElementById("autocontrol-window-close-button")
         .addEventListener("click", closeApp);
 
+    document
+        .getElementById("autocontrol-add-element-button")
+        .addEventListener("click", toggleSelector);
+}
+
+function maybe(){
+    console.log("a");
+}
+
+function toggleSelector(event) {
+    event.stopPropagation();
+
     var addElementButton = document.getElementById(
         "autocontrol-add-element-button"
     );
-    addElementButton.addEventListener("click", function () {
-        if (selectorIsDisplayed) {
-            document.removeEventListener("mousemove", moveOverlayToElement)
-            document.removeEventListener("click", selectElement);
 
-            addElementButton.innerHTML = "Add Element";
-        } else {
-            document.addEventListener("click", selectElement);
-            document.addEventListener("mousemove", moveOverlayToElement)
+    console.log(selectorIsDisplayed);
 
-            addElementButton.innerHTML = "Cancel";
-        }
+    if (selectorIsDisplayed) {
+        addElementButton.innerHTML = "Add Element";
 
-        selectorIsDisplayed = !selectorIsDisplayed;
-    });
+        elementSelector.style.display = "none";
+        document.removeEventListener("click", selectElement);
+        document.removeEventListener("mousemove", moveOverlayToElement);
+    } else {
+        console.log("add");
+
+        addElementButton.innerHTML = "Cancel";
+
+        document.addEventListener("click", selectElement);
+        document.addEventListener("mousemove", moveOverlayToElement);
+    }
+
+    selectorIsDisplayed = !selectorIsDisplayed;
 }
 
-function selectElement() {
+function selectElement(event) {
     if (selectedElement != null) {
-        console.log(selectedElement);
+        console.log("select element");
+
+        toggleSelector(event);
     }
 }
 
