@@ -73,12 +73,12 @@ function toggleSelector(event) {
 
 function selectElement(event) {
     if (selectedElement != null) {
-        createStyledElement(selectedElement);
+        generateElementListItem(selectedElement);
     }
     toggleSelector(event);
 }
 
-function createStyledElement(element) {
+function generateElementListItem(element) {
     var elementList = document.getElementById("autocontrol-element-list");
     
     var elementListItem = document.createElement("div");
