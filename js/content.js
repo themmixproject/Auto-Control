@@ -27,6 +27,7 @@ function generateApp() {
         "<button id='autocontrol-window-close-button'>X</button>" +
         "</header>" +
         "<div id='autocontrol-window-content'>" +
+        "<div id='autocontrol-element-list'></div>" +
         "<button id='autocontrol-add-element-button'>Add Element</button>" +
         "</div>";
 
@@ -41,10 +42,6 @@ function generateApp() {
     document
         .getElementById("autocontrol-add-element-button")
         .addEventListener("click", toggleSelector);
-}
-
-function maybe(){
-    console.log("a");
 }
 
 function toggleSelector(event) {
@@ -76,11 +73,43 @@ function toggleSelector(event) {
 
 function selectElement(event) {
     if (selectedElement != null) {
-        console.log("select element");
-
-        toggleSelector(event);
+        createStyledElement(selectedElement);
     }
+    toggleSelector(event);
 }
+
+function createStyledElement(element) {
+    var elementList = document.getElementById("autocontrol-element-list");
+    
+    var elementListItem = document.createElement("div");
+    elementListItem.className = "autocontrol-element-list-item";
+    
+    var elementInfo = document.createElement("span");
+    elementInfo.style.fontFamily = "monospace";
+    elementInfo.style.fontSize = "16px";
+    
+    elementInfo.innerHTML =
+      "<span style='color: blue'>" +
+      element.tagName.toLowerCase() +
+      "</span>";
+    if (element.id) {
+      elementInfo.innerHTML += "<span style='color: green'>#" + element.id + "</span>";
+    }
+    if (element.className) {
+      elementInfo.innerHTML +=
+        "<span style='color: red'>." + element.className + "</span>";
+    }
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", function () {
+      elementListItem.remove();
+    });
+
+    elementListItem.appendChild(elementInfo);
+    elementListItem.appendChild(deleteButton);
+    elementList.appendChild(elementListItem);
+  }
+  
 
 function moveOverlayToElement(event) {
     elementSelector.style.display = "none";

@@ -63,12 +63,51 @@
     background-color: transparent;
 }
 
-#autocontrol-add-element-button {
-    border: 0;
-    outline: 0;
+/* select the list item by its class name */
+.autocontrol-element-list-item {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    /* add a background color */
+    background-color: #f0f0f0;
+}
+
+.autocontrol-element-list-item button {
+    border: none;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    order: 1;
+}
+
+.autocontrol-element-list-item button:active {
+    background-color: #cc0000;
+}
+
+.autocontrol-element-list-item .element-info {
+    font-family: "monospace";
+    font-size: "16px";
+}
+
+#autocontrol-add-element-button {
+    border: none;
+    outline: none;
     width: 100%;
     font-size: 20px;
     padding: 10px;
-    background-color: rgb(165, 165, 165);
-}
+    background-color: #0099ff; /* changed this line */
+    color: #ffffff;
+    border-radius: 10px;
+  }
+  
+  #autocontrol-add-element-button:active {
+    background-color: #0077cc; /* changed this line */
+  }
