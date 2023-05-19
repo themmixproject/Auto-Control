@@ -129,9 +129,10 @@ function closeApp() {
     document.removeEventListener("mousemove", moveOverlayToElement);
     document.body.removeChild(appContainer);
 
-    selectedElement = null;
-    appContainer = null;
     overlay = null;
+    appContainer = null;
+    selectedElement = null;
+    selectorIsDisplayed = false;
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
