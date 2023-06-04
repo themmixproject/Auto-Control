@@ -7,6 +7,8 @@ var selectorsContainer = null;
 var selectorIsDisplayed = false;
 
 function generateApp() {
+    adjustSiteContent();
+
     appContainer = document.createElement("div");
     appContainer.style.display = "block";
 
@@ -42,6 +44,21 @@ function generateApp() {
     document
         .getElementById("autocontrol-add-element-button")
         .addEventListener("click", toggleSelector);
+}
+
+function adjustSiteContent(){
+    var elementsInBody = document.querySelectorAll("body *");
+        
+    for(var i = 0; i < elementsInBody.length; i++){
+        var element = elementsInBody[i];
+        var elementStyle = window.getComputedStyle(element);
+        var zIndex = elementStyle.getPropertyValue("z-index");
+        zIndex = parseInt(zIndex);
+
+        if(zIndex > 1000000){
+            element.style.zIndex = 100000;
+        }
+    }
 }
 
 function toggleSelector(event) {
