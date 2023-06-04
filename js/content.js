@@ -182,9 +182,36 @@ function closeApp() {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
-    var firstChild = document.body.children[0];
+    var firstChild = getFirstNonScriptStyleElement();
+    if(firstChild == null){
+        alert("This document does not contain any elements");
+        return;
+    }
+
     var lastChildIndex = firstChild.children.length - 1;
     if (firstChild.children[lastChildIndex].id != "autocontrol-window") {
         generateApp();
     }
 });
+
+// Assuming the body element exists
+function getFirstNonScriptStyleElement() {
+    // Get the body element
+    let body = document.body;
+    // Check if the body has any child elements
+    if (body.childElementCount > 0) {
+      // Get the first child element of the body
+      let first = body.firstElementChild;
+      // Loop until the first element is not a script or style element or null
+      while (first && (first.tagName === "SCRIPT" || first.tagName === "STYLE")) {
+        // Get the next sibling element of the first element
+        first = first.nextElementSibling;
+      }
+      // Return the first non-script and non-style element or null
+      return first;
+    } else {
+      // Return null if the body has no child elements
+      return null;
+    }
+  }
+  
