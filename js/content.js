@@ -46,16 +46,16 @@ function generateApp() {
         .addEventListener("click", toggleSelector);
 }
 
-function adjustSiteContent(){
-    var elementsInBody = document.querySelectorAll("body *");
-        
-    for(var i = 0; i < elementsInBody.length; i++){
+function adjustSiteContent() {
+    var elementsInBody = document.body.getElementsByTagName("*");
+
+    for (var i = 0; i < elementsInBody.length; i++) {
         var element = elementsInBody[i];
         var elementStyle = window.getComputedStyle(element);
         var zIndex = elementStyle.getPropertyValue("z-index");
         zIndex = parseInt(zIndex);
 
-        if(zIndex > 1000000){
+        if (zIndex > 1000000) {
             element.style.zIndex = 100000;
         }
     }
@@ -97,36 +97,36 @@ function selectElement(event) {
 
 function generateElementListItem(element) {
     var elementList = document.getElementById("autocontrol-element-list");
-    
+
     var elementListItem = document.createElement("div");
     elementListItem.className = "autocontrol-element-list-item";
-    
+
     var elementInfo = document.createElement("span");
     elementInfo.style.fontFamily = "monospace";
     elementInfo.style.fontSize = "16px";
-    
+
     elementInfo.innerHTML =
-      "<span style='color: blue'>" +
-      element.tagName.toLowerCase() +
-      "</span>";
+        "<span style='color: blue'>" +
+        element.tagName.toLowerCase() +
+        "</span>";
     if (element.id) {
-      elementInfo.innerHTML += "<span style='color: green'>#" + element.id + "</span>";
+        elementInfo.innerHTML +=
+            "<span style='color: green'>#" + element.id + "</span>";
     }
     if (element.className) {
-      elementInfo.innerHTML +=
-        "<span style='color: red'>." + element.className + "</span>";
+        elementInfo.innerHTML +=
+            "<span style='color: red'>." + element.className + "</span>";
     }
     var deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", function () {
-      elementListItem.remove();
+        elementListItem.remove();
     });
 
     elementListItem.appendChild(elementInfo);
     elementListItem.appendChild(deleteButton);
     elementList.appendChild(elementListItem);
-  }
-  
+}
 
 function moveOverlayToElement(event) {
     elementSelector.style.display = "none";
@@ -183,7 +183,7 @@ function closeApp() {
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
     var firstChild = getFirstNonScriptStyleElement();
-    if(firstChild == null){
+    if (firstChild == null) {
         alert("This document does not contain any elements");
         return;
     }
@@ -194,24 +194,16 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     }
 });
 
-// Assuming the body element exists
-function getFirstNonScriptStyleElement() {
-    // Get the body element
-    let body = document.body;
-    // Check if the body has any child elements
-    if (body.childElementCount > 0) {
-      // Get the first child element of the body
-      let first = body.firstElementChild;
-      // Loop until the first element is not a script or style element or null
-      while (first && (first.tagName === "SCRIPT" || first.tagName === "STYLE")) {
-        // Get the next sibling element of the first element
-        first = first.nextElementSibling;
-      }
-      // Return the first non-script and non-style element or null
-      return first;
-    } else {
-      // Return null if the body has no child elements
-      return null;
+function getFirstElement() {
+    var firstElement = document.body.firstElementChild;
+    while (
+        firstElement &&
+        (firstElement.tagName === "SCRIPT" || firstElement.tagName === "STYLE")
+    ) {
+        firstElement = firstElement.nextElementSibling;
     }
-  }
-  
+    if (!firstElement) {
+        return null;
+    }
+    return firstElement;
+}
