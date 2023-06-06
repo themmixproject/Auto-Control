@@ -58,6 +58,22 @@ function adjustSiteContent() {
         if (zIndex > 1000000) {
             element.style.zIndex = 100000;
         }
+
+        var offset = 100;
+        var left = elementStyle.getPropertyValue("left");
+        var right = elementStyle.getPropertyValue("right");
+        var position = elementStyle.getPropertyValue("position");
+
+        if (position == "absoluste" || position == "fixed") {
+            if (left === "0px" && !right) {
+                element.style.right = "0px";
+                element.style.left = offset + "px";
+            } else if (left) {
+                element.style.left = parseInt(left) + offset + "px";
+            }
+        }
+
+        document.body.style.marginLeft = offset + "px";
     }
 }
 
