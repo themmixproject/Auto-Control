@@ -182,7 +182,7 @@ function closeApp() {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
-    var firstChild = getFirstNonScriptStyleElement();
+    var firstChild = getFirstElement();
     if (firstChild == null) {
         alert("This document does not contain any elements");
         return;
