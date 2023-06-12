@@ -199,15 +199,18 @@ function closeApp() {
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
     var firstChild = getFirstElement();
+
     if (firstChild == null) {
         alert("This document does not contain any elements");
         return;
+    } else if (firstChild.children.length > 0) {
+        var lastChildIndex = firstChild.children.length - 1;
+        if (firstChild.children[lastChildIndex].id == "autocontrol-window") {
+            return;
+        }
     }
 
-    var lastChildIndex = firstChild.children.length - 1;
-    if (firstChild.children[lastChildIndex].id != "autocontrol-window") {
-        generateApp();
-    }
+    generateApp();
 });
 
 function getFirstElement() {
