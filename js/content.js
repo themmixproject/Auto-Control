@@ -158,7 +158,7 @@ function moveOverlayToElement(event) {
 
     var boundingClientRect = hoverElement.getBoundingClientRect();
     elementSelector.style.top = boundingClientRect.top + window.scrollY + "px";
-    elementSelector.style.left = boundingClientRect.left + "px";
+    elementSelector.style.left = boundingClientRect.left + window.scrollX +"px";
     elementSelector.style.height = boundingClientRect.height + "px";
     elementSelector.style.width = boundingClientRect.width + "px";
 }
