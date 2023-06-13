@@ -7,7 +7,25 @@ var selectorsContainer = null;
 var selectorIsDisplayed = false;
 
 function generateApp() {
-    adjustSiteContent();
+    var divs = document.getElementsByTagName("div");
+    if (divs.length > 200) {
+        loopThroughChildren(document.body, 5);
+    } else {
+        for (var i = 0; i < divs.length; i++) {
+            var element = divs[i];
+            if (
+                element.tagName != "BR" &&
+                element.tagName != "SCRIPT" &&
+                element.tagName != "STYLE" &&
+                element.tagName != "NOSCRIPT"
+            ) {
+                adjustElement(element);
+            }
+        }
+    }
+    console.log(divs.length);
+
+    // console.log(counter);
 
     appContainer = document.createElement("div");
     appContainer.style.display = "block";
@@ -47,33 +65,79 @@ function generateApp() {
 }
 
 function adjustSiteContent() {
-    var elementsInBody = document.body.getElementsByTagName("*");
+    // var elementsInBody = document.body.getElementsByTagName("div");
+    // console.log(elementsInBody.length)
+    // for (var i = 0; i < elementsInBody.length; i++) {
+    //     var element = elementsInBody[i];
+    //     var elementStyle = window.getComputedStyle(element);
+    //     var zIndex = elementStyle.getPropertyValue("z-index");
+    //     zIndex = parseInt(zIndex);
+    //     if (zIndex > 1000000) {
+    //         element.style.zIndex = 100000;
+    //     }
+    //     var offset = 100;
+    //     var left = elementStyle.getPropertyValue("left");
+    //     var right = elementStyle.getPropertyValue("right");
+    //     var position = elementStyle.getPropertyValue("position");
+    //     if (position == "absoluste" || position == "fixed") {
+    //         if (left === "0px" && !right) {
+    //             element.style.right = "0px";
+    //             element.style.left = offset + "px";
+    //         } else if (left) {
+    //             element.style.left = parseInt(left) + offset + "px";
+    //         }
+    //     }
+    //     document.body.style.marginLeft = offset + "px";
+    // }
+}
 
-    for (var i = 0; i < elementsInBody.length; i++) {
-        var element = elementsInBody[i];
-        var elementStyle = window.getComputedStyle(element);
-        var zIndex = elementStyle.getPropertyValue("z-index");
-        zIndex = parseInt(zIndex);
+var counter = 0;
+function loopThroughChildren(node, level) {
+    if (level == 0) {
+        return;
+    }
+    for (var i = 0; i < node.children.length; i++) {
+        var child = node.children[i];
 
-        if (zIndex > 1000000) {
-            element.style.zIndex = 100000;
-        }
+        counter++;
 
-        var offset = 100;
-        var left = elementStyle.getPropertyValue("left");
-        var right = elementStyle.getPropertyValue("right");
-        var position = elementStyle.getPropertyValue("position");
-
-        if (position == "absoluste" || position == "fixed") {
-            if (left === "0px" && !right) {
-                element.style.right = "0px";
-                element.style.left = offset + "px";
-            } else if (left) {
-                element.style.left = parseInt(left) + offset + "px";
+        if (
+            child.tagName != "BR" &&
+            child.tagName != "SCRIPT" &&
+            child.tagName != "STYLE" &&
+            child.tagName != "NOSCRIPT"
+        ) {
+            adjustElement(child);
+            if (child.children.length > 0) {
+                loopThroughChildren(child, level - 1);
             }
         }
+    }
+}
 
-        document.body.style.marginLeft = offset + "px";
+function adjustElement(element) {
+    var elementStyle = window.getComputedStyle(element);
+    var zIndex = elementStyle.getPropertyValue("z-index");
+    zIndex = parseInt(zIndex);
+    if (zIndex > 1000000) {
+        element.style.zIndex = 100000;
+    }
+
+    var offset = 100;
+    var left = elementStyle.getPropertyValue("left");
+    var right = elementStyle.getPropertyValue("right");
+    var position = elementStyle.getPropertyValue("position");
+
+    if (
+        position == "absoluste" ||
+        position == "fixed"
+    ) {
+        if (left === "0px" && !right) {
+            element.style.right = "0px";
+            element.style.left = offset + "px";
+        } else if (left) {
+            element.style.left = parseInt(left) + offset + "px";
+        }
     }
 }
 
@@ -158,7 +222,8 @@ function moveOverlayToElement(event) {
 
     var boundingClientRect = hoverElement.getBoundingClientRect();
     elementSelector.style.top = boundingClientRect.top + window.scrollY + "px";
-    elementSelector.style.left = boundingClientRect.left + window.scrollX +"px";
+    elementSelector.style.left =
+        boundingClientRect.left + window.scrollX + "px";
     elementSelector.style.height = boundingClientRect.height + "px";
     elementSelector.style.width = boundingClientRect.width + "px";
 }
