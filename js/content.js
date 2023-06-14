@@ -8,23 +8,8 @@ var selectorIsDisplayed = false;
 var globalOffset = 100;
 
 function generateApp() {
-    var divs = document.getElementsByTagName("div");
-    if (divs.length > 200) {
-        loopThroughChildren(document.body, 5);
-    } else {
-        for (var i = 0; i < divs.length; i++) {
-            var element = divs[i];
-            if (
-                element.tagName != "BR" &&
-                element.tagName != "SCRIPT" &&
-                element.tagName != "STYLE" &&
-                element.tagName != "NOSCRIPT"
-            ) {
-                adjustElement(element);
-            }
-        }
-    }
-
+    adaptSiteContent();
+    
     var currentSyle = document.body.getAttribute("style");
     document.body.setAttribute(
         "style",
@@ -68,10 +53,28 @@ function generateApp() {
         .addEventListener("click", toggleSelector);
 }
 
-function adjustSiteContent() {}
+function adaptSiteContent() {
+    var allDivs  = document.getElementsByTagName("div");
+    if (allDivs.length > 200) {
+        adaptChildrenStyle(document.body, 5);
+    } else {
+        for (var i = 0; i < divs.length; i++) {
+            var element = divs[i];
+            if (
+                element.tagName != "BR" &&
+                element.tagName != "SCRIPT" &&
+                element.tagName != "STYLE" &&
+                element.tagName != "NOSCRIPT"
+            ) {
+                adjustElement(element);
+            }
+            console.log()
+        }
+    }
+}
 
 var counter = 0;
-function loopThroughChildren(node, level) {
+function adaptChildrenStyle(node, level) {
     if (level == 0) {
         return;
     }
@@ -83,7 +86,7 @@ function loopThroughChildren(node, level) {
             child.tagName != "STYLE" &&
             child.tagName != "NOSCRIPT"
         ) {
-            adjustElement(child);
+            adaptElementStyle(child);
             if (child.children.length > 0) {
                 loopThroughChildren(child, level - 1);
             }
@@ -91,14 +94,13 @@ function loopThroughChildren(node, level) {
     }
 }
 
-function adjustElement(element) {
+function adaptElementStyle(element) {
     var elementStyle = window.getComputedStyle(element);
     var zIndex = elementStyle.getPropertyValue("z-index");
     zIndex = parseInt(zIndex);
     if (zIndex > 1000000) {
         element.style.zIndex = 100000;
     }
-
     var left = elementStyle.getPropertyValue("left");
     var right = elementStyle.getPropertyValue("right");
     var position = elementStyle.getPropertyValue("position");
