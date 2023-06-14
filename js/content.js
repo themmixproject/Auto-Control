@@ -5,6 +5,7 @@ var selectedElement = null;
 var overlay = null;
 var selectorsContainer = null;
 var selectorIsDisplayed = false;
+var globalOffset = 100;
 
 function generateApp() {
     var divs = document.getElementsByTagName("div");
@@ -23,9 +24,12 @@ function generateApp() {
             }
         }
     }
-    console.log(divs.length);
 
-    // console.log(counter);
+    var currentSyle = document.body.getAttribute("style");
+    document.body.setAttribute(
+        "style",
+        currentSyle + " margin-left: " + globalOffset + " !important"
+    );
 
     appContainer = document.createElement("div");
     appContainer.style.display = "block";
@@ -64,32 +68,7 @@ function generateApp() {
         .addEventListener("click", toggleSelector);
 }
 
-function adjustSiteContent() {
-    // var elementsInBody = document.body.getElementsByTagName("div");
-    // console.log(elementsInBody.length)
-    // for (var i = 0; i < elementsInBody.length; i++) {
-    //     var element = elementsInBody[i];
-    //     var elementStyle = window.getComputedStyle(element);
-    //     var zIndex = elementStyle.getPropertyValue("z-index");
-    //     zIndex = parseInt(zIndex);
-    //     if (zIndex > 1000000) {
-    //         element.style.zIndex = 100000;
-    //     }
-    //     var offset = 100;
-    //     var left = elementStyle.getPropertyValue("left");
-    //     var right = elementStyle.getPropertyValue("right");
-    //     var position = elementStyle.getPropertyValue("position");
-    //     if (position == "absoluste" || position == "fixed") {
-    //         if (left === "0px" && !right) {
-    //             element.style.right = "0px";
-    //             element.style.left = offset + "px";
-    //         } else if (left) {
-    //             element.style.left = parseInt(left) + offset + "px";
-    //         }
-    //     }
-    //     document.body.style.marginLeft = offset + "px";
-    // }
-}
+function adjustSiteContent() {}
 
 var counter = 0;
 function loopThroughChildren(node, level) {
@@ -98,9 +77,6 @@ function loopThroughChildren(node, level) {
     }
     for (var i = 0; i < node.children.length; i++) {
         var child = node.children[i];
-
-        counter++;
-
         if (
             child.tagName != "BR" &&
             child.tagName != "SCRIPT" &&
@@ -123,20 +99,16 @@ function adjustElement(element) {
         element.style.zIndex = 100000;
     }
 
-    var offset = 100;
     var left = elementStyle.getPropertyValue("left");
     var right = elementStyle.getPropertyValue("right");
     var position = elementStyle.getPropertyValue("position");
 
-    if (
-        position == "absoluste" ||
-        position == "fixed"
-    ) {
+    if (position == "absoluste" || position == "fixed") {
         if (left === "0px" && !right) {
             element.style.right = "0px";
-            element.style.left = offset + "px";
+            element.style.left = globalOffset + "px";
         } else if (left) {
-            element.style.left = parseInt(left) + offset + "px";
+            element.style.left = parseInt(left) + globalOffset + "px";
         }
     }
 }
