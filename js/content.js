@@ -58,15 +58,15 @@ function adaptSiteContent() {
     if (allDivs.length > 200) {
         adaptChildrenStyle(document.body, 5);
     } else {
-        for (var i = 0; i < divs.length; i++) {
-            var element = divs[i];
+        for (var i = 0; i < allDivs.length; i++) {
+            var element = allDivs[i];
             if (
                 element.tagName != "BR" &&
                 element.tagName != "SCRIPT" &&
                 element.tagName != "STYLE" &&
                 element.tagName != "NOSCRIPT"
             ) {
-                adjustElement(element);
+                adaptElementStyle(element);
             }
             console.log()
         }
@@ -88,7 +88,7 @@ function adaptChildrenStyle(node, level) {
         ) {
             adaptElementStyle(child);
             if (child.children.length > 0) {
-                loopThroughChildren(child, level - 1);
+                adaptChildrenStyle(child, level - 1);
             }
         }
     }
