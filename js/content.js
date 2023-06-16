@@ -68,9 +68,10 @@ function adaptSiteContent() {
             ) {
                 adaptElementStyle(element);
             }
-            console.log()
         }
     }
+
+    document.body.style.marginLeft = globalOffset + "px";
 }
 
 var counter = 0;
