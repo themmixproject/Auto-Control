@@ -5,7 +5,7 @@ var selectedElement = null;
 var overlay = null;
 var selectorsContainer = null;
 var selectorIsDisplayed = false;
-var globalOffset = 100;
+var globalOffset = 200;
 
 function generateApp() {
     adaptSiteContent();
