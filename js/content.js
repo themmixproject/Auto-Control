@@ -6,12 +6,12 @@ var overlay = null;
 var selectorsContainer = null;
 var selectorIsDisplayed = false;
 var globalOffset = 200;
+var adaptedElementsAreLoaded = false;
 
 var adaptedElements = [];
 
 function generateApp() {
     adaptSiteContent();
-
 
     appContainer = document.createElement("div");
     appContainer.style.display = "block";
@@ -75,16 +75,11 @@ function adaptSiteContent() {
         originalStyle: currentBodyStyle,
     });
 
-    if (currentBodyStyle) {
-        document.body.setAttribute(
-            "style",
-            currentBodyStyle + " margin-left:" + globalOffset + "px !important;"
-        );
-    } else {
-        document.body.setAttribute("style", " margin-left:" + globalOffset + "px !important;")
-    }
-
-    console.log(adaptedElements);
+    document.body.setAttribute(
+        "style",
+        (currentBodyStyle ? currentBodyStyle + " " : "") +
+            "margin-left:" + globalOffset + "px !important;"
+    );
 }
 
 var counter = 0;
@@ -143,8 +138,6 @@ function toggleSelector(event) {
         "autocontrol-add-element-button"
     );
 
-    console.log(selectorIsDisplayed);
-
     if (selectorIsDisplayed) {
         addElementButton.innerHTML = "Add Element";
 
@@ -152,7 +145,6 @@ function toggleSelector(event) {
         document.removeEventListener("click", selectElement);
         document.removeEventListener("mousemove", moveOverlayToElement);
     } else {
-        console.log("add");
 
         addElementButton.innerHTML = "Cancel";
 
@@ -262,9 +254,10 @@ function closeApp() {
 function resetElementsToOriginalStyle() {
     for (var i = 0; i < adaptedElements.length; i++) {
         var adaptedElement = adaptedElements[i];
-        console.log()
-
-        adaptedElement.element.setAttribute("style", adaptedElement.originalStyle);
+        adaptedElement.element.setAttribute(
+            "style",
+            adaptedElement.originalStyle
+        );
     }
 }
 
