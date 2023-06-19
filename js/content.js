@@ -1,6 +1,6 @@
 console.log("hello world!");
 
-var appContainer = null;
+let appContainer = null;
 var selectedElement = null;
 var overlay = null;
 var selectorsContainer = null;
@@ -14,7 +14,6 @@ function generateApp() {
     adaptSiteContent();
 
     appContainer = document.createElement("div");
-    appContainer.style.display = "block";
 
     if (document.body.children.length > 0) {
         var firstChild = document.body.children[0];
@@ -27,12 +26,12 @@ function generateApp() {
         "<div id='autocontrol-selectors-container'>" +
         "<div class='autocontrol-selector'></div>" +
         "</div>" +
-        "<div id='autocontrol-window'>" +
-        "<header id='autocontrol-window-header'>" +
+        "<div id='autocontrol-panel'>" +
+        "<header id='autocontrol-panel-header'>" +
         "Auto Control" +
-        "<button id='autocontrol-window-close-button'>X</button>" +
+        "<button id='autocontrol-panel-close-button'>✕</button>" +
         "</header>" +
-        "<div id='autocontrol-window-content'>" +
+        "<div id='autocontrol-panel-content'>" +
         "<div id='autocontrol-element-list'></div>" +
         "<button id='autocontrol-add-element-button'>Add Element</button>" +
         "</div>";
@@ -42,7 +41,7 @@ function generateApp() {
     )[0];
 
     document
-        .getElementById("autocontrol-window-close-button")
+        .getElementById("autocontrol-panel-close-button")
         .addEventListener("click", closeApp);
 
     document
@@ -221,7 +220,7 @@ function getHoverElement(event) {
         event.pageY - window.scrollY
     );
 
-    var autoControlWindow = document.getElementById("autocontrol-window");
+    var autoControlWindow = document.getElementById("autocontrol-panel");
     var isWindow =
         autoControlWindow.contains(hoverElement) ||
         hoverElement == autoControlWindow;
