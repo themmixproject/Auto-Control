@@ -7,14 +7,11 @@ var selectorsContainer = null;
 var selectorIsDisplayed = false;
 var globalOffset = 200;
 
+var adaptedElements = [];
+
 function generateApp() {
     adaptSiteContent();
-    
-    var currentSyle = document.body.getAttribute("style");
-    document.body.setAttribute(
-        "style",
-        currentSyle + " margin-left: " + globalOffset + " !important"
-    );
+
 
     appContainer = document.createElement("div");
     appContainer.style.display = "block";
@@ -54,7 +51,7 @@ function generateApp() {
 }
 
 function adaptSiteContent() {
-    var allDivs  = document.getElementsByTagName("div");
+    var allDivs = document.getElementsByTagName("div");
     if (allDivs.length > 200) {
         adaptChildrenStyle(document.body, 5);
     } else {
@@ -71,7 +68,23 @@ function adaptSiteContent() {
         }
     }
 
+    var currentBodyStyle = document.body.getAttribute("style");
     document.body.style.marginLeft = globalOffset + "px";
+    adaptedElements.push({
+        element: document.body,
+        originalStyle: currentBodyStyle,
+    });
+
+    if (currentBodyStyle) {
+        document.body.setAttribute(
+            "style",
+            currentBodyStyle + " margin-left:" + globalOffset + "px !important;"
+        );
+    } else {
+        document.body.setAttribute("style", " margin-left:" + globalOffset + "px !important;")
+    }
+
+    console.log(adaptedElements);
 }
 
 var counter = 0;
@@ -96,6 +109,8 @@ function adaptChildrenStyle(node, level) {
 }
 
 function adaptElementStyle(element) {
+    var originalStyle = element.getAttribute("style");
+
     var elementStyle = window.getComputedStyle(element);
     var zIndex = elementStyle.getPropertyValue("z-index");
     zIndex = parseInt(zIndex);
@@ -114,6 +129,11 @@ function adaptElementStyle(element) {
             element.style.left = parseInt(left) + globalOffset + "px";
         }
     }
+
+    adaptedElements.push({
+        element: element,
+        originalStyle: originalStyle,
+    });
 }
 
 function toggleSelector(event) {
@@ -235,6 +255,17 @@ function closeApp() {
     appContainer = null;
     selectedElement = null;
     selectorIsDisplayed = false;
+
+    resetElementsToOriginalStyle();
+}
+
+function resetElementsToOriginalStyle() {
+    for (var i = 0; i < adaptedElements.length; i++) {
+        var adaptedElement = adaptedElements[i];
+        console.log()
+
+        adaptedElement.element.setAttribute("style", adaptedElement.originalStyle);
+    }
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
