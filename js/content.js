@@ -1,3 +1,6 @@
+//TODO: FIX APP CONTAINER BEING PUT ON DISPLAY NONE IN BING-GPT
+//TODO: FIX APP PANEL NOT BEING DISPLAYED WHEN YOU CLICK ON THE EXTENSION ICON AFTER YOU CLOSE THE APP
+
 console.log("hello world!");
 
 let appContainer = null;
@@ -10,11 +13,10 @@ var adaptedElementsAreLoaded = false;
 
 var adaptedElements = [];
 
-function generateApp() {
+function loadApp() {
     adaptSiteContent();
 
     appContainer = document.createElement("div");
-
     if (document.body.children.length > 0) {
         var firstChild = document.body.children[0];
         document.body.insertBefore(appContainer, firstChild);
@@ -50,23 +52,29 @@ function generateApp() {
 }
 
 function adaptSiteContent() {
-    var allDivs = document.getElementsByTagName("div");
-    if (allDivs.length > 200) {
-        adaptChildrenStyle(document.body, 5);
+    if (adaptedElements.length > 0) {
+        adaptedElements.forEach(adaptElementStyle);
     } else {
-        for (var i = 0; i < allDivs.length; i++) {
-            var element = allDivs[i];
-            if (
-                element.tagName != "BR" &&
-                element.tagName != "SCRIPT" &&
-                element.tagName != "STYLE" &&
-                element.tagName != "NOSCRIPT"
-            ) {
-                adaptElementStyle(element);
-            }
+        let allDivs = document.getElementsByTagName("div");
+        if (allDivs.length > 200) {
+            adaptChildrenStyle(document.body, 5);
+        } else {
+            adaptAllDivs(allDivs);
         }
     }
+    adaptBodyStyle();
+}
 
+function adaptAllDivs(divs) {
+    for (var i = 0; i < divs.length; i++) {
+        var element = divs[i];
+        if (!["BR", "SCRIPT", "STYLE", "NOSCRIPT"].includes(element.tagName)) {
+            adaptElementStyle(element);
+        }
+    }
+}
+
+function adaptBodyStyle() {
     var currentBodyStyle = document.body.getAttribute("style");
     document.body.style.marginLeft = globalOffset + "px";
     adaptedElements.push({
@@ -77,23 +85,19 @@ function adaptSiteContent() {
     document.body.setAttribute(
         "style",
         (currentBodyStyle ? currentBodyStyle + " " : "") +
-            "margin-left:" + globalOffset + "px !important;"
+            "margin-left:" +
+            globalOffset +
+            "px !important;"
     );
 }
 
-var counter = 0;
 function adaptChildrenStyle(node, level) {
     if (level == 0) {
         return;
     }
     for (var i = 0; i < node.children.length; i++) {
         var child = node.children[i];
-        if (
-            child.tagName != "BR" &&
-            child.tagName != "SCRIPT" &&
-            child.tagName != "STYLE" &&
-            child.tagName != "NOSCRIPT"
-        ) {
+        if (!["BR", "SCRIPT", "STYLE", "NOSCRIPT"].includes(child.tagName)) {
             adaptElementStyle(child);
             if (child.children.length > 0) {
                 adaptChildrenStyle(child, level - 1);
@@ -144,7 +148,6 @@ function toggleSelector(event) {
         document.removeEventListener("click", selectElement);
         document.removeEventListener("mousemove", moveOverlayToElement);
     } else {
-
         addElementButton.innerHTML = "Cancel";
 
         document.addEventListener("click", selectElement);
@@ -167,9 +170,11 @@ function generateElementListItem(element) {
     var elementListItem = document.createElement("div");
     elementListItem.className = "autocontrol-element-list-item";
 
-    var elementInfo = document.createElement("span");
+    var elementInfo = document.createElement("div");
     elementInfo.style.fontFamily = "monospace";
-    elementInfo.style.fontSize = "16px";
+    elementInfo.style.overflow = "hidden";
+    elementInfo.style.textOverflow = "ellipsis";
+    elementInfo.style.whiteSpace = "nowrap";
 
     elementInfo.innerHTML =
         "<span style='color: blue'>" +
@@ -177,7 +182,7 @@ function generateElementListItem(element) {
         "</span>";
     if (element.id) {
         elementInfo.innerHTML +=
-            "<span style='color: green'>#" + element.id + "</span>";
+            "<span style='color: green;'>#" + element.id + "</span>";
     }
     if (element.className) {
         elementInfo.innerHTML +=
@@ -273,7 +278,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         }
     }
 
-    generateApp();
+    loadApp();
 });
 
 function getFirstElement() {
