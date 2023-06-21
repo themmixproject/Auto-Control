@@ -19,12 +19,12 @@
 
 
 #autocontrol-panel {
+    font-size: 16px;
     position: fixed;
     width: 200px;
     margin-left: -200px;
     top: 0;
     bottom: 0;
-    font-size: 1.5em;
     background-color: white;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
@@ -41,7 +41,7 @@
 }
 
 #autocontrol-panel-content {
-    padding: 20px;
+    padding: 10px 10px;
     text-align: center;
 }
 
