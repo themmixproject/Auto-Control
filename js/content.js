@@ -292,9 +292,7 @@ function getFirstElement() {
     var firstElement = document.body.firstElementChild;
     while (
         firstElement &&
-        (firstElement.tagName === "SCRIPT" ||
-            firstElement.tagName === "STYLE" ||
-            firstElement.tagName === "NOSCRIPT")
+        ["BR", "SCRIPT", "STYLE", "NOSCRIPT"].includes(firstElement.tagName)
     ) {
         firstElement = firstElement.nextElementSibling;
     }
