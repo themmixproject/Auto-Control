@@ -25,6 +25,7 @@ function loadApp() {
         document.body.appendChild(appContainer);
     }
 
+    appContainer.style.display = "block";
     appContainer.innerHTML +=
         "<div id='autocontrol-selectors-container'>" +
         "<div class='autocontrol-selector'></div>" +
