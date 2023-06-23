@@ -1,5 +1,6 @@
-//TODO: FIX APP CONTAINER BEING PUT ON DISPLAY NONE IN BING-GPT
+//TODO: FIX APP CONTAINER BEING PUT ON DISPLAY NONE IN BING-GPT (DUE TO CSS SELECTOR PUTTING IT ON DISPLAY NONE)
 //TODO: FIX APP PANEL NOT BEING DISPLAYED WHEN YOU CLICK ON THE EXTENSION ICON AFTER YOU CLOSE THE APP
+//  TODO: ADD EXCEPTIONS WITHIN ADAPTING ELEMENTS TO ADAPT THE BODY
 
 console.log("hello world!");
 
@@ -53,7 +54,9 @@ function loadApp() {
 
 function adaptSiteContent() {
     if (adaptedElements.length > 0) {
-        adaptedElements.forEach(adaptElementStyle);
+        adaptedElements.forEach(function (adaptedElement) {
+            adaptElementStyle(adaptedElement.element);
+        });
     } else {
         let allDivs = document.getElementsByTagName("div");
         if (allDivs.length > 200) {
@@ -61,7 +64,14 @@ function adaptSiteContent() {
         } else {
             adaptAllDivs(allDivs);
         }
+
+        var currentBodyStyle = document.body.getAttribute("style");
+        adaptedElements.push({
+            element: document.body,
+            originalStyle: currentBodyStyle,
+        });
     }
+
     adaptBodyStyle();
 }
 
@@ -76,12 +86,6 @@ function adaptAllDivs(divs) {
 
 function adaptBodyStyle() {
     var currentBodyStyle = document.body.getAttribute("style");
-    document.body.style.marginLeft = globalOffset + "px";
-    adaptedElements.push({
-        element: document.body,
-        originalStyle: currentBodyStyle,
-    });
-
     document.body.setAttribute(
         "style",
         (currentBodyStyle ? currentBodyStyle + " " : "") +
@@ -98,6 +102,12 @@ function adaptChildrenStyle(node, level) {
     for (var i = 0; i < node.children.length; i++) {
         var child = node.children[i];
         if (!["BR", "SCRIPT", "STYLE", "NOSCRIPT"].includes(child.tagName)) {
+            var originalStyle = child.getAttribute("style");
+            adaptedElements.push({
+                element: child,
+                originalStyle: originalStyle,
+            });
+
             adaptElementStyle(child);
             if (child.children.length > 0) {
                 adaptChildrenStyle(child, level - 1);
@@ -107,8 +117,6 @@ function adaptChildrenStyle(node, level) {
 }
 
 function adaptElementStyle(element) {
-    var originalStyle = element.getAttribute("style");
-
     var elementStyle = window.getComputedStyle(element);
     var zIndex = elementStyle.getPropertyValue("z-index");
     zIndex = parseInt(zIndex);
@@ -127,11 +135,6 @@ function adaptElementStyle(element) {
             element.style.left = parseInt(left) + globalOffset + "px";
         }
     }
-
-    adaptedElements.push({
-        element: element,
-        originalStyle: originalStyle,
-    });
 }
 
 function toggleSelector(event) {
@@ -258,10 +261,14 @@ function closeApp() {
 function resetElementsToOriginalStyle() {
     for (var i = 0; i < adaptedElements.length; i++) {
         var adaptedElement = adaptedElements[i];
-        adaptedElement.element.setAttribute(
-            "style",
-            adaptedElement.originalStyle
-        );
+        if (adaptedElement.originalStyle) {
+            adaptedElement.element.setAttribute(
+                "style",
+                adaptedElement.originalStyle
+            );
+        } else {
+            adaptedElement.element.removeAttribute("style");
+        }
     }
 }
 
