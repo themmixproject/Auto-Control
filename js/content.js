@@ -25,15 +25,16 @@ function loadApp() {
 
     appContainer.style.display = "block";
     appContainer.innerHTML +=
-        "<div id='autocontrol-selectors-container'>" +
-        "<div class='autocontrol-selector'></div>" +
-        "</div>" +
-        "<div id='autocontrol-panel'>" +
-        "<header id='autocontrol-panel-header'>" +
-        "Auto Control" +
-        "<button id='autocontrol-panel-close-button'>✕</button>" +
-        "</header>" +
-        "<div id='autocontrol-panel-content'>" +
+    "<div id='autocontrol-selectors-container'>" +
+    "<div class='autocontrol-selector'></div>" +
+    "</div>" +
+    "<div id='autocontrol-panel'>" +
+    "<header id='autocontrol-panel-header'>" +
+    "Auto Control" +
+    "<button id='autocontrol-panel-close-button'>✕</button>" +
+    "</header>" +
+    "<div id='autocontrol-panel-content'>" +
+    "<div id='autocontrol-panel-resizer'></div>" +
         "<div id='autocontrol-element-list'></div>" +
         "<button id='autocontrol-add-element-button'>Add Element</button>" +
         "</div>";

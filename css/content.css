@@ -30,7 +30,7 @@
     text-align: center;
     width: 200px;
     z-index: 10000000;
-
+    
     color: black;
 }
 #autocontrol-panel header {
@@ -43,6 +43,19 @@
 #autocontrol-panel-content {
     padding: 10px 10px;
     text-align: center;
+}
+
+#autocontrol-panel-resizer {
+    position: absolute;
+    top: 0.7em;
+    bottom: 0;
+    width: 4px;
+    right: -2px;
+    background-color: lightgreen;
+}
+
+#autocontrol-panel-resizer:hover {
+    cursor: w-resize;
 }
 
 #autocontrol-panel button {
