@@ -16,7 +16,6 @@ var adaptedElements = [];
 
 function loadApp() {
     adaptSiteContent();
-    document.body.style.cursor = "copy";
 
     appContainer = document.createElement("div");
     if (document.body.children.length > 0) {
