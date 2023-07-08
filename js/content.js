@@ -9,11 +9,14 @@ var selectorsContainer = null;
 var selectorIsDisplayed = false;
 var globalOffset = 200;
 var adaptedElementsAreLoaded = false;
+var isResizing = false;
+var resizeStart = 0;
 
 var adaptedElements = [];
 
 function loadApp() {
     adaptSiteContent();
+    document.body.style.cursor = "copy";
 
     appContainer = document.createElement("div");
     if (document.body.children.length > 0) {
@@ -25,16 +28,18 @@ function loadApp() {
 
     appContainer.style.display = "block";
     appContainer.innerHTML +=
-    "<div id='autocontrol-selectors-container'>" +
-    "<div class='autocontrol-selector'></div>" +
-    "</div>" +
-    "<div id='autocontrol-panel'>" +
-    "<header id='autocontrol-panel-header'>" +
-    "Auto Control" +
-    "<button id='autocontrol-panel-close-button'>✕</button>" +
-    "</header>" +
-    "<div id='autocontrol-panel-content'>" +
-    "<div id='autocontrol-panel-resizer'></div>" +
+        "<div id='autocontrol-selectors-container'>" +
+        "<div class='autocontrol-selector'></div>" +
+        "</div>" +
+        "<div id='autocontrol-panel' style='width: " +
+        globalOffset +
+        "px;'>" +
+        "<header id='autocontrol-panel-header'>" +
+        "Auto Control" +
+        "<button id='autocontrol-panel-close-button'>✕</button>" +
+        "</header>" +
+        "<div id='autocontrol-panel-content'>" +
+        "<div id='autocontrol-panel-resizer'></div>" +
         "<div id='autocontrol-element-list'></div>" +
         "<button id='autocontrol-add-element-button'>Add Element</button>" +
         "</div>";
@@ -50,6 +55,31 @@ function loadApp() {
     document
         .getElementById("autocontrol-add-element-button")
         .addEventListener("click", toggleSelector);
+
+    document
+        .getElementById("autocontrol-panel-resizer")
+        .addEventListener("mousedown", function (event) {
+            isResizing = true;
+            resizeStart = event.clientX;
+        });
+
+    document.addEventListener("mouseup", function () {
+        isResizing = false;
+        document.body.style.cursor = null;
+    });
+
+    document.addEventListener("mousemove", function (event) {
+        if (isResizing) {
+            globalOffset += event.clientX - globalOffset;
+            adaptBodyStyle();
+            var autocontrolPanel = document.getElementById("autocontrol-panel");
+            autocontrolPanel.style.width = globalOffset + "px";
+            autocontrolPanel.style.marginLeft = -globalOffset + "px";
+            document.body.style.cursor = "w-resize";
+            document.getElementById("autocontrol-panel-resizer").style.cursor =
+                "w-resize";
+        }
+    });
 }
 
 function adaptSiteContent() {
