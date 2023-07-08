@@ -62,13 +62,17 @@ function loadApp() {
             resizeStart = event.clientX;
         });
 
-    document.addEventListener("mouseup", function () {
-        isResizing = false;
-        document.body.style.cursor = null;
+    document.addEventListener("mouseup", function (event) {
+        if(isResizing){
+            event.preventDefault();
+            isResizing = false;
+            document.body.style.cursor = null;
+        }
     });
 
     document.addEventListener("mousemove", function (event) {
         if (isResizing) {
+            event.preventDefault();
             globalOffset += event.clientX - globalOffset;
             adaptBodyStyle();
             var autocontrolPanel = document.getElementById("autocontrol-panel");
@@ -114,6 +118,7 @@ function adaptAllDivs(divs) {
 }
 
 function adaptBodyStyle() {
+    document.body.style.marginLeft = null;
     var currentBodyStyle = document.body.getAttribute("style");
     document.body.setAttribute(
         "style",
