@@ -18,5 +18,11 @@
     "action": {},
     "background": {
         "service_worker": "background.js"
-    }
+    },
+    "web_accessible_resources": [
+        {
+            "matches": ["<all_urls>"],
+            "resources": ["assets/cross.svg"]
+        }
+    ]
 }

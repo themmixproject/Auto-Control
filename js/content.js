@@ -34,8 +34,14 @@ function loadApp() {
         globalOffset +
         "px;'>" +
         "<header id='autocontrol-panel-header'>" +
-        "Auto Control" +
-        "<button id='autocontrol-panel-close-button'>✕</button>" +
+        "<div id='app-title-wrapper'>"+
+        "<h1 id='app-title'>Auto Control</h1>" +
+        "</div>"+
+        "<div id='close-button-wrapper'>" +
+        "<button id='close-button'>"+
+        "<div id='close-button-icon'></div>"
+        +"</button>" +
+        "</div>" +
         "</header>" +
         "<div id='autocontrol-panel-content'>" +
         "<div id='autocontrol-panel-resizer'></div>" +
@@ -48,7 +54,7 @@ function loadApp() {
     )[0];
 
     document
-        .getElementById("autocontrol-panel-close-button")
+        .getElementById("close-button")
         .addEventListener("click", closeApp);
 
     document
