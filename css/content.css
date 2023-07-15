@@ -71,6 +71,7 @@ header #close-button {
     outline: 0;
     border: 0;
     padding: 6px;
+    flex-grow: 1;
 }
 
 header #close-button-icon {
