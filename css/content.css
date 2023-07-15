@@ -79,8 +79,6 @@ header #close-button-icon {
     width: 20px;
     
     background-size: contain;
-    background-image: url("chrome-extension://ahgnigogcjijfmbcgmknlhefgapkfeha/assets/cross.svg");
-
 }
 
 header #close-button:active {

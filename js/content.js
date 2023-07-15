@@ -14,6 +14,8 @@ var resizeStart = 0;
 
 var adaptedElements = [];
 
+var extensionId = "";
+
 function loadApp() {
     adaptSiteContent();
 
@@ -34,13 +36,15 @@ function loadApp() {
         globalOffset +
         "px;'>" +
         "<header id='autocontrol-panel-header'>" +
-        "<div id='app-title-wrapper'>"+
+        "<div id='app-title-wrapper'>" +
         "<h1 id='app-title'>Auto Control</h1>" +
-        "</div>"+
+        "</div>" +
         "<div id='close-button-wrapper'>" +
-        "<button id='close-button'>"+
-        "<div id='close-button-icon'></div>"
-        +"</button>" +
+        "<button id='close-button'>" +
+        "<div id='close-button-icon' style='background-image: url(\"chrome-extension://" +
+        extensionId +
+        "/assets/cross.svg\")'></div>" +
+        "</button>" +
         "</div>" +
         "</header>" +
         "<div id='autocontrol-panel-content'>" +
@@ -53,9 +57,7 @@ function loadApp() {
         "autocontrol-selector"
     )[0];
 
-    document
-        .getElementById("close-button")
-        .addEventListener("click", closeApp);
+    document.getElementById("close-button").addEventListener("click", closeApp);
 
     document
         .getElementById("autocontrol-add-element-button")
@@ -69,7 +71,7 @@ function loadApp() {
         });
 
     document.addEventListener("mouseup", function (event) {
-        if(isResizing){
+        if (isResizing) {
             event.preventDefault();
             isResizing = false;
             document.body.style.cursor = null;
@@ -314,6 +316,7 @@ function resetElementsToOriginalStyle() {
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
     var firstChild = getFirstElement();
+    extensionId = sender.id;
 
     if (firstChild == null) {
         alert("This document does not contain any elements");
