@@ -51,6 +51,7 @@ function loadApp() {
         "<div id='autocontrol-panel-resizer'></div>" +
         "<div id='autocontrol-element-list'></div>" +
         "<button id='autocontrol-add-element-button'>Add Element</button>" +
+        "</div>" +
         "</div>";
 
     elementSelector = document.getElementsByClassName(
