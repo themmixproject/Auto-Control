@@ -116,7 +116,7 @@ function resizePanel(clientX) {
     if (newGlobalOffset > 200) {
         globalOffset = newGlobalOffset;
     }
-    console.log(globalOffset);
+
     adaptBodyStyle();
     var autocontrolPanel = document.getElementById("autocontrol-panel");
     autocontrolPanel.style.width = globalOffset + "px";
