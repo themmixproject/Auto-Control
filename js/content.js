@@ -28,6 +28,7 @@ function loadApp() {
     }
 
     appContainer.style.display = "block";
+
     appContainer.innerHTML +=
         "<div id='autocontrol-selectors-container'>" +
         "<div class='autocontrol-selector'></div>" +
@@ -35,7 +36,12 @@ function loadApp() {
         "<div id='autocontrol-panel' style='width: " +
         globalOffset +
         "px;'>" +
-        "<header id='autocontrol-panel-header'>" +
+        "<div id='autocontrol-panel-resizer' style='position: fixed; left:" +
+        globalOffset +
+        "px;'></div>" +
+        "<header id='autocontrol-panel-header' style='width: " +
+        globalOffset +
+        "px;'>" +
         "<div id='app-title-wrapper'>" +
         "<h1 id='app-title'>Auto Control</h1>" +
         "</div>" +
@@ -48,9 +54,14 @@ function loadApp() {
         "</div>" +
         "</header>" +
         "<div id='autocontrol-panel-content'>" +
-        "<div id='autocontrol-panel-resizer'></div>" +
-        "<div id='autocontrol-element-list'></div>" +
-        "<button id='autocontrol-add-element-button'>Add Element</button>" +
+        "<div id='autocontrol-element-list'>" +
+        "<div class='autocontrol-element-list-item-placeholder'></div>" +
+        "</div>" +
+        "</div>" +
+        "<div id='autocontrol-bottom-nav' style='width: " +
+        globalOffset +
+        "'>" +
+        "<h1>bottom nav</h1>" +
         "</div>" +
         "</div>";
 
@@ -60,9 +71,9 @@ function loadApp() {
 
     document.getElementById("close-button").addEventListener("click", closeApp);
 
-    document
-        .getElementById("autocontrol-add-element-button")
-        .addEventListener("click", toggleSelector);
+    // document
+    //     .getElementById("autocontrol-add-element-button")
+    //     .addEventListener("click", toggleSelector);
 
     document
         .getElementById("autocontrol-panel-resizer")
@@ -82,16 +93,42 @@ function loadApp() {
     document.addEventListener("mousemove", function (event) {
         if (isResizing) {
             event.preventDefault();
-            globalOffset += event.clientX - globalOffset;
-            adaptBodyStyle();
-            var autocontrolPanel = document.getElementById("autocontrol-panel");
-            autocontrolPanel.style.width = globalOffset + "px";
-            autocontrolPanel.style.marginLeft = -globalOffset + "px";
-            document.body.style.cursor = "w-resize";
-            document.getElementById("autocontrol-panel-resizer").style.cursor =
-                "w-resize";
+            resizePanel(event.clientX);
         }
     });
+
+    setNavWidth();
+}
+
+function setNavWidth() {
+    var panel = document.getElementById("autocontrol-panel");
+    var header = document.getElementById("autocontrol-panel-header");
+    var bottomNav = document.getElementById("autocontrol-bottom-nav");
+    var hasScrollbar = panel.scrollHeight > panel.clientHeight;
+    header.style.width =
+        (hasScrollbar ? globalOffset - 17 : globalOffset) + "px";
+    bottomNav.style.width =
+        (hasScrollbar ? globalOffset - 17 : globalOffset) + "px";
+}
+
+function resizePanel(clientX) {
+    var newGlobalOffset = globalOffset + clientX - globalOffset;
+    if (newGlobalOffset > 200) {
+        globalOffset = newGlobalOffset;
+    }
+    console.log(globalOffset);
+    adaptBodyStyle();
+    var autocontrolPanel = document.getElementById("autocontrol-panel");
+    autocontrolPanel.style.width = globalOffset + "px";
+    autocontrolPanel.style.marginLeft = -globalOffset + "px";
+
+    var resizer = document.getElementById("autocontrol-panel-resizer");
+    resizer.style.cursor = "w-resize";
+    resizer.style.left = globalOffset + "px";
+
+    setNavWidth();
+
+    document.body.style.cursor = "w-resize";
 }
 
 function adaptSiteContent() {

@@ -32,19 +32,28 @@
 
     color: black;
     border-right: 1px solid rgb(196, 196, 196);
-
-    overflow: hidden;
+    padding-top: 32px;
+    padding-bottom: 18px;
+    overflow: auto;
 }
 
 #autocontrol-panel header {
     font-size: 0.8em;
-    /* padding: 5px 10px; */
     background-color: #5fbfff;
     color: white;
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+}
+
+.scroll-placeholder {
+    width: 50px;
+    height: 2000px;
+    background-color: aquamarine;
 }
 
 header #app-title-wrapper {
@@ -91,11 +100,10 @@ header #close-button:active {
 }
 
 #autocontrol-panel-resizer {
-    position: absolute;
+    position: relative;
     top: 0.7em;
     bottom: 0;
     width: 5px;
-    right: -3px;
 }
 
 #autocontrol-panel-resizer:hover {
@@ -145,7 +153,14 @@ header #close-button:active {
     font-size: "16px";
 }
 
+.autocontrol-element-list-item-placeholder {
+    height: 2000px;
+    width: 50px;
+    background-color: aquamarine;
+}
+
 #autocontrol-add-element-button {
+    display: block;
     border: none;
     outline: none;
     width: 100%;
@@ -154,8 +169,18 @@ header #close-button:active {
     background-color: #0099ff;
     color: #ffffff;
     border-radius: 10px;
+
+    box-sizing: border-box; /* Add this line */
 }
 
 #autocontrol-add-element-button:active {
     background-color: #0077cc;
+}
+
+#autocontrol-bottom-nav {
+    background-color: rgb(95, 191, 255);
+    text-align: center;
+    color: white;
+    position: fixed;
+    bottom: 0;
 }
