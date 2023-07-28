@@ -61,7 +61,7 @@ function loadApp() {
         "<div id='autocontrol-bottom-nav' style='width: " +
         globalOffset +
         "'>" +
-        "<h1>bottom nav</h1>" +
+        "<button id='autocontrol-add-element-button'>Add Element</button>" +
         "</div>" +
         "</div>";
 
@@ -71,9 +71,9 @@ function loadApp() {
 
     document.getElementById("close-button").addEventListener("click", closeApp);
 
-    // document
-    //     .getElementById("autocontrol-add-element-button")
-    //     .addEventListener("click", toggleSelector);
+    document
+        .getElementById("autocontrol-add-element-button")
+        .addEventListener("click", toggleSelector);
 
     document
         .getElementById("autocontrol-panel-resizer")
