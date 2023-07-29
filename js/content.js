@@ -55,7 +55,6 @@ function loadApp() {
         "</header>" +
         "<div id='autocontrol-panel-content'>" +
         "<div id='autocontrol-element-list'>" +
-        "<div class='autocontrol-element-list-item-placeholder'></div>" +
         "</div>" +
         "</div>" +
         "<div id='autocontrol-bottom-nav' style='width: " +
