@@ -37,7 +37,7 @@
     overflow: auto;
 }
 
-#autocontrol-panel header {
+#autocontrol-panel-header {
     font-size: 0.8em;
     background-color: #5fbfff;
     color: white;
@@ -50,25 +50,25 @@
     overflow: hidden;
 }
 
-header #app-title-wrapper {
+#autocontrol-panel-header #app-title-wrapper {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-header h1 {
+#autocontrol-panel-header h1 {
     font-size: 1.5em;
     padding: 5px 10px;
 }
 
-header #close-button-wrapper {
+#autocontrol-panel-header #close-button-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-header #close-button {
+#autocontrol-panel-header #close-button {
     
     background-color: transparent;
     outline: 0;
@@ -77,14 +77,14 @@ header #close-button {
     flex-grow: 1;
 }
 
-header #close-button-icon {
+#autocontrol-panel-header #close-button-icon {
     height: 20px;
     width: 20px;
     
     background-size: contain;
 }
 
-header #close-button:active {
+#autocontrol-panel-header #close-button:active {
     background-color: rgb(85, 168, 223);
 }
 
