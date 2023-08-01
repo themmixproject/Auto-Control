@@ -118,34 +118,37 @@
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    padding: 10px;
     margin: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    /* add a background color */
     background-color: #f0f0f0;
+    padding-bottom: 30px;
 }
 
-.autocontrol-element-list-item button {
-    border: none;
-    background-color: #ff0000;
-    color: #ffffff;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    order: 1;
-}
+    .autocontrol-element-list-item header {
+        background-color: grey;
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        text-align: left;
+        padding: 5px;
+        background-color: #dfdfdf;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
-.autocontrol-element-list-item button:active {
-    background-color: #cc0000;
-}
-
-.autocontrol-element-list-item .element-info {
-    font-family: "monospace";
-    font-size: "16px";
-}
+    .autocontrol-element-list-item .delete-button {
+        color: red;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        padding-right: 0;
+    }
+    .autocontrol-element-list-item .delete-button:active {
+        color: rgb(219, 0, 0);
+    }
 
 .autocontrol-element-list-item-placeholder {
     height: 2000px;

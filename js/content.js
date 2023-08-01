@@ -247,37 +247,46 @@ function selectElement(event) {
 }
 
 function generateElementListItem(element) {
-    var elementList = document.getElementById("autocontrol-element-list");
+    console.log("generate");
 
     var elementListItem = document.createElement("div");
     elementListItem.className = "autocontrol-element-list-item";
-
+    
+    var listItemHeader = document.createElement("header");
     var elementInfo = document.createElement("div");
     elementInfo.style.fontFamily = "monospace";
     elementInfo.style.overflow = "hidden";
     elementInfo.style.textOverflow = "ellipsis";
     elementInfo.style.whiteSpace = "nowrap";
-
+    
     elementInfo.innerHTML =
-        "<span style='color: blue'>" +
-        element.tagName.toLowerCase() +
-        "</span>";
+    "<span style='color: blue'>" +
+    element.tagName.toLowerCase() +
+    "</span>";
     if (element.id) {
         elementInfo.innerHTML +=
-            "<span style='color: green;'>#" + element.id + "</span>";
+        "<span style='color: green;'>#" + element.id + "</span>";
     }
     if (element.className) {
         elementInfo.innerHTML +=
-            "<span style='color: red'>." + element.className + "</span>";
+        "<span style='color: red'>." + element.className + "</span>";
     }
+
+
+    listItemHeader.appendChild(elementInfo);
+    elementListItem.appendChild(listItemHeader);
+    
     var deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
+    deleteButton.className = "delete-button";
     deleteButton.addEventListener("click", function () {
         elementListItem.remove();
     });
+    listItemHeader.appendChild(deleteButton);
 
-    elementListItem.appendChild(elementInfo);
-    elementListItem.appendChild(deleteButton);
+    elementListItem.append(listItemHeader);
+
+    var elementList = document.getElementById("autocontrol-element-list");
     elementList.appendChild(elementListItem);
 }
 
@@ -352,8 +361,8 @@ function resetElementsToOriginalStyle() {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
-    var firstChild = getFirstElement();
     extensionId = sender.id;
+    var firstChild = getFirstElement();
 
     if (firstChild == null) {
         alert("This document does not contain any elements");
