@@ -26,54 +26,44 @@ function loadApp() {
     } else {
         document.body.appendChild(appContainer);
     }
-
     appContainer.style.display = "block";
-
-    appContainer.innerHTML +=
-        "<div id='autocontrol-selectors-container'>" +
-        "<div class='autocontrol-selector'></div>" +
-        "</div>" +
-        "<div id='autocontrol-panel' style='width: " +
-        globalOffset +
-        "px;'>" +
-        "<div id='autocontrol-panel-resizer' style='position: fixed; left:" +
-        globalOffset +
-        "px;'></div>" +
-        "<header id='autocontrol-panel-header' style='width: " +
-        globalOffset +
-        "px;'>" +
-        "<div id='app-title-wrapper'>" +
-        "<h1 id='app-title'>Auto Control</h1>" +
-        "</div>" +
-        "<div id='close-button-wrapper'>" +
-        "<button id='close-button'>" +
-        "<div id='close-button-icon' style='background-image: url(\"chrome-extension://" +
-        extensionId +
-        "/assets/cross.svg\")'></div>" +
-        "</button>" +
-        "</div>" +
-        "</header>" +
-        "<div id='autocontrol-panel-content'>" +
-        "<div id='autocontrol-element-list'>" +
-        "</div>" +
-        "</div>" +
-        "<div id='autocontrol-bottom-nav' style='width: " +
-        globalOffset +
-        "'>" +
-        "<button id='autocontrol-add-element-button'>Add Element</button>" +
-        "</div>" +
-        "</div>";
-
+    
     elementSelector = document.getElementsByClassName(
         "autocontrol-selector"
     )[0];
 
+    appendAppHTML();
     addInitialEventListeners();
-    
     setNavWidth();
 }
 
-function addInitialEventListeners(){
+function appendAppHTML() {
+    appContainer.innerHTML += `
+    <div id="autocontrol-selectors-container">
+        <div class="autocontrol-selector"></div>
+    </div>
+    <div id="autocontrol-panel" style="width: ${globalOffset}px;">
+        <div id="autocontrol-panel-resizer" style="position: fixed; left: ${globalOffset}px;"></div>
+        <header id="autocontrol-panel-header" style="width: ${globalOffset}px;">
+            <div id="app-title-wrapper">
+                <h1 id="app-title">Auto Control</h1>
+            </div>
+            <div id="close-button-wrapper">
+                <button id="close-button">
+                    <div id="close-button-icon" style="background-image: url('chrome-extension://${extensionId}/assets/cross.svg')"></div>
+                </button>
+            </div>
+        </header>
+        <div id="autocontrol-panel-content">
+            <div id="autocontrol-element-list"></div>
+        </div>
+        <div id="autocontrol-bottom-nav" style="width: ${globalOffset}px;">
+            <button id="autocontrol-add-element-button">Add Element</button>
+        </div>
+    </div>`;
+}
+
+function addInitialEventListeners() {
     document.getElementById("close-button").addEventListener("click", closeApp);
 
     document
@@ -219,7 +209,6 @@ function adaptElementStyle(element) {
         }
     }
 }
-
 
 function closeApp() {
     document.removeEventListener("click", selectElement);
