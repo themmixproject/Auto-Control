@@ -68,6 +68,12 @@ function loadApp() {
         "autocontrol-selector"
     )[0];
 
+    addInitialEventListeners();
+    
+    setNavWidth();
+}
+
+function addInitialEventListeners(){
     document.getElementById("close-button").addEventListener("click", closeApp);
 
     document
@@ -95,8 +101,6 @@ function loadApp() {
             resizePanel(event.clientX);
         }
     });
-
-    setNavWidth();
 }
 
 function setNavWidth() {
