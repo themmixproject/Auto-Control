@@ -4,6 +4,7 @@ console.log("hello world!");
 
 let appContainer = null;
 var selectedElement = null;
+var elementSelector = null;
 var overlay = null;
 var selectorsContainer = null;
 var selectorIsDisplayed = false;
@@ -18,7 +19,7 @@ var extensionId = "";
 
 function loadApp() {
     adaptSiteContent();
-
+    
     appContainer = document.createElement("div");
     if (document.body.children.length > 0) {
         var firstChild = document.body.children[0];
@@ -28,13 +29,13 @@ function loadApp() {
     }
     appContainer.style.display = "block";
     
+    appendAppHTML();    
+    addInitialEventListeners();
+    setNavWidth();
+    
     elementSelector = document.getElementsByClassName(
         "autocontrol-selector"
     )[0];
-
-    appendAppHTML();
-    addInitialEventListeners();
-    setNavWidth();
 }
 
 function appendAppHTML() {
@@ -111,6 +112,7 @@ function resizePanel(clientX) {
     }
 
     adaptBodyStyle();
+    
     var autocontrolPanel = document.getElementById("autocontrol-panel");
     autocontrolPanel.style.width = globalOffset + "px";
     autocontrolPanel.style.marginLeft = -globalOffset + "px";
