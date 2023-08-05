@@ -19,7 +19,7 @@ var extensionId = "";
 
 function loadApp() {
     adaptSiteContent();
-    
+
     appContainer = document.createElement("div");
     if (document.body.children.length > 0) {
         var firstChild = document.body.children[0];
@@ -28,14 +28,28 @@ function loadApp() {
         document.body.appendChild(appContainer);
     }
     appContainer.style.display = "block";
-    
-    appendAppHTML();    
+
+    appendAppHTML();
     addInitialEventListeners();
     setNavWidth();
-    
+
     elementSelector = document.getElementsByClassName(
         "autocontrol-selector"
     )[0];
+
+    var myElement = document.createElement("a");
+    myElement.href = "/assets";
+    document.body.appendChild(myElement);
+    generateElementListItem(myElement);
+
+    var myElement = document.createElement("div");
+    document.body.appendChild(myElement);
+    generateElementListItem(myElement);
+
+    var myElement = document.createElement("input");
+    myElement.placeholder = "username";
+    document.body.appendChild(myElement);
+    generateElementListItem(myElement);
 }
 
 function appendAppHTML() {
@@ -60,6 +74,7 @@ function appendAppHTML() {
         </div>
         <div id="autocontrol-bottom-nav" style="width: ${globalOffset}px;">
             <button id="autocontrol-add-element-button">Add Element</button>
+            <button id="autocontrol-run-button">Run</button>
         </div>
     </div>`;
 }
@@ -70,6 +85,10 @@ function addInitialEventListeners() {
     document
         .getElementById("autocontrol-add-element-button")
         .addEventListener("click", toggleSelector);
+
+    document
+        .getElementById("autocontrol-run-button")
+        .addEventListener("click", runAutomation);
 
     document
         .getElementById("autocontrol-panel-resizer")
@@ -112,7 +131,7 @@ function resizePanel(clientX) {
     }
 
     adaptBodyStyle();
-    
+
     var autocontrolPanel = document.getElementById("autocontrol-panel");
     autocontrolPanel.style.width = globalOffset + "px";
     autocontrolPanel.style.marginLeft = -globalOffset + "px";

@@ -192,8 +192,12 @@
     color: white;
     position: fixed;
     bottom: 0;
-    padding: 5px;
+    padding: 0 5px;
 }
+    #autocontrol-bottom-nav button {
+        margin: 5px 0;
+    }
+
     #autocontrol-add-element-button {
         display: block;
         border: none;
@@ -209,3 +213,19 @@
     #autocontrol-add-element-button:active {
         background-color: #0077cc;
     }
+
+    #autocontrol-run-button {
+        display: block;
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 20px;
+        padding: 5px;
+        background-color: #68d868;
+        color: #ffffff;
+        border-radius: 10px;
+    }
+    
+    
+    
+    

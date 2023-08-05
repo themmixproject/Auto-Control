@@ -92,7 +92,6 @@ function generateListItemContent(element){
 
     var elementTag = element.tagName.toLowerCase();
     if(elementTag === "a"){
-
         actionDescriptor.innerHTML += "go to: ";
         listItemContent.appendChild(actionDescriptor);
 
@@ -186,4 +185,8 @@ function getHoverElement(event) {
     } else {
         return hoverElement;
     }
+}
+
+function runAutomation(){
+    console.log("run");
 }
