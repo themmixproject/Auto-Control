@@ -26,7 +26,6 @@
     bottom: 0;
     background-color: white;
     font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
     width: 200px;
     z-index: 10000000;
 
@@ -35,6 +34,7 @@
     padding-top: 32px;
     padding-bottom: 57px;
     overflow: auto;
+    text-align: initial;
 }
 
 #autocontrol-panel-header {
@@ -90,7 +90,6 @@
 
 #autocontrol-panel-content {
     padding: 10px 10px;
-    text-align: center;
 }
 
 #autocontrol-panel-resizer {
@@ -119,11 +118,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin: 10px;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
     background-color: #f0f0f0;
-    padding-bottom: 30px;
 }
 
     .autocontrol-element-list-item header {
@@ -139,12 +135,45 @@
         justify-content: space-between;
     }
 
+    .autocontrol-element-list-item .content {
+        padding: 5px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .autocontrol-element-list-item .content .action-descriptor {
+        font-style: italic;
+        color: #898989;
+    }
+    
+    .autocontrol-element-list-item .content .label-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .autocontrol-element-list-item .content input {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        padding: 5px;
+    }
+    
+    .autocontrol-element-list-item .input-container {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+
     .autocontrol-element-list-item .delete-button {
         color: red;
         border: 0;
         outline: 0;
         background-color: transparent;
-        padding-right: 0;
+        padding: 0;
     }
     .autocontrol-element-list-item .delete-button:active {
         color: rgb(219, 0, 0);
