@@ -55,7 +55,7 @@ function generateElementInfo(element){
 }
 
 
-function generateCardContent(element){
+function generateCardContent(element) {
     var listItemContent = document.createElement("div");
     listItemContent.className = "content";
 
@@ -63,52 +63,67 @@ function generateCardContent(element){
     actionDescriptor.className = "action-descriptor";
 
     var elementTag = element.tagName.toLowerCase();
-    if(elementTag === "a"){
+    if (elementTag === "a") {
         actionDescriptor.innerHTML += "go to: ";
         listItemContent.appendChild(actionDescriptor);
 
-        var linkElement = document.createElement("a");
-
-        var url = new URL(element.href, window.location);
-        if(url.protocol === "http:" || url.protocol === "https:"){ // check if the protocol is http or https
-            linkElement.innerHTML += element.href;
-            linkElement.href += element.href;
-        }
-        else {
-            var root = window.location.origin;
-            linkElement.innerHTML += root + element.href;
-            linkElement.href += root + element.href;
-        }
-        linkElement.target = "_blank";
-        
-        listItemContent.appendChild(linkElement);
-    }
-    else if(elementTag === "div" || elementTag === "button"){
+        listItemContent = generateLinkContent(element, listItemContent);
+    } else if (elementTag === "div" || elementTag === "button") {
         actionDescriptor.innerHTML += "action: ";
         listItemContent.appendChild(actionDescriptor);
 
-        listItemContent.innerHTML += "click";
-    }
-    else if(elementTag === "input"){
+        listItemContent = generateClickActionContent(listItemContent);
+    } else if (elementTag === "input") {
         actionDescriptor.innerHTML += "insert value: ";
         listItemContent.appendChild(actionDescriptor);
 
-        var inputContainer = document.createElement("div");
-        inputContainer.className = "input-container";
-
-        var inputLabelWrapper = document.createElement("div");
-        inputLabelWrapper.className = "label-wrapper";
-        var inputLabel = document.createElement("label");
-        inputLabel.innerHTML = element.placeholder;
-        inputLabelWrapper.appendChild(inputLabel);
-        
-        inputContainer.appendChild(inputLabelWrapper);
-
-        var input = document.createElement("input");
-        inputContainer.appendChild(input);
-
-        listItemContent.appendChild(inputContainer);
+        listItemContent = generateInputContent(element, listItemContent);
     }
+
+    return listItemContent;
+}
+
+function generateLinkContent(element, listItemContent) {
+    var linkElement = document.createElement("a");
+
+    var url = new URL(element.href, window.location);
+    if (url.protocol === "http:" || url.protocol === "https:") {
+        linkElement.innerHTML += element.href;
+        linkElement.href += element.href;
+    } else {
+        var root = window.location.origin;
+        linkElement.innerHTML += root + element.href;
+        linkElement.href += root + element.href;
+    }
+    linkElement.target = "_blank";
+
+    listItemContent.appendChild(linkElement);
+
+    return listItemContent;
+}
+
+function generateClickActionContent(listItemContent) {
+    listItemContent.innerHTML += "click";
+
+    return listItemContent;
+}
+
+function generateInputContent(element, listItemContent) {
+    var inputContainer = document.createElement("div");
+    inputContainer.className = "input-container";
+
+    var inputLabelWrapper = document.createElement("div");
+    inputLabelWrapper.className = "label-wrapper";
+    var inputLabel = document.createElement("label");
+    inputLabel.innerHTML = element.placeholder;
+    inputLabelWrapper.appendChild(inputLabel);
+
+    inputContainer.appendChild(inputLabelWrapper);
+
+    var input = document.createElement("input");
+    inputContainer.appendChild(input);
+
+    listItemContent.appendChild(inputContainer);
 
     return listItemContent;
 }
