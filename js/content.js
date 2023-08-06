@@ -5,6 +5,7 @@ console.log("hello world!");
 let appContainer = null;
 var selectedElement = null;
 var elementSelector = null;
+var elementSelectorLabel = null;
 var overlay = null;
 var selectorsContainer = null;
 var selectorIsDisplayed = false;
@@ -38,12 +39,18 @@ function loadApp() {
     elementSelector = document.getElementsByClassName(
         "autocontrol-selector"
     )[0];
+
+    elementSelectorLabel = document.getElementsByClassName(
+        "autocontrol-selector-label"
+    )[0];
 }
 
 function appendAppHTML() {
     appContainer.innerHTML += `
     <div id="autocontrol-selectors-container">
-        <div class="autocontrol-selector"></div>
+        <div class="autocontrol-selector">
+            <div class="autocontrol-selector-label"></div>
+        </div>
     </div>
     <div id="autocontrol-panel" style="width: ${globalOffset}px;">
         <div id="autocontrol-panel-resizer" style="position: fixed; left: ${globalOffset}px;"></div>

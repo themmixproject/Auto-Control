@@ -14,10 +14,10 @@ function generateElementCard(element) {
     return listItemContent;
 }
 
-function generateCardHeader(element, listItem){
+function generateCardHeader(element, listItem) {
     var listItemHeader = document.createElement("header");
-    
-    var elementInfo = generateElementInfo(element);
+
+    var elementInfo = convertElementToStyledSelectorElement(element);
     listItemHeader.appendChild(elementInfo);
 
     var deleteButton = document.createElement("button");
@@ -30,30 +30,6 @@ function generateCardHeader(element, listItem){
     listItemHeader.appendChild(deleteButton);
     return listItemHeader;
 }
-
-function generateElementInfo(element){
-    var elementInfo = document.createElement("div");
-    elementInfo.style.fontFamily = "monospace";
-    elementInfo.style.overflow = "hidden";
-    elementInfo.style.textOverflow = "ellipsis";
-    elementInfo.style.whiteSpace = "nowrap";
-
-    elementInfo.innerHTML =
-        "<span style='color: blue'>" +
-        element.tagName.toLowerCase() +
-        "</span>";
-    if (element.id) {
-        elementInfo.innerHTML +=
-            "<span style='color: green;'>#" + element.id + "</span>";
-    }
-    if (element.className) {
-        elementInfo.innerHTML +=
-            "<span style='color: red'>." + element.className + "</span>";
-    }
-
-    return elementInfo;
-}
-
 
 function generateCardContent(element) {
     var contentContainer = document.createElement("div");
@@ -70,17 +46,17 @@ function generateCardContent(element) {
         generatedElement = generateLinkContent(element);
     } else if (elementTag === "div" || elementTag === "button") {
         actionDescriptor.innerHTML += "action: ";
-        
+
         generatedElement = generateClickActionContent();
     } else if (elementTag === "input") {
         actionDescriptor.innerHTML += "insert value: ";
-        
+
         generatedElement = generateInputContent(element);
     }
-    
+
     contentContainer.appendChild(actionDescriptor);
     contentContainer.appendChild(generatedElement);
-    
+
     return contentContainer;
 }
 

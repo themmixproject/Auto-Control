@@ -28,8 +28,7 @@ function processSelectedElement(event) {
     var processObject = createProcessObject(listItemContent);
     automationProcess.push(processObject);
 }
-
-function createProcessObject(listItemContent){
+-function createProcessObject(listItemContent) {
     var elementQuery = elementToQuery(selectedElement);
     var processObject = {
         elementQuery: elementQuery,
@@ -47,7 +46,7 @@ function createProcessObject(listItemContent){
     }
 
     return processObject;
-}
+};
 
 function elementToQuery(element) {
     let query = "";
@@ -82,6 +81,8 @@ function moveOverlayToElement(event) {
     elementSelector.style.display = "none";
 
     var hoverElement = getHoverElement(event);
+    // hoverElement = document.getElementById("link");
+
     if (
         hoverElement == null ||
         !["a", "div", "button", "input"].includes(
@@ -101,6 +102,38 @@ function moveOverlayToElement(event) {
         boundingClientRect.left + window.scrollX + "px";
     elementSelector.style.height = boundingClientRect.height + "px";
     elementSelector.style.width = boundingClientRect.width + "px";
+
+    moveSelectorLabelToElement(hoverElement);
+}
+
+function moveSelectorLabelToElement(hoverElement) {
+    elementSelectorLabel.innerHTML = "";
+    elementSelectorLabel.appendChild(
+        convertElementToStyledSelectorElement(hoverElement)
+    );
+}
+
+function convertElementToStyledSelectorElement(element) {
+    var elementInfo = document.createElement("span");
+    elementInfo.style.fontFamily = "monospace";
+    elementInfo.style.overflow = "hidden";
+    elementInfo.style.textOverflow = "ellipsis";
+    elementInfo.style.whiteSpace = "nowrap";
+
+    elementInfo.innerHTML =
+        "<span style='color: blue'>" +
+        element.tagName.toLowerCase() +
+        "</span>";
+    if (element.id) {
+        elementInfo.innerHTML +=
+            "<span style='color: green;'>#" + element.id + "</span>";
+    }
+    if (element.className) {
+        elementInfo.innerHTML +=
+            "<span style='color: red'>." + element.className + "</span>";
+    }
+
+    return elementInfo;
 }
 
 function getHoverElement(event) {
