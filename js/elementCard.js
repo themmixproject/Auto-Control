@@ -2,10 +2,10 @@ function generateElementCard(element) {
     var elementListItem = document.createElement("div");
     elementListItem.className = "autocontrol-element-list-item";
 
-    var listItemHeader = generateListItemHeader(element, elementListItem);
+    var listItemHeader = generateCardHeader(element, elementListItem);
     elementListItem.append(listItemHeader);
 
-    var listItemContent = generateListItemContent(element);
+    var listItemContent = generateCardContent(element);
     elementListItem.appendChild(listItemContent);
 
     var elementList = document.getElementById("autocontrol-element-list");
@@ -14,7 +14,7 @@ function generateElementCard(element) {
     return listItemContent;
 }
 
-function generateListItemHeader(element, listItem){
+function generateCardHeader(element, listItem){
     var listItemHeader = document.createElement("header");
     
     var elementInfo = generateElementInfo(element);
@@ -55,7 +55,7 @@ function generateElementInfo(element){
 }
 
 
-function generateListItemContent(element){
+function generateCardContent(element){
     var listItemContent = document.createElement("div");
     listItemContent.className = "content";
 
