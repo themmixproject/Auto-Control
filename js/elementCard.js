@@ -56,12 +56,12 @@ function generateElementInfo(element){
 
 
 function generateCardContent(element) {
-    var listItemContent = document.createElement("div");
-    listItemContent.className = "content";
+    var contentContainer = document.createElement("div");
+    contentContainer.className = "content";
 
     var actionDescriptor = document.createElement("span");
     actionDescriptor.className = "action-descriptor";
-    
+
     var generatedElement = null;
     var elementTag = element.tagName.toLowerCase();
     if (elementTag === "a") {
@@ -77,13 +77,14 @@ function generateCardContent(element) {
         
         generatedElement = generateInputContent(element);
     }
-    listItemContent.appendChild(actionDescriptor);
-    listItemContent.appendChild(generatedElement);
     
-    return listItemContent;
+    contentContainer.appendChild(actionDescriptor);
+    contentContainer.appendChild(generatedElement);
+    
+    return contentContainer;
 }
 
-function generateLinkContent(element, listItemContent) {
+function generateLinkContent(element) {
     var linkElement = document.createElement("a");
 
     var url = new URL(element.href, window.location);
@@ -107,7 +108,7 @@ function generateClickActionContent() {
     return actionElement;
 }
 
-function generateInputContent(element, listItemContent) {
+function generateInputContent(element) {
     var inputContainer = document.createElement("div");
     inputContainer.className = "input-container";
 
