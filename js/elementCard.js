@@ -61,25 +61,25 @@ function generateCardContent(element) {
 
     var actionDescriptor = document.createElement("span");
     actionDescriptor.className = "action-descriptor";
-
+    
+    var generatedElement = null;
     var elementTag = element.tagName.toLowerCase();
     if (elementTag === "a") {
         actionDescriptor.innerHTML += "go to: ";
-        listItemContent.appendChild(actionDescriptor);
 
-        listItemContent = generateLinkContent(element, listItemContent);
+        generatedElement = generateLinkContent(element);
     } else if (elementTag === "div" || elementTag === "button") {
         actionDescriptor.innerHTML += "action: ";
-        listItemContent.appendChild(actionDescriptor);
-
-        listItemContent = generateClickActionContent(listItemContent);
+        
+        generatedElement = generateClickActionContent();
     } else if (elementTag === "input") {
         actionDescriptor.innerHTML += "insert value: ";
-        listItemContent.appendChild(actionDescriptor);
-
-        listItemContent = generateInputContent(element, listItemContent);
+        
+        generatedElement = generateInputContent(element);
     }
-
+    listItemContent.appendChild(actionDescriptor);
+    listItemContent.appendChild(generatedElement);
+    
     return listItemContent;
 }
 
@@ -97,15 +97,14 @@ function generateLinkContent(element, listItemContent) {
     }
     linkElement.target = "_blank";
 
-    listItemContent.appendChild(linkElement);
-
-    return listItemContent;
+    return linkElement;
 }
 
-function generateClickActionContent(listItemContent) {
-    listItemContent.innerHTML += "click";
+function generateClickActionContent() {
+    var actionElement = document.createElement("span");
+    actionElement.innerHTML += "click";
 
-    return listItemContent;
+    return actionElement;
 }
 
 function generateInputContent(element, listItemContent) {
@@ -123,7 +122,5 @@ function generateInputContent(element, listItemContent) {
     var input = document.createElement("input");
     inputContainer.appendChild(input);
 
-    listItemContent.appendChild(inputContainer);
-
-    return listItemContent;
+    return inputContainer;
 }
