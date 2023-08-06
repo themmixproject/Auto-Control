@@ -26,39 +26,56 @@ function selectElement(event) {
         toggleSelector(event);
         return;
     }
-    
+
     var listItemContent = generateElementCard(selectedElement);
-
-    var elementQuery = elementToQuery(selectedElement);
-    var processObject = {
-        elementQuery: elementQuery,
-        eventType: ""
-    };
-
-    var elementTag = selectedElement.tagName.toLowerCase();
-    if(elementTag == "input"){
-        processObject.eventType = "insert";
-        processObject.input = listItemContent.getElementsByTagName("input")[0];
-    }
-    else if(elementTag == "div" || elementTag == "button"){
-        processObject.eventType = "click";
-    }
-    else if(elementTag == "a"){
-        processObject.eventType = "goto";
-    }
-    
+    var processObject = createProcessObject(listItemContent);
     automationProcess.push(processObject);
 }
 
+function createProcessObject(listItemContent){
+    var elementQuery = elementToQuery(selectedElement);
+    var processObject = {
+        elementQuery: elementQuery,
+        eventType: "",
+    };
+
+    var elementTag = selectedElement.tagName.toLowerCase();
+    if (elementTag == "input") {
+        processObject.eventType = "insert";
+        processObject.input = listItemContent.getElementsByTagName("input")[0];
+    } else if (elementTag == "div" || elementTag == "button") {
+        processObject.eventType = "click";
+    } else if (elementTag == "a") {
+        processObject.eventType = "goto";
+    }
+
+    return processObject;
+}
 
 function elementToQuery(element) {
     let query = "";
     let current = element;
     while (current && current !== document) {
         let id = current.id ? "#" + current.id : "";
-        let className = current.className ? "." + current.className.replace(/\s+/g, ".") : "";
-        let nthChild = current.parentElement ? ":nth-child(" + (Array.prototype.indexOf.call(current.parentElement.children, current) + 1) + ")" : "";
-        query = current.tagName.toLowerCase() + id + className + nthChild + " " + query;
+        let className = current.className
+            ? "." + current.className.replace(/\s+/g, ".")
+            : "";
+        let nthChild = current.parentElement
+            ? ":nth-child(" +
+              (Array.prototype.indexOf.call(
+                  current.parentElement.children,
+                  current
+              ) +
+                  1) +
+              ")"
+            : "";
+        query =
+            current.tagName.toLowerCase() +
+            id +
+            className +
+            nthChild +
+            " " +
+            query;
         current = current.parentElement;
     }
     return query.trim();
@@ -112,19 +129,17 @@ function getHoverElement(event) {
     }
 }
 
-function runAutomation(){
-    for(var i = 0; i < automationProcess.length; i++){
+function runAutomation() {
+    for (var i = 0; i < automationProcess.length; i++) {
         var item = automationProcess[i];
         var eventElement = document.querySelector(item.elementQuery);
-        if(item.eventType == "click"){
+        if (item.eventType == "click") {
             var event = new Event("click");
             eventElement.dispatchEvent(event);
-        }
-        else if(item.eventType == "insert"){
+        } else if (item.eventType == "insert") {
             eventElement.value = item.input.value;
-        }
-        else{
-            window.location.assign(eventElement.href); 
+        } else {
+            window.location.assign(eventElement.href);
         }
     }
 }
