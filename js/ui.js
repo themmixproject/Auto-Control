@@ -9,23 +9,20 @@ function toggleSelector(event) {
         addElementButton.innerHTML = "Add Element";
 
         elementSelector.style.display = "none";
-        document.removeEventListener("click", selectElement);
+        document.removeEventListener("click", processSelectedElement);
         document.removeEventListener("mousemove", moveOverlayToElement);
     } else {
         addElementButton.innerHTML = "Cancel";
 
-        document.addEventListener("click", selectElement);
+        document.addEventListener("click", processSelectedElement);
         document.addEventListener("mousemove", moveOverlayToElement);
     }
 
     selectorIsDisplayed = !selectorIsDisplayed;
 }
 
-function selectElement(event) {
-    if (selectedElement == null) {
-        toggleSelector(event);
-        return;
-    }
+function processSelectedElement(event) {
+    toggleSelector(event);
 
     var listItemContent = generateElementCard(selectedElement);
     var processObject = createProcessObject(listItemContent);
