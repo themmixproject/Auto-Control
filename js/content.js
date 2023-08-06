@@ -13,6 +13,8 @@ var adaptedElementsAreLoaded = false;
 var isResizing = false;
 var resizeStart = 0;
 
+var automationProcess = [];
+
 var adaptedElements = [];
 
 var extensionId = "";
@@ -36,20 +38,6 @@ function loadApp() {
     elementSelector = document.getElementsByClassName(
         "autocontrol-selector"
     )[0];
-
-    var myElement = document.createElement("a");
-    myElement.href = "/assets";
-    document.body.appendChild(myElement);
-    generateElementListItem(myElement);
-
-    var myElement = document.createElement("div");
-    document.body.appendChild(myElement);
-    generateElementListItem(myElement);
-
-    var myElement = document.createElement("input");
-    myElement.placeholder = "username";
-    document.body.appendChild(myElement);
-    generateElementListItem(myElement);
 }
 
 function appendAppHTML() {
