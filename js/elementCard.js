@@ -1,4 +1,4 @@
-function generateElementListItem(element) {
+function generateElementCard(element) {
     var elementListItem = document.createElement("div");
     elementListItem.className = "autocontrol-element-list-item";
 

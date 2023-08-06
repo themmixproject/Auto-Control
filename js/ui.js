@@ -27,7 +27,7 @@ function selectElement(event) {
         return;
     }
     
-    var listItemContent = generateElementListItem(selectedElement);
+    var listItemContent = generateElementCard(selectedElement);
 
     var elementQuery = elementToQuery(selectedElement);
     var processObject = {
