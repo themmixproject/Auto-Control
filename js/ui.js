@@ -135,13 +135,16 @@ function generateListItemContent(element){
 
         var linkElement = document.createElement("a");
 
-        var root = window.location.origin;
-        if(!element.href.includes(root)){
-            linkElement.innerHTML += root;
-            linkElement.href += root;
+        var url = new URL(element.href, window.location);
+        if(url.protocol === "http:" || url.protocol === "https:"){ // check if the protocol is http or https
+            linkElement.innerHTML += element.href;
+            linkElement.href += element.href;
         }
-        linkElement.innerHTML += element.href;
-        linkElement.href += element.href;
+        else {
+            var root = window.location.origin;
+            linkElement.innerHTML += root + element.href;
+            linkElement.href += root + element.href;
+        }
         linkElement.target = "_blank";
         
         listItemContent.appendChild(linkElement);
