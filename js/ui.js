@@ -81,7 +81,6 @@ function moveOverlayToElement(event) {
     elementSelector.style.display = "none";
 
     var hoverElement = getHoverElement(event);
-    // hoverElement = document.getElementById("link");
 
     if (
         hoverElement == null ||
@@ -103,15 +102,29 @@ function moveOverlayToElement(event) {
     elementSelector.style.height = boundingClientRect.height + "px";
     elementSelector.style.width = boundingClientRect.width + "px";
 
-    moveSelectorLabelToElement(hoverElement);
+    elementSelectorLabel.innerHTML = getCssSelector(hoverElement);
+
 }
 
-function moveSelectorLabelToElement(hoverElement) {
-    elementSelectorLabel.innerHTML = "";
-    elementSelectorLabel.appendChild(
-        convertElementToStyledSelectorElement(hoverElement)
-    );
-}
+function getCssSelector(element) {
+    var path = [];
+    while (element.nodeType === Node.ELEMENT_NODE) {
+      var selector = element.nodeName.toLowerCase();
+      if (element.id) {
+        selector += '#' + element.id;
+        path.unshift(selector);
+        break;
+      } else {
+        if (element.className) {
+          selector += '.' + element.className.trim().replace(/\s+/g, '.');
+        }
+      }
+      path.unshift(selector);
+      element = element.parentNode;
+    }
+    return path.join(' > ');
+  }
+  
 
 function convertElementToStyledSelectorElement(element) {
     var elementInfo = document.createElement("span");

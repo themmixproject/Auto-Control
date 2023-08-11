@@ -13,18 +13,27 @@
     left: 15px;
 
     background-color: rgba(0, 0, 0, 0.363);
-    /* outline: 2px solid rgb(180, 180, 180); */
+    border: 1px solid rgb(233, 233, 233);
     border-radius: 5px;
     font-size: 16px;
+    border-top-left-radius: 0;
 }
 
     .autocontrol-selector-label {
         position: absolute;
         top: -25px;
-        background-color: white;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        left: -1px;
+        background-color: rgba(0, 0, 0, 0.363);
         padding: 0 5px;
+        outline: inherit;
+        padding: 2px 5px;
+        overflow: hidden;
         border-radius: 5px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border: inherit;
+        color: white;
+        font-family: monospace;
     }
 
 #autocontrol-panel {
