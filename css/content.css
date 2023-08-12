@@ -18,6 +18,9 @@
     font-size: 16px;
     border-top-left-radius: 0;
 }
+    .autocontrol-selector.labelOverflow {
+        border-top-right-radius: 0;
+    }
 
     .autocontrol-selector-label {
         position: absolute;
@@ -34,6 +37,8 @@
         border: inherit;
         color: white;
         font-family: monospace;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
 #autocontrol-panel {

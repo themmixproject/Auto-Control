@@ -101,30 +101,34 @@ function moveOverlayToElement(event) {
         boundingClientRect.left + window.scrollX + "px";
     elementSelector.style.height = boundingClientRect.height + "px";
     elementSelector.style.width = boundingClientRect.width + "px";
+    elementSelector.class
 
     elementSelectorLabel.innerHTML = getCssSelector(hoverElement);
+
+    var selectorWidth = elementSelector.style.width.split("px")[0];
+    var labelWidth = elementSelectorLabel.getBoundingClientRect().width;
+
+    elementSelector.className = "autocontrol-selector";
+
+    var hasLabelOverflow = labelWidth >= selectorWidth;
+    if(hasLabelOverflow){
+        elementSelector.className += " labelOverflow";
+    }
+    elementSelectorLabel.style.maxWidth = selectorWidth + "px";
+
 
 }
 
 function getCssSelector(element) {
-    var path = [];
-    while (element.nodeType === Node.ELEMENT_NODE) {
-      var selector = element.nodeName.toLowerCase();
-      if (element.id) {
-        selector += '#' + element.id;
-        path.unshift(selector);
-        break;
-      } else {
-        if (element.className) {
-          selector += '.' + element.className.trim().replace(/\s+/g, '.');
-        }
-      }
-      path.unshift(selector);
-      element = element.parentNode;
+    var selector = element.nodeName.toLowerCase();
+    if (element.id) {
+        selector += "#" + element.id;
     }
-    return path.join(' > ');
-  }
-  
+    if (element.className) {
+        selector += "." + element.className.trim().replace(/\s+/g, ".");
+    }
+    return selector;
+}
 
 function convertElementToStyledSelectorElement(element) {
     var elementInfo = document.createElement("span");
