@@ -12,7 +12,7 @@
         {
             "matches": ["<all_urls>"],
             "js": ["js/ui.js", "js/content.js", "js/elementCard.js"],
-            "css": ["css/content.css"]
+            "css": ["css/content.css", "css/element-list-item.css"]
         }
     ],
     "action": {},

@@ -1,0 +1,71 @@
+.autocontrol-element-list-item {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 10px;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+}
+
+    .autocontrol-element-list-item header {
+        background-color: grey;
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        text-align: left;
+        padding: 5px;
+        background-color: #dfdfdf;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .autocontrol-element-list-item .content {
+        padding: 5px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .autocontrol-element-list-item .content .action-descriptor {
+        font-style: italic;
+        color: #898989;
+    }
+    
+    .autocontrol-element-list-item .content .label-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .autocontrol-element-list-item .content input {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        padding: 5px;
+    }
+    
+    .autocontrol-element-list-item .input-container {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .autocontrol-element-list-item .delete-button {
+        color: red;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        padding: 0;
+    }
+    .autocontrol-element-list-item .delete-button:active {
+        color: rgb(219, 0, 0);
+    }
+
+.autocontrol-element-list-item-placeholder {
+    height: 2000px;
+    width: 100%;
+    background-color: aquamarine;
+}
