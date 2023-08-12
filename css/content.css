@@ -149,18 +149,28 @@
 }
     #autocontrol-bottom-nav button {
         margin: 5px 0;
-    }
+        font-size: 20px;
+        padding: 5px;
+        border-radius: 10px;
 
-    #autocontrol-add-element-button {
         display: block;
         border: none;
         outline: none;
         width: 100%;
-        font-size: 20px;
-        padding: 10px;
+    }
+
+    #autocontrol-add-element-group-button {
         background-color: #0099ff;
         color: #ffffff;
-        border-radius: 10px;
+    }
+
+    #autocontrol-add-element-group-button:active {
+        background-color: #0077cc;
+    }
+
+    #autocontrol-add-element-button {
+        background-color: #0099ff;
+        color: #ffffff;
     }
 
     #autocontrol-add-element-button:active {
@@ -168,15 +178,14 @@
     }
 
     #autocontrol-run-button {
-        display: block;
-        border: none;
-        outline: none;
-        width: 100%;
         font-size: 20px;
         padding: 5px;
         background-color: #68d868;
         color: #ffffff;
-        border-radius: 10px;
+    }
+
+    #autocontrol-run-button:active {
+        background-color: #5EB85B;
     }
     
     

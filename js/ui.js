@@ -1,3 +1,7 @@
+function selectElementGroup(event){
+    console.log("hello world!");
+}
+
 function toggleSelector(event) {
     event.stopPropagation();
 

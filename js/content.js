@@ -68,6 +68,7 @@ function appendAppHTML() {
             <div id="autocontrol-element-list"></div>
         </div>
         <div id="autocontrol-bottom-nav" style="width: ${globalOffset}px;">
+            <button id="autocontrol-add-element-group-button">Add Group</button>
             <button id="autocontrol-add-element-button">Add Element</button>
             <button id="autocontrol-run-button">Run</button>
         </div>
@@ -76,6 +77,10 @@ function appendAppHTML() {
 
 function addInitialEventListeners() {
     document.getElementById("close-button").addEventListener("click", closeApp);
+
+    document
+        .getElementById("autocontrol-add-element-group-button")
+        .addEventListener("click", selectElementGroup);
 
     document
         .getElementById("autocontrol-add-element-button")
@@ -283,3 +288,5 @@ function getFirstElement() {
     }
     return firstElement;
 }
+
+// loadApp();
