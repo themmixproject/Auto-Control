@@ -6,9 +6,7 @@ let appContainer = null;
 var selectedElement = null;
 var elementSelector = null;
 var elementSelectorLabel = null;
-var overlay = null;
 var selectorsContainer = null;
-var selectorIsDisplayed = false;
 var globalOffset = 200;
 var adaptedElementsAreLoaded = false;
 var isResizing = false;
@@ -36,22 +34,12 @@ function loadApp() {
     addInitialEventListeners();
     setNavWidth();
 
-    elementSelector = document.getElementsByClassName(
-        "autocontrol-selector"
-    )[0];
-
-    elementSelectorLabel = document.getElementsByClassName(
-        "autocontrol-selector-label"
-    )[0];
+    selectorsContainer = document.getElementById("autocontrol-selectors-container");
 }
 
 function appendAppHTML() {
     appContainer.innerHTML += `
-    <div id="autocontrol-selectors-container">
-        <div class="autocontrol-selector">
-            <div class="autocontrol-selector-label"></div>
-        </div>
-    </div>
+    <div id="autocontrol-selectors-container"></div>
     <div id="autocontrol-panel" style="width: ${globalOffset}px;">
         <div id="autocontrol-panel-resizer" style="position: fixed; left: ${globalOffset}px;"></div>
         <header id="autocontrol-panel-header" style="width: ${globalOffset}px;">
@@ -84,7 +72,7 @@ function addInitialEventListeners() {
 
     document
         .getElementById("autocontrol-add-element-button")
-        .addEventListener("click", toggleSelector);
+        .addEventListener("click", toggleSingleSelector);
 
     document
         .getElementById("autocontrol-run-button")
@@ -236,10 +224,8 @@ function closeApp() {
     document.removeEventListener("mousemove", moveOverlayToElement);
     document.body.removeChild(appContainer);
 
-    overlay = null;
     appContainer = null;
     selectedElement = null;
-    selectorIsDisplayed = false;
 
     resetElementsToOriginalStyle();
 }
@@ -289,4 +275,4 @@ function getFirstElement() {
     return firstElement;
 }
 
-// loadApp();
+loadApp();

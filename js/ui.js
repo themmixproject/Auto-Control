@@ -1,38 +1,48 @@
-function selectElementGroup(event){
+function selectElementGroup() {
     console.log("hello world!");
 }
 
-function toggleSelector(event) {
+function toggleSingleSelector(event) {
     event.stopPropagation();
 
     var addElementButton = document.getElementById(
         "autocontrol-add-element-button"
     );
 
+    var selectorIsDisplayed = selectorsContainer.children.length > 0;
     if (selectorIsDisplayed) {
+        selectorsContainer.innerHTML = "";
+
         addElementButton.innerHTML = "Add Element";
 
-        elementSelector.style.display = "none";
-        document.removeEventListener("click", processSelectedElement);
-        document.removeEventListener("mousemove", moveOverlayToElement);
+        document.removeEventListener("click", processSingleSelectedElement);
+        document.removeEventListener("mousemove", moveSingleOverlayToElement);
     } else {
+        var elementSelector = document.createElement("div");
+        elementSelector.className = "autocontrol-selector";
+
+        var selectorLabel = document.createElement("div");
+        selectorLabel.className = "autocontrol-selector-label";
+        elementSelector.appendChild(selectorLabel);
+
+        selectorsContainer.appendChild(elementSelector);
+
         addElementButton.innerHTML = "Cancel";
 
-        document.addEventListener("click", processSelectedElement);
-        document.addEventListener("mousemove", moveOverlayToElement);
+        document.addEventListener("click", processSingleSelectedElement);
+        document.addEventListener("mousemove", moveSingleOverlayToElement);
     }
-
-    selectorIsDisplayed = !selectorIsDisplayed;
 }
 
-function processSelectedElement(event) {
-    toggleSelector(event);
+function processSingleSelectedElement(event) {
+    toggleSingleSelector(event);
 
     var listItemContent = generateElementCard(selectedElement);
     var processObject = createProcessObject(listItemContent);
     automationProcess.push(processObject);
 }
--function createProcessObject(listItemContent) {
+
+function createProcessObject(listItemContent) {
     var elementQuery = elementToQuery(selectedElement);
     var processObject = {
         elementQuery: elementQuery,
@@ -50,7 +60,7 @@ function processSelectedElement(event) {
     }
 
     return processObject;
-};
+}
 
 function elementToQuery(element) {
     let query = "";
@@ -81,7 +91,8 @@ function elementToQuery(element) {
     return query.trim();
 }
 
-function moveOverlayToElement(event) {
+function moveSingleOverlayToElement(event) {
+    var elementSelector = selectorsContainer.children[0];
     elementSelector.style.display = "none";
 
     var hoverElement = getHoverElement(event);
@@ -105,8 +116,9 @@ function moveOverlayToElement(event) {
         boundingClientRect.left + window.scrollX + "px";
     elementSelector.style.height = boundingClientRect.height + "px";
     elementSelector.style.width = boundingClientRect.width + "px";
-    elementSelector.class
+    elementSelector.class;
 
+    var elementSelectorLabel = elementSelector.children[0];
     elementSelectorLabel.innerHTML = getCssSelector(hoverElement);
 
     var selectorWidth = elementSelector.style.width.split("px")[0];
@@ -115,12 +127,10 @@ function moveOverlayToElement(event) {
     elementSelector.className = "autocontrol-selector";
 
     var hasLabelOverflow = labelWidth >= selectorWidth;
-    if(hasLabelOverflow){
+    if (hasLabelOverflow) {
         elementSelector.className += " labelOverflow";
     }
     elementSelectorLabel.style.maxWidth = selectorWidth + "px";
-
-
 }
 
 function getCssSelector(element) {
