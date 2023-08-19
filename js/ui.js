@@ -1,4 +1,6 @@
-function selectElementGroup(event) {
+var selectedElements = [];
+
+function toggleGroupSelector(event) {
     event.stopPropagation();
 
     var addGroupButton = document.getElementById(
@@ -14,33 +16,49 @@ function selectElementGroup(event) {
         // document.removeEventListener("click", processSingleSelectedElement);
         document.removeEventListener("mousemove", moveGroupOverlayToElement);
     } else {
-        // var elementSelector = document.createElement("div");
+        var elementSelector = document.createElement("div");
         // elementSelector.className = "autocontrol-selector";
 
         // var selectorLabel = document.createElement("div");
         // selectorLabel.className = "autocontrol-selector-label";
         // elementSelector.appendChild(selectorLabel);
 
-        // selectorsContainer.appendChild(elementSelector);
+        selectorsContainer.appendChild(elementSelector);
 
         addGroupButton.innerHTML = "Cancel";
 
-        // document.addEventListener("click", processSingleSelectedElement);
+        // document.addEventListener("click", processGroupSelectedElements);
         document.addEventListener("mousemove", moveGroupOverlayToElement);
     }
 }
 
 function moveGroupOverlayToElement(event) {
+    selectorsContainer.innerHTML = "";
     var hoverElement = getHoverElement(event);
 
     if (hoverElement == null) {
         return;
     }
 
+    selectedElements = findElementGroup(hoverElement, 5);
+    console.log(selectedElements);
 
-
-    var elementGroup = findElementGroup(hoverElement, 5);
-    console.log(elementGroup);
+    selectorsContainer.innerHTML = "";
+    if (selectedElements != null) {
+        for (var i = 0; i < selectedElements.length; i++) {
+            var newSelector = document.createElement("div");
+            newSelector.className = "autocontrol-selector";
+            selectorsContainer.appendChild(newSelector);
+            
+            var overlayElement = selectedElements[i];
+            var boundingClientRect = overlayElement.getBoundingClientRect();
+            newSelector.style.top = boundingClientRect.top + window.scrollY + "px";
+            newSelector.style.left =
+                boundingClientRect.left + window.scrollX + "px";
+            newSelector.style.height = boundingClientRect.height + "px";
+            newSelector.style.width = boundingClientRect.width + "px";
+        }
+    }
 }
 
 function findElementGroup(originElement, maxDepth) {
@@ -227,7 +245,6 @@ function moveSingleOverlayToElement(event) {
         boundingClientRect.left + window.scrollX + "px";
     elementSelector.style.height = boundingClientRect.height + "px";
     elementSelector.style.width = boundingClientRect.width + "px";
-    elementSelector.class;
 
     var elementSelectorLabel = elementSelector.children[0];
     elementSelectorLabel.innerHTML = getCssSelector(hoverElement);
