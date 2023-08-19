@@ -1,5 +1,124 @@
-function selectElementGroup() {
-    console.log("hello world!");
+function selectElementGroup(event) {
+    event.stopPropagation();
+
+    var addGroupButton = document.getElementById(
+        "autocontrol-add-element-group-button"
+    );
+
+    var selectorIsDisplayed = selectorsContainer.children.length > 0;
+    if (selectorIsDisplayed) {
+        selectorsContainer.innerHTML = "";
+
+        addGroupButton.innerHTML = "Add Element";
+
+        // document.removeEventListener("click", processSingleSelectedElement);
+        document.removeEventListener("mousemove", moveGroupOverlayToElement);
+    } else {
+        // var elementSelector = document.createElement("div");
+        // elementSelector.className = "autocontrol-selector";
+
+        // var selectorLabel = document.createElement("div");
+        // selectorLabel.className = "autocontrol-selector-label";
+        // elementSelector.appendChild(selectorLabel);
+
+        // selectorsContainer.appendChild(elementSelector);
+
+        addGroupButton.innerHTML = "Cancel";
+
+        // document.addEventListener("click", processSingleSelectedElement);
+        document.addEventListener("mousemove", moveGroupOverlayToElement);
+    }
+}
+
+function moveGroupOverlayToElement(event) {
+    var hoverElement = getHoverElement(event);
+
+    if (hoverElement == null) {
+        return;
+    }
+
+
+
+    var elementGroup = findElementGroup(hoverElement, 5);
+    console.log(elementGroup);
+}
+
+function findElementGroup(originElement, maxDepth) {
+    if (originElement == null) {
+        console.log("originElement doesn't exist")   
+    }
+
+    var depth = 0;
+    var compareChild = originElement;
+    var parent = originElement.parentElement;
+    var children = parent.children;
+    while (parent && parent != document.body && depth < maxDepth) {
+        // see if there are multiple nodes in grandparent match in terms of tags and class
+        // this is done by looping through the children of the parent
+        // (parent will be called grandparent from now on)
+        // 'parent' will now be refered to as the element which was the parent of the last child
+        // the 'parent' is also a child of the grandparent
+        // the elements in the grandparent will be looped through and compared to the parent
+        // if there are any elements that match the parent (meaning more than one)
+        // the list of 'parents' will be returned
+
+        var matchingChildren = [];
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            if (
+                isSameElement(compareChild, child)
+            ) {
+                matchingChildren.push(child);
+            }
+        }
+
+        if (matchingChildren.length > 1) {
+            if ( isSameElement(compareChild, originElement) ) {
+                return matchingChildren;
+            }
+
+            var elementGroup = [];
+            var childQuery = getChildQuery(compareChild, originElement);            
+            for(var i = 0; i < matchingChildren.length; i++) {
+                var originParent = matchingChildren[i];
+                var matchingChild = originParent.querySelector(childQuery);
+                elementGroup.push(matchingChild);
+            }
+            if (elementGroup.length > 1) {
+                return elementGroup;
+            }
+        }
+        
+        compareChild = parent;
+        parent = parent.parentElement;
+        children = parent.children;
+        depth++;
+    }
+
+    return null;
+}
+
+function isSameElement(element1, element2) {
+    return element1.className == element2.className &&
+                element1.tagName.toLowerCase() ==
+                    element2.tagName.toLowerCase() &&
+                element1.getAttribute("style") ==
+                    element2.getAttribute("style")
+}
+
+function getChildQuery(parent, child) {
+    let query = "";
+    let currentElement = child;
+    while (currentElement !== parent) {
+        let tagName = currentElement.tagName.toLowerCase();
+        let id = currentElement.id ? "#" + currentElement.id : "";
+        let className = currentElement.className
+            ? "." + currentElement.className.split(" ").join(".")
+            : "";
+        query = " > " + tagName + id + className + query;
+        currentElement = currentElement.parentElement;
+    }
+    return query.slice(3);
 }
 
 function toggleSingleSelector(event) {

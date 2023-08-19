@@ -1,7 +1,3 @@
-//TODO: ADD EXCEPTIONS WITHIN ADAPTING ELEMENTS TO ADAPT THE BODY
-
-console.log("hello world!");
-
 let appContainer = null;
 var selectedElement = null;
 var elementSelector = null;
@@ -275,4 +271,3 @@ function getFirstElement() {
     return firstElement;
 }
 
-loadApp();
