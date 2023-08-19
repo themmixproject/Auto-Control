@@ -53,14 +53,6 @@ function findElementGroup(originElement, maxDepth) {
     var parent = originElement.parentElement;
     var children = parent.children;
     while (parent && parent != document.body && depth < maxDepth) {
-        // see if there are multiple nodes in grandparent match in terms of tags and class
-        // this is done by looping through the children of the parent
-        // (parent will be called grandparent from now on)
-        // 'parent' will now be refered to as the element which was the parent of the last child
-        // the 'parent' is also a child of the grandparent
-        // the elements in the grandparent will be looped through and compared to the parent
-        // if there are any elements that match the parent (meaning more than one)
-        // the list of 'parents' will be returned
 
         var matchingChildren = [];
         for (var i = 0; i < children.length; i++) {
