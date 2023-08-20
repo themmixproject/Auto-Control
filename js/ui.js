@@ -134,7 +134,15 @@ function getChildQuery(parent, child) {
         let className = currentElement.className
             ? "." + currentElement.className.split(" ").join(".")
             : "";
-        query = " > " + tagName + id + className + query;
+        if (id || className) {
+            query = " > " + tagName + id + className + query;
+        } else {
+            let index = Array.prototype.indexOf.call(
+                currentElement.parentElement.children,
+                currentElement
+            );
+            query = " > " + tagName + ":nth-child(" + (index + 1) + ")" + query;
+        }
         currentElement = currentElement.parentElement;
     }
     return query.slice(3);
