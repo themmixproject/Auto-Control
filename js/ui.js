@@ -13,7 +13,7 @@ function toggleGroupSelector(event) {
 
         addGroupButton.innerHTML = "Add Element";
 
-        // document.removeEventListener("click", processSingleSelectedElement);
+        document.removeEventListener("click", processSingleSelectedElement);
         document.removeEventListener("mousemove", moveGroupOverlayToElement);
     } else {
         var elementSelector = document.createElement("div");
@@ -27,7 +27,7 @@ function toggleGroupSelector(event) {
 
         addGroupButton.innerHTML = "Cancel";
 
-        // document.addEventListener("click", processGroupSelectedElements);
+        document.addEventListener("click", processGroupSelectedElements);
         document.addEventListener("mousemove", moveGroupOverlayToElement);
     }
 }
@@ -41,11 +41,10 @@ function moveGroupOverlayToElement(event) {
     }
 
     selectedElements = findElementGroup(hoverElement, 5);
-    console.log(selectedElements);
 
     selectorsContainer.innerHTML = "";
     if (selectedElements != null) {
-        renderSelectors(selectedElements, hoverElement)
+        renderSelectors(selectedElements, hoverElement);
     }
 }
 
@@ -54,7 +53,7 @@ function renderSelectors(elements, hoverElement) {
         var newSelector = document.createElement("div");
         newSelector.className = "autocontrol-selector";
         selectorsContainer.appendChild(newSelector);
-        
+
         var overlayElement = elements[i];
         var boundingClientRect = overlayElement.getBoundingClientRect();
         newSelector.style.top = boundingClientRect.top + window.scrollY + "px";
@@ -74,40 +73,41 @@ function renderSelectors(elements, hoverElement) {
 }
 
 function findElementGroup(originElement, maxDepth) {
-
     var depth = 0;
     var compareChild = originElement;
     var parent = originElement.parentElement;
     var children = parent.children;
-    while (parent && parent != document.body && depth < maxDepth) {
 
+    while (parent && parent != document.body && depth < maxDepth) {
         var matchingChildren = [];
         for (var i = 0; i < children.length; i++) {
             var child = children[i];
-            if (
-                isSameElement(compareChild, child)
-            ) {
+
+            if (isSameElement(compareChild, child)) {
                 matchingChildren.push(child);
             }
         }
 
         if (matchingChildren.length > 1) {
-            if ( isSameElement(compareChild, originElement) ) {
+            if (isSameElement(compareChild, originElement)) {
                 return matchingChildren;
             }
 
             var elementGroup = [];
-            var childQuery = getChildQuery(compareChild, originElement);            
-            for(var i = 0; i < matchingChildren.length; i++) {
+            var childQuery = getChildQuery(compareChild, originElement);
+
+            for (var i = 0; i < matchingChildren.length; i++) {
                 var originParent = matchingChildren[i];
                 var matchingChild = originParent.querySelector(childQuery);
+
                 elementGroup.push(matchingChild);
             }
+
             if (elementGroup.length > 1) {
                 return elementGroup;
             }
         }
-        
+
         compareChild = parent;
         parent = parent.parentElement;
         children = parent.children;
@@ -118,11 +118,11 @@ function findElementGroup(originElement, maxDepth) {
 }
 
 function isSameElement(element1, element2) {
-    return element1.className == element2.className &&
-                element1.tagName.toLowerCase() ==
-                    element2.tagName.toLowerCase() &&
-                element1.getAttribute("style") ==
-                    element2.getAttribute("style")
+    return (
+        element1.className == element2.className &&
+        element1.tagName.toLowerCase() == element2.tagName.toLowerCase() &&
+        element1.getAttribute("style") == element2.getAttribute("style")
+    );
 }
 
 function getChildQuery(parent, child) {
@@ -146,6 +146,10 @@ function getChildQuery(parent, child) {
         currentElement = currentElement.parentElement;
     }
     return query.slice(3);
+}
+
+function processGroupSelectedElements() {
+    generateGroupCard(selectedElements);
 }
 
 function toggleSingleSelector(event) {
