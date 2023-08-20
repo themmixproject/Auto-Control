@@ -64,7 +64,7 @@ function addInitialEventListeners() {
 
     document
         .getElementById("autocontrol-add-element-group-button")
-        .addEventListener("click", selectElementGroup);
+        .addEventListener("click", toggleGroupSelector);
 
     document
         .getElementById("autocontrol-add-element-button")
