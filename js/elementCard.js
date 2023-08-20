@@ -31,6 +31,29 @@ function generateCardHeader(element, listItem) {
     return listItemHeader;
 }
 
+function convertElementToStyledSelectorElement(element) {
+    var elementInfo = document.createElement("span");
+    elementInfo.style.fontFamily = "monospace";
+    elementInfo.style.overflow = "hidden";
+    elementInfo.style.textOverflow = "ellipsis";
+    elementInfo.style.whiteSpace = "nowrap";
+
+    elementInfo.innerHTML =
+        "<span style='color: blue'>" +
+        element.tagName.toLowerCase() +
+        "</span>";
+    if (element.id) {
+        elementInfo.innerHTML +=
+            "<span style='color: green;'>#" + element.id + "</span>";
+    }
+    if (element.className) {
+        elementInfo.innerHTML +=
+            "<span style='color: red'>." + element.className + "</span>";
+    }
+
+    return elementInfo;
+}
+
 function generateCardContent(element) {
     var contentContainer = document.createElement("div");
     contentContainer.className = "content";
