@@ -1,3 +1,57 @@
+function generateGroupCard(elements){
+    var listItem = document.createElement("div");
+    listItem.className = "autocontrol-element-list-item item-group";
+
+    var listItemHeader = generateGroupCardHeader(elements, listItem);
+    listItem.append(listItemHeader);
+
+    var listItemContent = generateCardContent(elements[0]);
+    listItem.appendChild(listItemContent);
+
+    var elementList = document.getElementById("autocontrol-element-list");
+    elementList.appendChild(listItem);
+}
+
+function generateGroupCardHeader(elements, listItem) {
+    var listItemHeader = document.createElement("header");
+    var baseElement = elements[0];
+
+    var infoContainer = document.createElement("span");
+    infoContainer.style.fontFamily = "monospace";
+    infoContainer.style.overflow = "hidden";
+    infoContainer.style.textOverflow = "ellipsis";
+    infoContainer.style.whiteSpace = "nowrap";
+    
+    infoContainer.innerHTML =
+    "<span style='color: blue'>" +
+    baseElement.tagName.toLowerCase() +
+    "</span>";
+    if (baseElement.id) {
+        infoContainer.innerHTML +=
+        "<span style='color: green;'>#" + baseElement.id + "</span>";
+    }
+    if (baseElement.className) {
+        infoContainer.innerHTML +=
+        "<span style='color: red'>." + baseElement.className + "</span>";
+    }
+    infoContainer.innerHTML += " [<span style='color: orange'>" + elements.length +"</span>]";
+    listItemHeader.appendChild(infoContainer);
+
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "delete-button";
+    deleteButton.addEventListener("click", function () {
+        listItem.remove();
+    });
+    listItemHeader.appendChild(deleteButton);
+
+
+
+
+    return listItemHeader;
+
+}
+
 function generateElementCard(element) {
     var elementListItem = document.createElement("div");
     elementListItem.className = "autocontrol-element-list-item";
