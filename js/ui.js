@@ -45,26 +45,35 @@ function moveGroupOverlayToElement(event) {
 
     selectorsContainer.innerHTML = "";
     if (selectedElements != null) {
-        for (var i = 0; i < selectedElements.length; i++) {
-            var newSelector = document.createElement("div");
-            newSelector.className = "autocontrol-selector";
-            selectorsContainer.appendChild(newSelector);
-            
-            var overlayElement = selectedElements[i];
-            var boundingClientRect = overlayElement.getBoundingClientRect();
-            newSelector.style.top = boundingClientRect.top + window.scrollY + "px";
-            newSelector.style.left =
-                boundingClientRect.left + window.scrollX + "px";
-            newSelector.style.height = boundingClientRect.height + "px";
-            newSelector.style.width = boundingClientRect.width + "px";
+        renderSelectors(selectedElements, hoverElement)
+    }
+}
+
+function renderSelectors(elements, hoverElement) {
+    for (var i = 0; i < elements.length; i++) {
+        var newSelector = document.createElement("div");
+        newSelector.className = "autocontrol-selector";
+        selectorsContainer.appendChild(newSelector);
+        
+        var overlayElement = elements[i];
+        var boundingClientRect = overlayElement.getBoundingClientRect();
+        newSelector.style.top = boundingClientRect.top + window.scrollY + "px";
+        newSelector.style.left =
+            boundingClientRect.left + window.scrollX + "px";
+        newSelector.style.height = boundingClientRect.height + "px";
+        newSelector.style.width = boundingClientRect.width + "px";
+
+        if (overlayElement == hoverElement) {
+            var selectorLabel = document.createElement("div");
+            selectorLabel.className = "autocontrol-selector-label";
+            selectorLabel.innerHTML = getCssSelector(hoverElement);
+
+            newSelector.appendChild(selectorLabel);
         }
     }
 }
 
 function findElementGroup(originElement, maxDepth) {
-    if (originElement == null) {
-        console.log("originElement doesn't exist")   
-    }
 
     var depth = 0;
     var compareChild = originElement;
