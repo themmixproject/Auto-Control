@@ -149,7 +149,7 @@ function getChildQuery(parent, child) {
 }
 
 function processGroupSelectedElements() {
-    generateGroupCard(selectedElements);
+    generateCard(selectedElements);
 }
 
 function toggleSingleSelector(event) {
@@ -187,9 +187,11 @@ function toggleSingleSelector(event) {
 function processSingleSelectedElement(event) {
     toggleSingleSelector(event);
 
-    var listItemContent = generateElementCard(selectedElement);
-    var processObject = createProcessObject(listItemContent);
-    automationProcess.push(processObject);
+    generateCard([selectedElement])
+
+    // var listItemContent = generateElementCard(selectedElement);
+    // var processObject = createProcessObject(listItemContent);
+    // automationProcess.push(processObject);
 }
 
 function createProcessObject(listItemContent) {
