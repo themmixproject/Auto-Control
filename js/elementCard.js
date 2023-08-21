@@ -59,28 +59,45 @@ function generateCardContent(elements) {
 
     var content = document.createElement("div");
     content.className = "content";
+    
+    var tag = baseElement.tagName.toLowerCase();
+    
+    content.innerHTML += generateActionDescription(tag);
+    
+    var conditionalContent = generateConditionalContent(tag);
+    if (conditionalContent != null) {
+        content.appendChild(conditionalContent);
+    }
 
+    return content;
+}
+
+function generateActionDescription (tag) {
     var actionDescriber = document.createElement("span");
     actionDescriber.className = "action-descriptor";
-    
-    var conditionalContent = null;
-    var tag = baseElement.tagName.toLowerCase();
+
     if (tag == "a") {
-        actionDescriber.inneHTML += "got to: ";
-        conditionalContent = generateLinkContent(baseElement)
+        actionDescriber.innerHTML += "got to: ";
     }
     else if (tag == "div" || tag == "button") {
         actionDescriber.innerHTML += "action: ";
+        return actionDescriber.outerHTML + "click";
+    }
+    else if (tag == "input") {
+        actionDescriber.innerHTML += "insert value";
+    }
 
-        conditionalContent = generateClickActionContent(baseElement);
+    return actionDescriber.outerHTML;
+}
+
+function generateConditionalContent (tag) {
+    var content = null;
+    if (tag == "a") {
+        content = generateLinkContent(baseElement)
     }
     else if(tag == "input") {
-        actionDescriber += "inster value: ";
-
-        conditionalContent = generateInputContent(baseElement);
+        content = generateInputContent(baseElement);
     }
-    content.appendChild(actionDescriber);
-    content.appendChild(conditionalContent)
 
     return content;
 }
@@ -100,13 +117,6 @@ function generateLinkContent(element) {
     linkElement.target = "_blank";
 
     return linkElement;
-}
-
-function generateClickActionContent() {
-    var description = document.createElement("span");
-    description.innerHTML += "click";
-    
-    return description;
 }
 
 function generateInputContent(element) {
@@ -291,12 +301,15 @@ function generateInputContent(element) {
 //     return inputContainer;
 // }
 
-// loadApp();
+if (window.location.hostname === 'localhost') {
+    loadApp();
 
-// var demoButton = document.querySelector(
-//     "html body:nth-child(2) div#app:nth-child(2) div#card-container:nth-child(9) div.card:nth-child(3) button:nth-child(5)"
-// );
-// console.log(findElementGroup(demoButton, 5));
+    var demoButton = document.querySelector(
+        "html body:nth-child(2) div#app:nth-child(2) div#card-container:nth-child(9) div.card:nth-child(3) button:nth-child(5)"
+    );
+    console.log(findElementGroup(demoButton, 5));
+    
+    var buttonGroup = findElementGroup(demoButton, 5);
+    generateGroupCard(buttonGroup);
 
-// var buttonGroup = findElementGroup(demoButton, 5);
-// generateGroupCard(buttonGroup);
+}
