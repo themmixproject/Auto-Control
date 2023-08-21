@@ -255,33 +255,12 @@ function moveSingleOverlayToElement(event) {
             hoverElement.tagName.toLowerCase()
         )
     ) {
-        selectedElement = null;
         return;
     }
 
-    selectedElement = hoverElement;
-    elementSelector.style.display = "";
-
-    var boundingClientRect = hoverElement.getBoundingClientRect();
-    elementSelector.style.top = boundingClientRect.top + window.scrollY + "px";
-    elementSelector.style.left =
-        boundingClientRect.left + window.scrollX + "px";
-    elementSelector.style.height = boundingClientRect.height + "px";
-    elementSelector.style.width = boundingClientRect.width + "px";
-
-    var elementSelectorLabel = elementSelector.children[0];
-    elementSelectorLabel.innerHTML = getCssSelector(hoverElement);
-
-    var selectorWidth = elementSelector.style.width.split("px")[0];
-    var labelWidth = elementSelectorLabel.getBoundingClientRect().width;
-
-    elementSelector.className = "autocontrol-selector";
-
-    var hasLabelOverflow = labelWidth >= selectorWidth;
-    if (hasLabelOverflow) {
-        elementSelector.className += " labelOverflow";
-    }
-    elementSelectorLabel.style.maxWidth = selectorWidth + "px";
+    selectorsContainer.innerHTML = "";
+    selectedElements = [hoverElement];
+    renderSelectors(selectedElements, hoverElement);
 }
 
 function getCssSelector(element) {
