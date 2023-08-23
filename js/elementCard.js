@@ -141,7 +141,7 @@ function generateInputContent(element) {
 }
 
 
-if (window.location.hostname === 'localhost') {
+if (window.location.hostname === "localhost") {
     loadApp();
 
     var demoButton = document.querySelector(
@@ -151,5 +151,4 @@ if (window.location.hostname === 'localhost') {
     
     var buttonGroup = findElementGroup(demoButton, 5);
     generateCard(buttonGroup);
-
 }
