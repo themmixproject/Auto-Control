@@ -13,18 +13,9 @@ function toggleGroupSelector(event) {
 
         addGroupButton.innerHTML = "Add Element";
 
-        document.removeEventListener("click", processSingleSelectedElement);
+        document.removeEventListener("click", processGroupSelectedElements);
         document.removeEventListener("mousemove", moveGroupOverlayToElement);
     } else {
-        var elementSelector = document.createElement("div");
-        // elementSelector.className = "autocontrol-selector";
-
-        // var selectorLabel = document.createElement("div");
-        // selectorLabel.className = "autocontrol-selector-label";
-        // elementSelector.appendChild(selectorLabel);
-
-        selectorsContainer.appendChild(elementSelector);
-
         addGroupButton.innerHTML = "Cancel";
 
         document.addEventListener("click", processGroupSelectedElements);
@@ -42,7 +33,6 @@ function moveGroupOverlayToElement(event) {
 
     selectedElements = findElementGroup(hoverElement, 5);
 
-    selectorsContainer.innerHTML = "";
     if (selectedElements != null) {
         renderSelectors(selectedElements, hoverElement);
     }
@@ -161,8 +151,6 @@ function toggleSingleSelector(event) {
 
     var selectorIsDisplayed = selectorsContainer.children.length > 0;
     if (selectorIsDisplayed) {
-        selectorsContainer.innerHTML = "";
-
         addElementButton.innerHTML = "Add Element";
 
         document.removeEventListener("click", processSingleSelectedElement);
@@ -186,12 +174,7 @@ function toggleSingleSelector(event) {
 
 function processSingleSelectedElement(event) {
     toggleSingleSelector(event);
-
-    generateCard([selectedElement])
-
-    // var listItemContent = generateElementCard(selectedElement);
-    // var processObject = createProcessObject(listItemContent);
-    // automationProcess.push(processObject);
+    generateCard(selectedElements)
 }
 
 function createProcessObject(listItemContent) {
@@ -244,9 +227,7 @@ function elementToQuery(element) {
 }
 
 function moveSingleOverlayToElement(event) {
-    var elementSelector = selectorsContainer.children[0];
-    elementSelector.style.display = "none";
-
+    selectorsContainer.innerHTML = "";
     var hoverElement = getHoverElement(event);
 
     if (
@@ -257,8 +238,7 @@ function moveSingleOverlayToElement(event) {
     ) {
         return;
     }
-
-    selectorsContainer.innerHTML = "";
+    
     selectedElements = [hoverElement];
     renderSelectors(selectedElements, hoverElement);
 }
