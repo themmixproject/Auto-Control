@@ -59,15 +59,13 @@ function generateCardHeader(elements, elementCard) {
 
 function generateCardContent(elements) {
     var baseElement = elements[0];
-
-    var content = document.createElement("div");
-    content.className = "content";
-    
     var tag = baseElement.tagName.toLowerCase();
     
+    var content = document.createElement("div");
+    content.className = "content";
     content.innerHTML += generateActionDescription(tag);
     
-    var conditionalContent = generateConditionalContent(tag);
+    var conditionalContent = generateConditionalContent(tag, baseElement);
     if (conditionalContent != null) {
         content.appendChild(conditionalContent);
     }
@@ -92,7 +90,7 @@ function generateActionDescription (tag) {
     return actionDescriber + "</span>";
 }
 
-function generateConditionalContent (tag) {
+function generateConditionalContent (tag, baseElement) {
     var content = null;
     if (tag == "a") {
         content = generateLinkContent(baseElement)
