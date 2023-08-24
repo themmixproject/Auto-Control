@@ -76,21 +76,20 @@ function generateCardContent(elements) {
 }
 
 function generateActionDescription (tag) {
-    var actionDescriber = document.createElement("span");
-    actionDescriber.className = "action-descriptor";
+    var actionDescriber = "<span class='action-descriptor'>"
 
     if (tag == "a") {
-        actionDescriber.innerHTML += "got to: ";
+        actionDescriber += "got to: ";
     }
     else if (tag == "div" || tag == "button") {
-        actionDescriber.innerHTML += "action: ";
-        return actionDescriber.outerHTML + "click";
+        actionDescriber += "action: </span>";
+        return actionDescriber + "click";
     }
     else if (tag == "input") {
-        actionDescriber.innerHTML += "insert value";
+        actionDescriber += "insert value:";
     }
 
-    return actionDescriber.outerHTML;
+    return actionDescriber + "</span>";
 }
 
 function generateConditionalContent (tag) {
