@@ -30,17 +30,17 @@ function loadApp() {
     addInitialEventListeners();
     setNavWidth();
 
-    selectorsContainer = document.getElementById("autocontrol-selectors-container");
+    selectorsContainer = document.getElementById("ac-selectors-container");
 }
 
 function appendAppHTML() {
     appContainer.innerHTML += `
-    <div id="autocontrol-selectors-container"></div>
-    <div id="autocontrol-panel" style="width: ${globalOffset}px;">
-        <div id="autocontrol-panel-resizer" style="position: fixed; left: ${globalOffset}px;"></div>
-        <header id="autocontrol-panel-header" style="width: ${globalOffset}px;">
-            <div id="app-title-wrapper">
-                <h1 id="app-title">Auto Control</h1>
+    <div id="ac-selectors-container"></div>
+    <div id="ac-panel" style="width: ${globalOffset}px;">
+        <div id="ac-panel-resizer" style="position: fixed; left: ${globalOffset}px;"></div>
+        <header id="ac-panel-header" style="width: ${globalOffset}px;">
+            <div id="title-wrapper">
+                <h1>Auto Control</h1>
             </div>
             <div id="close-button-wrapper">
                 <button id="close-button">
@@ -48,13 +48,13 @@ function appendAppHTML() {
                 </button>
             </div>
         </header>
-        <div id="autocontrol-panel-content">
-            <div id="autocontrol-element-list"></div>
+        <div id="ac-panel-content">
+            <div id="ac-element-list"></div>
         </div>
-        <div id="autocontrol-bottom-nav" style="width: ${globalOffset}px;">
-            <button id="autocontrol-add-element-group-button">Add Group</button>
-            <button id="autocontrol-add-element-button">Add Element</button>
-            <button id="autocontrol-run-button">Run</button>
+        <div id="ac-bottom-nav" style="width: ${globalOffset}px;">
+            <button id="ac-add-element-group-button">Add Group</button>
+            <button id="ac-add-element-button">Add Element</button>
+            <button id="ac-run-button">Run</button>
         </div>
     </div>`;
 }
@@ -63,19 +63,19 @@ function addInitialEventListeners() {
     document.getElementById("close-button").addEventListener("click", closeApp);
 
     document
-        .getElementById("autocontrol-add-element-group-button")
+        .getElementById("ac-add-element-group-button")
         .addEventListener("click", toggleGroupSelector);
 
     document
-        .getElementById("autocontrol-add-element-button")
+        .getElementById("ac-add-element-button")
         .addEventListener("click", toggleSingleSelector);
 
     document
-        .getElementById("autocontrol-run-button")
+        .getElementById("ac-run-button")
         .addEventListener("click", runAutomation);
 
     document
-        .getElementById("autocontrol-panel-resizer")
+        .getElementById("ac-panel-resizer")
         .addEventListener("mousedown", function (event) {
             isResizing = true;
             resizeStart = event.clientX;
@@ -98,9 +98,9 @@ function addInitialEventListeners() {
 }
 
 function setNavWidth() {
-    var panel = document.getElementById("autocontrol-panel");
-    var header = document.getElementById("autocontrol-panel-header");
-    var bottomNav = document.getElementById("autocontrol-bottom-nav");
+    var panel = document.getElementById("ac-panel");
+    var header = document.getElementById("ac-panel-header");
+    var bottomNav = document.getElementById("ac-bottom-nav");
     var hasScrollbar = panel.scrollHeight > panel.clientHeight;
     header.style.width =
         (hasScrollbar ? globalOffset - 17 : globalOffset) + "px";
@@ -116,11 +116,11 @@ function resizePanel(clientX) {
 
     adaptBodyStyle();
 
-    var autocontrolPanel = document.getElementById("autocontrol-panel");
+    var autocontrolPanel = document.getElementById("ac-panel");
     autocontrolPanel.style.width = globalOffset + "px";
     autocontrolPanel.style.marginLeft = -globalOffset + "px";
 
-    var resizer = document.getElementById("autocontrol-panel-resizer");
+    var resizer = document.getElementById("ac-panel-resizer");
     resizer.style.cursor = "w-resize";
     resizer.style.left = globalOffset + "px";
 
@@ -249,7 +249,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         return;
     } else if (firstChild.children.length > 0) {
         var lastChildIndex = firstChild.children.length - 1;
-        if (firstChild.children[lastChildIndex].id == "autocontrol-window") {
+        if (firstChild.children[lastChildIndex].id == "ac-window") {
             return;
         }
     }

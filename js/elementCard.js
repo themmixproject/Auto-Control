@@ -1,8 +1,6 @@
 function generateCard(elements) {
-    // console.log("elements: ", elements);
-
     var elementCard = document.createElement("div");
-    elementCard.className = "autocontrol-element-list-item item-group";
+    elementCard.className = "ac-element-list-item item-group";
 
     var header = generateCardHeader(elements, elementCard);
     elementCard.append(header);
@@ -10,7 +8,7 @@ function generateCard(elements) {
     var content = generateCardContent(elements);
     elementCard.appendChild(content);
 
-    var elementList = document.getElementById("autocontrol-element-list");
+    var elementList = document.getElementById("ac-element-list");
     elementList.appendChild(elementCard);
 
     return content;
@@ -19,8 +17,6 @@ function generateCard(elements) {
 function generateCardHeader(elements, elementCard) {
     var header = document.createElement("header");
     var baseElement = elements[0];
-
-    console.log("baseElement: ", baseElement);
 
     var infoContainer = document.createElement("span");
     infoContainer.style.fontFamily = "monospace";
@@ -143,8 +139,7 @@ if (window.location.hostname === "localhost") {
     // var demoButton = document.querySelector(
     //     "html body:nth-child(2) div#app:nth-child(2) div#card-container:nth-child(9) div.card:nth-child(3) button:nth-child(5)"
     // );
-    // console.log(findElementGroup(demoButton, 5));
-    
+        
     // var buttonGroup = findElementGroup(demoButton, 5);
     // generateCard(buttonGroup);
 }

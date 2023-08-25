@@ -5,7 +5,7 @@ function toggleGroupSelector(event) {
     event.stopPropagation();
 
     var addGroupButton = document.getElementById(
-        "autocontrol-add-element-group-button"
+        "ac-add-element-group-button"
     );
 
     if (elementsAreSelected) {
@@ -44,7 +44,7 @@ function moveGroupOverlayToElement(event) {
 function renderSelectors(elements, hoverElement) {
     for (var i = 0; i < elements.length; i++) {
         var newSelector = document.createElement("div");
-        newSelector.className = "autocontrol-selector";
+        newSelector.className = "ac-selector";
         selectorsContainer.appendChild(newSelector);
 
         var overlayElement = elements[i];
@@ -57,7 +57,7 @@ function renderSelectors(elements, hoverElement) {
 
         if (overlayElement == hoverElement) {
             var selectorLabel = document.createElement("div");
-            selectorLabel.className = "autocontrol-selector-label";
+            selectorLabel.className = "ac-selector-label";
             selectorLabel.innerHTML = getCssSelector(hoverElement);
 
             newSelector.appendChild(selectorLabel);
@@ -150,7 +150,7 @@ function toggleSingleSelector(event) {
     event.stopPropagation();
 
     var addElementButton = document.getElementById(
-        "autocontrol-add-element-button"
+        "ac-add-element-button"
     );
 
     if (elementsAreSelected) {
@@ -164,10 +164,10 @@ function toggleSingleSelector(event) {
         document.removeEventListener("mousemove", moveSingleOverlayToElement);
     } else {
         var elementSelector = document.createElement("div");
-        elementSelector.className = "autocontrol-selector";
+        elementSelector.className = "ac-selector";
 
         var selectorLabel = document.createElement("div");
-        selectorLabel.className = "autocontrol-selector-label";
+        selectorLabel.className = "ac-selector-label";
         elementSelector.appendChild(selectorLabel);
 
         selectorsContainer.appendChild(elementSelector);
@@ -291,7 +291,7 @@ function getHoverElement(event) {
         event.pageY - window.scrollY
     );
 
-    var autoControlWindow = document.getElementById("autocontrol-panel");
+    var autoControlWindow = document.getElementById("ac-panel");
     var isWindow =
         autoControlWindow.contains(hoverElement) ||
         hoverElement == autoControlWindow;
