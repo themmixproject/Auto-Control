@@ -1,4 +1,5 @@
 var selectedElements = [];
+var elementsAreSelected = false;
 
 function toggleGroupSelector(event) {
     event.stopPropagation();
@@ -7,8 +8,9 @@ function toggleGroupSelector(event) {
         "autocontrol-add-element-group-button"
     );
 
-    var selectorIsDisplayed = selectorsContainer.children.length > 0;
-    if (selectorIsDisplayed) {
+    if (elementsAreSelected) {
+        elementsAreSelected = false;
+        
         selectorsContainer.innerHTML = "";
 
         addGroupButton.innerHTML = "Add Element";
@@ -30,10 +32,11 @@ function moveGroupOverlayToElement(event) {
     if (hoverElement == null) {
         return;
     }
-
+    
     selectedElements = findElementGroup(hoverElement, 5);
 
     if (selectedElements != null) {
+        elementsAreSelected = true;
         renderSelectors(selectedElements, hoverElement);
     }
 }
@@ -138,7 +141,8 @@ function getChildQuery(parent, child) {
     return query.slice(3);
 }
 
-function processGroupSelectedElements() {
+function processGroupSelectedElements(event) {
+    toggleGroupSelector(event);
     generateCard(selectedElements);
 }
 
@@ -149,8 +153,11 @@ function toggleSingleSelector(event) {
         "autocontrol-add-element-button"
     );
 
-    var selectorIsDisplayed = selectorsContainer.children.length > 0;
-    if (selectorIsDisplayed) {
+    if (elementsAreSelected) {
+        elementsAreSelected = false;
+        
+        selectorsContainer.innerHTML = "";
+
         addElementButton.innerHTML = "Add Element";
 
         document.removeEventListener("click", processSingleSelectedElement);
@@ -238,7 +245,8 @@ function moveSingleOverlayToElement(event) {
     ) {
         return;
     }
-    
+
+    elementsAreSelected = true;
     selectedElements = [hoverElement];
     renderSelectors(selectedElements, hoverElement);
 }
