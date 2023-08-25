@@ -48,9 +48,18 @@ function appendAppHTML() {
                 </button>
             </div>
         </header>
-        <div id="ac-panel-content">
-            <div id="ac-element-list"></div>
-        </div>
+        <ul id="ac-element-list">
+            <li>
+                <div class="ac-action-type"><span>insert</span></div>
+                <div class="ac-element-list-item-content">
+                    <span style="color: blue;">input</span>
+                    <input type="text" placeholder="username" />
+                </div>
+                <div>
+                    <button class="ac-list-item-delete-btn">Delete</button>
+                </div>
+            </li>
+        </ul>
         <div id="ac-bottom-nav" style="width: ${globalOffset}px;">
             <button id="ac-add-element-group-button">Add Group</button>
             <button id="ac-add-element-button">Add Element</button>

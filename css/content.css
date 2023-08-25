@@ -112,10 +112,6 @@
     background-color: rgb(85, 168, 223);
 }
 
-#ac-panel-content {
-    padding: 10px 10px;
-}
-
 #ac-panel-resizer {
     position: relative;
     top: 0.7em;

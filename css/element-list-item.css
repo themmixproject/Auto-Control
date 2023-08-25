@@ -1,4 +1,4 @@
-.ac-element-list-item {
+/* .ac-element-list-item {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -68,4 +68,58 @@
     height: 2000px;
     width: 100%;
     background-color: aquamarine;
+} */
+
+
+#ac-element-list {
+    list-style: none;
+    padding: 0 5px;
+    padding-top: 5px;
 }
+    #ac-element-list li {
+        display: flex;
+        justify-content: space-between;
+
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        background-color: #f0f0f0;
+        width: 100%;
+    }
+
+    #ac-element-list li .ac-action-type {
+        background-color: #dddddd;
+        color: #636363;
+        font-style: italic;
+        padding: 5px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    
+    .ac-element-list-item-content {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        flex-grow: 1;
+    }
+
+    .ac-element-list-item-content input {
+        width: 100%;
+        outline: 0;
+        border: 0;
+        padding: 3px;
+    }
+
+    #ac-element-list li .ac-list-item-delete-btn {
+        color: red;
+        padding: 5px;
+        padding-left: 0;
+        margin: 0;
+        display: block;
+        outline: 0;
+        border: 0;
+        background-color: transparent;
+    }
