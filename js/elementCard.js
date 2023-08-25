@@ -140,12 +140,11 @@ function generateInputContent(element) {
 
 if (window.location.hostname === "localhost") {
     loadApp();
-
-    var demoButton = document.querySelector(
-        "html body:nth-child(2) div#app:nth-child(2) div#card-container:nth-child(9) div.card:nth-child(3) button:nth-child(5)"
-    );
-    console.log(findElementGroup(demoButton, 5));
+    // var demoButton = document.querySelector(
+    //     "html body:nth-child(2) div#app:nth-child(2) div#card-container:nth-child(9) div.card:nth-child(3) button:nth-child(5)"
+    // );
+    // console.log(findElementGroup(demoButton, 5));
     
-    var buttonGroup = findElementGroup(demoButton, 5);
-    generateCard(buttonGroup);
+    // var buttonGroup = findElementGroup(demoButton, 5);
+    // generateCard(buttonGroup);
 }
