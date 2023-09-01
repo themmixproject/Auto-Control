@@ -8,7 +8,7 @@ function generateCard(elements) {
     var content = generateCardContent(elements);
     elementCard.appendChild(content);
 
-    var elementList = document.getElementById("ac-element-list");
+    var elementList = document.getElementById("ac-el-list");
     elementList.appendChild(elementCard);
 
     return content;
