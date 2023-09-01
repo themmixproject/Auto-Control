@@ -1,125 +1,159 @@
-/* .ac-element-list-item {
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    margin: 10px;
-    justify-content: space-between;
-    background-color: #f0f0f0;
-}
-
-    .ac-element-list-item header {
-        background-color: grey;
-        width: 100%;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        text-align: left;
-        padding: 5px;
-        background-color: #dfdfdf;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .ac-element-list-item .content {
-        padding: 5px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-
-    .ac-element-list-item .content .action-descriptor {
-        font-style: italic;
-        color: #898989;
-    }
-    
-    .ac-element-list-item .content .label-wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .ac-element-list-item .content input {
-        width: 100%;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        outline: none;
-        transition: border-color 0.3s, box-shadow 0.3s;
-        padding: 5px;
-    }
-    
-    .ac-element-list-item .input-container {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-    }
-
-    .ac-element-list-item .delete-button {
-        color: red;
-        border: 0;
-        outline: 0;
-        background-color: transparent;
-        padding: 0;
-    }
-    .ac-element-list-item .delete-button:active {
-        color: rgb(219, 0, 0);
-    }
-
-.ac-element-list-item-placeholder {
-    height: 2000px;
-    width: 100%;
-    background-color: aquamarine;
-} */
-
-
-#ac-element-list {
+#ac-el-list {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     list-style: none;
     padding: 0 5px;
     padding-top: 5px;
+
+    margin-bottom: 50px;
 }
-    #ac-element-list li {
-        display: flex;
-        justify-content: space-between;
 
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        background-color: #f0f0f0;
-        width: 100%;
-    }
 
-    #ac-element-list li .ac-action-type {
+#ac-el-list li {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    width: 100%;
+    margin: 20px 0;
+}
+
+#ac-el-list .element-item {
+    display: flex;
+    flex-direction: row;
+}
+
+#ac-el-list .group-item {
+    display: flex;
+    flex-direction: column;
+}
+    
+    #ac-el-list .action-type {
         background-color: #dddddd;
         color: #636363;
         font-style: italic;
-        padding: 5px;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         display: flex;
         justify-content: center;
         flex-direction: column;
+        font-size: 13px;
+        padding: 0 5px;
     }
     
-    .ac-element-list-item-content {
+    #ac-el-list .list-item-content {
         display: flex;
         flex-direction: column;
-        padding: 5px;
         flex-grow: 1;
+        overflow: hidden;
+    }
+    
+    #ac-el-list header {
+        font-size: 13px;
+    }
+    
+    #ac-el-list .main-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        overflow: hidden;
+        width: 100%;
+        min-width: 37.58px;
+        padding: 0 5px;
+        border-radius: 10px;
     }
 
-    .ac-element-list-item-content input {
+    #ac-el-list .action-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: 3px 5px;
+    }
+    
+    #ac-el-list .action-content input {
         width: 100%;
         outline: 0;
         border: 0;
+        font-size: 16px;
         padding: 3px;
     }
-
-    #ac-element-list li .ac-list-item-delete-btn {
+    
+    #ac-el-list .ac-delete-btn {
+        padding: 0;
         color: red;
-        padding: 5px;
         padding-left: 0;
         margin: 0;
         display: block;
         outline: 0;
         border: 0;
         background-color: transparent;
+        overflow: initial;
+        font-size: 13px;
+        box-shadow: 0 0 4px 5px #f0f0f0;
+    }
+    
+    #ac-el-list .ac-delete-btn:active {
+        color: rgb(219, 0, 0);
+    }
+
+    #ac-el-list .group-item .ac-delete-btn {
+        box-shadow: 0 0 4px 5px #dddddd;
+    }
+    
+    #ac-el-list .element-details {
+        padding: 3px 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0; 
+    }
+    
+    
+    
+    #ac-el-list .group-header {
+        font-size: 13px;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        background-color: #dddddd;
+        border-radius: 10px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        overflow: hidden;
+    }
+    
+    #ac-el-list .group-details {
+        display: flex;
+        flex-direction: row;
+        background-color: #00aeff;
+        border-radius: 10px;
+        border-bottom-left-radius: 0;
+        font-size: 13px;
+        font-style: italic;
+    }    
+    
+    
+    #ac-el-list .group-type-wrapper {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: inherit;
+    }
+
+    #ac-el-list .group-type {
+        color: white;
+        white-space: nowrap;
+        word-wrap: none;
+        padding: 0 5px;
+    }
+
+    #ac-el-list .group-details .action-type {
+        border-radius: 10px;
+        background-color: #0095da;
+        color: white;
+    }
+
+    #ac-el-list .group-content {
+        padding: 3px 5px;
     }
