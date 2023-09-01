@@ -181,7 +181,7 @@ function toggleSingleSelector(event) {
 
 function processSingleSelectedElement(event) {
     toggleSingleSelector(event);
-    generateCard(selectedElements)
+    generateSingleListItem(selectedElements)
 }
 
 function createProcessObject(listItemContent) {
