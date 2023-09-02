@@ -16,9 +16,12 @@
     border: 1px solid rgb(233, 233, 233);
     border-radius: 5px;
     font-size: 16px;
-    border-top-left-radius: 0;
 }
-    .ac-selector.labelOverflow {
+    .ac-selector.has-label {
+        border-top-left-radius: 0;
+    }
+
+    .ac-selector.label-overflow {
         border-top-right-radius: 0;
     }
 

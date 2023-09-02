@@ -48,17 +48,27 @@ function renderSelectors(elements, hoverElement) {
         selectorsContainer.appendChild(newSelector);
 
         var overlayElement = elements[i];
-        var boundingClientRect = overlayElement.getBoundingClientRect();
-        newSelector.style.top = boundingClientRect.top + window.scrollY + "px";
+        var overlayBoundingClient = overlayElement.getBoundingClientRect();
+        newSelector.style.top = overlayBoundingClient.top + window.scrollY + "px";
         newSelector.style.left =
-            boundingClientRect.left + window.scrollX + "px";
-        newSelector.style.height = boundingClientRect.height + "px";
-        newSelector.style.width = boundingClientRect.width + "px";
+            overlayBoundingClient.left + window.scrollX + "px";
+        newSelector.style.height = overlayBoundingClient.height + "px";
+        newSelector.style.width = overlayBoundingClient.width + "px";
 
         if (overlayElement == hoverElement) {
             var selectorLabel = document.createElement("div");
             selectorLabel.className = "ac-selector-label";
             selectorLabel.innerHTML = getCssSelector(hoverElement);
+
+            newSelector.className += " has-label";
+
+            selectorBoundingClient = selectorLabel.getBoundingClientRect();
+            if (selectorBoundingClient.width > overlayBoundingClient.width) {
+                selectorLabel.style.width = overlayBoundingClient.width;
+
+                newSelector.className += " label-overflow";
+                
+            }
 
             newSelector.appendChild(selectorLabel);
         }
