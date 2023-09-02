@@ -92,8 +92,10 @@ function findElementGroup(originElement, maxDepth) {
             for (var i = 0; i < matchingChildren.length; i++) {
                 var originParent = matchingChildren[i];
                 var matchingChild = originParent.querySelector(childQuery);
-
-                elementGroup.push(matchingChild);
+                
+                if (matchingChild != null) {
+                    elementGroup.push(matchingChild);
+                }
             }
 
             if (elementGroup.length > 1) {
