@@ -143,7 +143,7 @@ function getChildQuery(parent, child) {
 
 function processGroupSelectedElements(event) {
     toggleGroupSelector(event);
-    generateCard(selectedElements);
+    generateGroupListItem(selectedElements);
 }
 
 function toggleSingleSelector(event) {
