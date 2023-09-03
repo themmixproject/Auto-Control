@@ -1,35 +1,54 @@
 var selectedElements = [];
 var elementsAreSelected = false;
+var selectorIsActive = false;
+var singleOverlayIsActive = false;
+var groupOverlayIsActive = false;
 
 function toggleGroupSelector(event) {
+    if (singleOverlayIsActive) { return; }
+
+    if (selectorIsActive) {
+        disableGroupOverlay();
+    }
+    else {
+        var addGroupButton = document.getElementById("ac-add-element-group-button");
+        addGroupButton.innerHTML = "Cancel";
+        enableGroupOverlay(event);
+    }
+
+    groupOverlayIsActive = !groupOverlayIsActive;
+    selectorIsActive = !selectorIsActive;
+}
+
+function disableGroupOverlay() {
+    var addGroupButton = document.getElementById(
+        "ac-add-element-group-button"
+    );
+    addGroupButton.innerHTML = "Add Group";
+
+    selectorsContainer.innerHTML = "";
+
+    document.removeEventListener("click", processGroupSelectedElements);
+    document.removeEventListener("mousemove", moveGroupOverlayToElement);
+}
+
+function enableGroupOverlay(event) {
     event.stopPropagation();
 
     var addGroupButton = document.getElementById(
         "ac-add-element-group-button"
     );
+    addGroupButton.innerHTML = "Cancel";
 
-    if (elementsAreSelected) {
-        elementsAreSelected = false;
-        
-        selectorsContainer.innerHTML = "";
-
-        addGroupButton.innerHTML = "Add Element";
-
-        document.removeEventListener("click", processGroupSelectedElements);
-        document.removeEventListener("mousemove", moveGroupOverlayToElement);
-    } else {
-        addGroupButton.innerHTML = "Cancel";
-
-        document.addEventListener("click", processGroupSelectedElements);
-        document.addEventListener("mousemove", moveGroupOverlayToElement);
-    }
+    document.addEventListener("click", processGroupSelectedElements);
+    document.addEventListener("mousemove", moveGroupOverlayToElement);
 }
 
 function moveGroupOverlayToElement(event) {
     selectorsContainer.innerHTML = "";
     var hoverElement = getHoverElement(event);
-
     if (hoverElement == null) {
+        selectedElements = null;
         return;
     }
     
@@ -153,46 +172,49 @@ function getChildQuery(parent, child) {
     return query.slice(3);
 }
 
-function processGroupSelectedElements(event) {
-    toggleGroupSelector(event);
+function processGroupSelectedElements() {
+    if (selectedElements == null) { return; }
+
+    disableGroupOverlay();
     generateGroupListItem(selectedElements);
 }
 
 function toggleSingleSelector(event) {
+    if (groupOverlayIsActive) { return; }
+    
+    if ( selectorIsActive ) {
+        disableSingleOverlay();
+    }
+    else {
+        enableSingleOverlay(event);
+    }
+    
+    singleOverlayIsActive = !singleOverlayIsActive;
+    selectorIsActive = !selectorIsActive;
+}
+
+function enableSingleOverlay(event) {
     event.stopPropagation();
 
-    var addElementButton = document.getElementById(
-        "ac-add-element-button"
-    );
+    var addElementButton = document.getElementById("ac-add-element-button");
+    addElementButton.innerHTML = "Cancel";
 
-    if (elementsAreSelected) {
-        elementsAreSelected = false;
-        
-        selectorsContainer.innerHTML = "";
+    document.addEventListener("click", processSingleSelectedElement);
+    document.addEventListener("mousemove", moveSingleOverlayToElement);
+}
 
-        addElementButton.innerHTML = "Add Element";
+function disableSingleOverlay() {
+    var addElementButton = document.getElementById("ac-add-element-button");
+    addElementButton.innerHTML = "Add Element";
 
-        document.removeEventListener("click", processSingleSelectedElement);
-        document.removeEventListener("mousemove", moveSingleOverlayToElement);
-    } else {
-        var elementSelector = document.createElement("div");
-        elementSelector.className = "ac-selector";
-
-        var selectorLabel = document.createElement("div");
-        selectorLabel.className = "ac-selector-label";
-        elementSelector.appendChild(selectorLabel);
-
-        selectorsContainer.appendChild(elementSelector);
-
-        addElementButton.innerHTML = "Cancel";
-
-        document.addEventListener("click", processSingleSelectedElement);
-        document.addEventListener("mousemove", moveSingleOverlayToElement);
-    }
+    document.removeEventListener("click", processSingleSelectedElement);
+    document.removeEventListener("mousemove", moveSingleOverlayToElement);
 }
 
 function processSingleSelectedElement(event) {
-    toggleSingleSelector(event);
+    if (selectedElements == null) { return; }
+    
+    disableSingleOverlay(event);
     generateSingleListItem(selectedElements)
 }
 
@@ -255,6 +277,7 @@ function moveSingleOverlayToElement(event) {
             hoverElement.tagName.toLowerCase()
         )
     ) {
+        selectedElements = null;
         return;
     }
 
