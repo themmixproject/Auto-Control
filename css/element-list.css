@@ -5,7 +5,7 @@
     padding: 0 5px;
     padding-top: 5px;
 
-    margin-bottom: 50px;
+    padding-bottom: 50px;
 }
 
 
@@ -94,10 +94,6 @@
     #ac-el-list .ac-delete-btn:active {
         color: rgb(219, 0, 0);
     }
-
-    #ac-el-list .group-item .ac-delete-btn {
-        box-shadow: 0 0 4px 5px #dddddd;
-    }
     
     #ac-el-list .element-details {
         padding: 3px 0;
@@ -110,12 +106,12 @@
     
     
     
-    #ac-el-list .group-header {
+       #ac-el-list .group-header {
         font-size: 13px;
         display: flex;
         flex-direction: row;
         width: 100%;
-        background-color: #dddddd;
+        background-color: #f0f0f0;
         border-radius: 10px;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -155,5 +151,17 @@
     }
 
     #ac-el-list .group-content {
-        padding: 3px 5px;
+        list-style: none;
+        background-color: white;
+        padding: 0 5px;
+    }
+
+    #ac-el-list .group-content:empty {
+        padding-bottom: 20px;
+    }
+
+
+    #ac-el-list .group-content li {
+        width: initial;
+        margin: 10px 0;
     }
