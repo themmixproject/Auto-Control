@@ -40,7 +40,10 @@ function generateGroupDetails(elements) {
 function generateGroupContent() {
     var groupContent = document.createElement("div");
     groupContent.className = "group-content";
-    groupContent.innerHTML = "placeholder content";
+
+    new Sortable(groupContent, {
+        group: "elementList"
+    })
 
     return groupContent;
 }
@@ -216,14 +219,17 @@ if (window.location.hostname === "localhost") {
     var demoAnchor = document.getElementById("link-container").getElementsByTagName("a")[0];
     generateSingleListItem([demoAnchor]);
 
-    // var buttonGroup = findElementGroup(demoButton, 5);
+    var buttonGroup = findElementGroup(demoButton, 5);
+    generateGroupListItem(buttonGroup);
+
     // for(var i = 0; i < buttonGroup.length; i++) {
     //     var button = buttonGroup[i];
     //     generateSingleListItem([button]);
     // }
 
-    var mything = new Sortable(document.getElementById("ac-el-list"))
-    Sortable.destroy();
+    var mything = new Sortable(document.getElementById("ac-el-list"), {
+        group: "elementList"
+    });
 
     // generateGroupListItem(buttonGroup);
 }
