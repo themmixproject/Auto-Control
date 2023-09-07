@@ -154,6 +154,7 @@
         list-style: none;
         background-color: white;
         padding: 0 5px;
+        border-radius: 0 0 10px 10px;
     }
 
     #ac-el-list .group-content:empty {
