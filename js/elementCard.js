@@ -41,8 +41,13 @@ function generateGroupContent() {
     var groupContent = document.createElement("div");
     groupContent.className = "group-content";
 
-    new Sortable(groupContent, {
-        group: "elementList"
+    var newSortable = new Sortable(groupContent, {
+        group: "elementList",
+        dataIdAttr: "data-id",
+        onSort: function (event) {
+            console.log(event);
+            console.log(newSortable.toArray())
+        }
     })
 
     return groupContent;
@@ -228,8 +233,12 @@ if (window.location.hostname === "localhost") {
     // }
 
     var mything = new Sortable(document.getElementById("ac-el-list"), {
-        group: "elementList"
+        group: "elementList",
+        dataIdAttr: "data-id",
+        onSort: function (event) {
+            console.log(event);
+            console.log(mything.toArray())
+        }
     });
 
-    // generateGroupListItem(buttonGroup);
 }
