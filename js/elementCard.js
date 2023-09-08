@@ -33,12 +33,12 @@ function generateGroupListItem(elements) {
 
 
     var elementList = document.getElementById("ac-el-list");
+
     listItem.setAttribute("ac-i", elementList.children.length);
+    
     elementList.appendChild(listItem);
 
-    autocontrolProces.push(new createGroupProcesObj(elements));
-    
-
+    autocontrolProces.push(createGroupProcesObj(elements));
 }
 
 function generateGroupHeader(elements, listItem) {
@@ -97,7 +97,13 @@ function generateSingleListItem(elements) {
     }
     itemContainer.appendChild(listItemContent);
 
-    document.getElementById("ac-el-list").appendChild(listItem);
+    var elementList = document.getElementById("ac-el-list");
+
+    listItem.setAttribute("ac-i", elementList.children.length);
+    
+    elementList.appendChild(listItem);
+
+    autocontrolProces.push(createProcesObj(element));
 }
 
 function generateActionTypeFromTagName(tagName) {
