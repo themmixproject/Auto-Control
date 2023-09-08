@@ -1,3 +1,17 @@
+var autocontrolProces = [];
+
+function createProcesObj(element){
+    return {
+        element: element
+    };
+}
+
+function createGroupProcesObj(elements) {
+    return {
+        elements: elements
+    }
+}
+
 function generateGroupListItem(elements) {
     var listItem = document.createElement("li");
     var groupItem = document.createElement("div");
@@ -5,9 +19,26 @@ function generateGroupListItem(elements) {
     listItem.appendChild(groupItem);
 
     groupItem.appendChild( generateGroupHeader(elements, listItem ));
-    groupItem.appendChild( generateGroupContent() )
+    var groupContent = generateGroupContent();
+    groupItem.appendChild(groupContent);
 
-    document.getElementById("ac-el-list").appendChild(listItem);
+    var groupSortable = new Sortable(groupContent, {
+        group: "elementList",
+        dataIdAttr: "ac-i",
+        onSort: function (event) {
+            console.log(event);
+            console.log(groupSortable.toArray())
+        }
+    })
+
+
+    var elementList = document.getElementById("ac-el-list");
+    listItem.setAttribute("ac-i", elementList.children.length);
+    elementList.appendChild(listItem);
+
+    autocontrolProces.push(new createGroupProcesObj(elements));
+    
+
 }
 
 function generateGroupHeader(elements, listItem) {
@@ -40,15 +71,6 @@ function generateGroupDetails(elements) {
 function generateGroupContent() {
     var groupContent = document.createElement("div");
     groupContent.className = "group-content";
-
-    var newSortable = new Sortable(groupContent, {
-        group: "elementList",
-        dataIdAttr: "data-id",
-        onSort: function (event) {
-            console.log(event);
-            console.log(newSortable.toArray())
-        }
-    })
 
     return groupContent;
 }
