@@ -23,17 +23,14 @@ function generateGroupListItem(elements) {
 
     var groupSortable = new Sortable(groupContent, {
         group: "elementList",
-        dataIdAttr: "ac-i",
-        onSort: function (event) {
-            console.log(event);
-            console.log(groupSortable.toArray())
-        }
+        dataIdAttr: "ac-i"
     })
 
 
     var elementList = document.getElementById("ac-el-list");
 
     listItem.setAttribute("ac-i", elementList.children.length);
+    groupContent.setAttribute("ac-i", elementList.children.length);
     
     elementList.appendChild(listItem);
 
