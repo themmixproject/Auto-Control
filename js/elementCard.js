@@ -8,7 +8,8 @@ function createProcesObj(element){
 
 function createGroupProcesObj(elements) {
     return {
-        elements: elements
+        elements: elements,
+        proces: []
     }
 }
 
