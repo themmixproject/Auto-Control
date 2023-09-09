@@ -257,10 +257,91 @@ if (window.location.hostname === "localhost") {
     var mything = new Sortable(document.getElementById("ac-el-list"), {
         group: "elementList",
         dataIdAttr: "data-id",
-        onSort: function (event) {
-            console.log(event);
-            console.log(mything.toArray())
-        }
+        onSort: handleElementListSortChange
     });
+}
 
+function handleElementListSortChange(event) {
+    updateAutoControlProces(event);
+    
+    var targetList = event.to;
+    var originList = event.from;
+    var oldIndex = event.oldIndex;
+    var newIndex = event.newIndex;
+    updateElementListItemIndexes(originList, oldIndex);
+    updateElementListItemIndexes(targetList, newIndex);
+}
+
+function updateAutoControlProces(event) {
+    var originList = event.from;
+    var targetList = event.to;
+    var originPath = getListIndexPath(originList);
+    var targetPath = getListIndexPath(targetList);
+    var originProces = getProcesFromIndexPath(originPath);
+    var targetProces = getProcesFromIndexPath(targetPath);
+
+    var newIndex = event.newIndex;
+    var oldIndex = event.oldIndex;
+    var transferElement = originProces[oldIndex];
+    insertElementAtIndex(targetProces, newIndex, transferElement);
+
+    originProces.splice(oldIndex, 1);
+}
+
+function updateElementListItemIndexes(list, oldIndex, newIndex) {
+    var listItems = list.children;
+    if (listItems.length == 0) { return; }
+    if (newIndex == undefined ) {
+        newIndex = listItems.length -1;
+    }
+    
+    var start = Math.min(oldIndex, newIndex);    
+    var end = Math.max(oldIndex, newIndex);
+    if (end > listItems.length - 1) {
+        end = listItems.length - 1;
+    }
+
+    for (var i = start; i <= end; i++) {
+        if (listItems[i].className == "group-item") {
+            listItems[i].children[1].setAttribute("ac-i", i);
+        }
+        listItems[i].setAttribute("ac-i", i);
+    }
+}
+
+
+function insertElementAtIndex(arr, index, element) {
+    if (index === 0) {
+        arr.unshift(element);
+    }
+    else if (index === arr.length) {
+        arr.push(element);
+    }
+    else {
+        arr.splice(index, 0, element);
+    }
+}
+
+function getProcesFromIndexPath(indexPath) {
+    var proces = autocontrolProces;
+    for (var i = 0; i <  indexPath.length; i++) {
+        proces = proces[ indexPath[i] ].proces
+    }
+
+    return proces;
+}
+
+function getListIndexPath(groupParent) {
+    var indexes = [];
+
+    var rootList = document.getElementById("ac-el-list");
+    while (groupParent != rootList) {
+        if (groupParent.parentElement == rootList) { break; }
+
+        indexes.push( parseInt(groupParent.getAttribute("ac-i")) );
+
+        groupParent = groupParent.parentElement.parentElement;
+    }
+
+    return indexes.reverse();
 }
