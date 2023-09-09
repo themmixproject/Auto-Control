@@ -14,13 +14,11 @@ function createGroupProcesObj(elements) {
 
 function generateGroupListItem(elements) {
     var listItem = document.createElement("li");
-    var groupItem = document.createElement("div");
-    groupItem.className = "group-item";
-    listItem.appendChild(groupItem);
+    listItem.className = "group-item";
 
-    groupItem.appendChild( generateGroupHeader(elements, listItem ));
+    listItem.appendChild( generateGroupHeader(elements, listItem ));
     var groupContent = generateGroupContent();
-    groupItem.appendChild(groupContent);
+    listItem.appendChild(groupContent);
 
     var groupSortable = new Sortable(groupContent, {
         group: "elementList",
@@ -79,14 +77,12 @@ function generateSingleListItem(elements) {
     var element = elements[0];
     
     var listItem = document.createElement("li");
-    var itemContainer = document.createElement("div");
-    itemContainer.className = "element-item";
-    listItem.appendChild(itemContainer);
+    listItem.className = "element-item";
 
     var tagName = element.tagName.toLowerCase();
 
     var actionType = generateActionTypeFromTagName(tagName);
-    itemContainer.innerHTML += actionType;
+    listItem.innerHTML += actionType;
 
     var listItemContent;
     if (tagName == "div" || tagName == "button") {
@@ -95,7 +91,7 @@ function generateSingleListItem(elements) {
     else {
         listItemContent = generateContent(element, listItem);
     }
-    itemContainer.appendChild(listItemContent);
+    listItem.appendChild(listItemContent);
 
     var elementList = document.getElementById("ac-el-list");
 
