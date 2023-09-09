@@ -65,7 +65,7 @@ function generateGroupDetails(elements) {
 }
 
 function generateGroupContent() {
-    var groupContent = document.createElement("div");
+    var groupContent = document.createElement("ul");
     groupContent.className = "group-content";
 
     return groupContent;
