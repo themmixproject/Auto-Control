@@ -148,7 +148,7 @@
     cursor: w-resize;
 }
 
-#ac-panel button {
+#ac-panel button, .ac-delete-btn, #ac-panel-overlay {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
