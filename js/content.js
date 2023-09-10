@@ -64,6 +64,8 @@ function appendAppHTML() {
 function addInitialEventListeners() {
     document.getElementById("close-button").addEventListener("click", closeApp);
 
+    document.getElementById("ac-panel-overlay").addEventListener("click", disableSelectors)
+
     document
         .getElementById("ac-add-element-group-button")
         .addEventListener("click", toggleGroupSelector);

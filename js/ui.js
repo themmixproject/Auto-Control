@@ -4,6 +4,10 @@ var selectorIsActive = false;
 var singleOverlayIsActive = false;
 var groupOverlayIsActive = false;
 
+function disableSelectors() {
+    console.log("disable selectors");
+};
+
 function toggleGroupSelector(event) {
     if (singleOverlayIsActive) { return; }
 
