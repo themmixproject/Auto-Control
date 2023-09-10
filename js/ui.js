@@ -30,6 +30,9 @@ function disableGroupOverlay() {
 
     document.removeEventListener("click", processGroupSelectedElements);
     document.removeEventListener("mousemove", moveGroupOverlayToElement);
+    
+    groupOverlayIsActive = !groupOverlayIsActive;
+    selectorIsActive = !selectorIsActive;
 }
 
 function enableGroupOverlay(event) {
@@ -209,6 +212,9 @@ function disableSingleOverlay() {
 
     document.removeEventListener("click", processSingleSelectedElement);
     document.removeEventListener("mousemove", moveSingleOverlayToElement);
+
+    groupOverlayIsActive = !groupOverlayIsActive;
+    selectorIsActive = !selectorIsActive;
 }
 
 function processSingleSelectedElement(event) {
