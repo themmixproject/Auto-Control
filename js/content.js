@@ -37,6 +37,9 @@ function appendAppHTML() {
     appContainer.innerHTML += `
     <div id="ac-selectors-container"></div>
     <div id="ac-panel" style="width: ${globalOffset}px;">
+        <div id="ac-panel-overlay">
+            <div id="overlay-message">click here to cancel selection</div>
+        </div>
         <div id="ac-panel-resizer" style="position: fixed; left: ${globalOffset}px;"></div>
         <header id="ac-panel-header" style="width: ${globalOffset}px;">
             <div id="title-wrapper">
@@ -54,6 +57,7 @@ function appendAppHTML() {
             <button id="ac-add-element-button">Add Element</button>
             <button id="ac-run-button">Run</button>
         </div>
+
     </div>`;
 }
 

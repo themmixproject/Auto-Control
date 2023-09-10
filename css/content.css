@@ -44,6 +44,27 @@
         white-space: nowrap;
     }
 
+#ac-panel-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+    #ac-panel-overlay #overlay-message {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+        height: 100%;
+        width: 100%;
+        font-size: 20px;
+    }
+
 #ac-panel {
     font-size: 16px;
     position: fixed;
@@ -75,6 +96,7 @@
     position: fixed;
     top: 0;
     overflow: hidden;
+    z-index: 2;
 }
 
 #ac-panel-header #title-wrapper {
