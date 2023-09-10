@@ -314,7 +314,7 @@ function insertElementAtIndex(arr, index, element) {
     if (index === 0) {
         arr.unshift(element);
     }
-    else if (index === arr.length) {
+    else if (index === arr.length - 1) {
         arr.push(element);
     }
     else {
