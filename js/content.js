@@ -66,11 +66,17 @@ function addInitialEventListeners() {
 
     document
         .getElementById("ac-add-element-group-button")
-        .addEventListener("click", enableGroupSelector);
+        .addEventListener("click", function(event){
+            event.stopPropagation();
+            enableSelectors(processGroupSelectedElements, moveGroupOverlayToElement);
+        });
 
     document
         .getElementById("ac-add-element-button")
-        .addEventListener("click", toggleSingleSelector);
+        .addEventListener("click", function(event) {
+            event.stopPropagation();
+            enableSelectors(processSingleSelectedElement, moveSingleOverlayToElement);
+        });
 
     document
         .getElementById("ac-run-button")

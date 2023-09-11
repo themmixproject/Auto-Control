@@ -4,25 +4,28 @@ var selectorIsActive = false;
 var singleOverlayIsActive = false;
 var groupOverlayIsActive = false;
 
-function enableGroupSelector(event) {
-    event.stopPropagation();
 
-    document.addEventListener("click", processGroupSelectedElements);
-    document.addEventListener("mousemove", moveGroupOverlayToElement);
+function enableSelectors(procesMethod, moveOverlayMethod) {
+    document.addEventListener("click", procesMethod);
+    document.addEventListener("mousemove", moveOverlayMethod);
+
+    console.log("enable selectors");
 
     var panelOverlay = document.getElementById("ac-panel-overlay");
-    panelOverlay.addEventListener("click", disableGroupOverlay);
+    panelOverlay.addEventListener("click", function () { 
+        disableSelectors(procesMethod, moveOverlayMethod)
+    });
     panelOverlay.style.display = "block";
 }
 
-function disableGroupOverlay() {
+function disableSelectors(procesMethod, moveOverlayMethod) {
     selectorsContainer.innerHTML = "";
 
-    document.removeEventListener("click", processGroupSelectedElements);
-    document.removeEventListener("mousemove", moveGroupOverlayToElement);
-    
+    document.removeEventListener("click", procesMethod);
+    document.removeEventListener("mousemove", moveOverlayMethod);
+
     var panelOverlay = document.getElementById("ac-panel-overlay");
-    panelOverlay.removeEventListener("click", disableGroupOverlay);
+    panelOverlay.removeEventListener("click", disableSelectors);
     panelOverlay.removeAttribute("style");
 }
 
@@ -157,40 +160,14 @@ function getChildQuery(parent, child) {
 function processGroupSelectedElements() {
     if (selectedElements == null) { return; }
 
-    disableGroupOverlay();
+    disableSelectors(processGroupSelectedElements, moveGroupOverlayToElement);
     generateGroupListItem(selectedElements);
 }
 
-function toggleSingleSelector(event) {
-    event.stopPropagation();
-
-    document.addEventListener("click", processSingleSelectedElement);
-    document.addEventListener("mousemove", moveSingleOverlayToElement);
-
-    var panelOverlay = document.getElementById("ac-panel-overlay");
-    panelOverlay.addEventListener("click", disableSingleOverlay);
-    panelOverlay.style.display = "block";
-}
-
-
-function disableSingleOverlay() {
-    selectorsContainer.innerHTML = "";
-
-    var addElementButton = document.getElementById("ac-add-element-button");
-    addElementButton.innerHTML = "Add Element";
-
-    document.removeEventListener("click", processSingleSelectedElement);
-    document.removeEventListener("mousemove", moveSingleOverlayToElement);
-
-    var panelOverlay = document.getElementById("ac-panel-overlay");
-    panelOverlay.removeEventListener("click", disableSingleOverlay);
-    panelOverlay.removeAttribute("style");
-}
-
-function processSingleSelectedElement(event) {
+function processSingleSelectedElement() {
     if (selectedElements == null) { return; }
     
-    disableSingleOverlay(event);
+    disableSelectors(processSingleSelectedElement, moveSingleOverlayToElement);
     generateSingleListItem(selectedElements)
 }
 
