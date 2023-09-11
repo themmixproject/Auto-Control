@@ -4,51 +4,26 @@ var selectorIsActive = false;
 var singleOverlayIsActive = false;
 var groupOverlayIsActive = false;
 
-function disableSelectors() {
-    console.log("disable selectors");
-};
+function enableGroupSelector(event) {
+    event.stopPropagation();
 
-function toggleGroupSelector(event) {
-    if (singleOverlayIsActive) { return; }
+    document.addEventListener("click", processGroupSelectedElements);
+    document.addEventListener("mousemove", moveGroupOverlayToElement);
 
-    if (selectorIsActive) {
-        disableGroupOverlay();
-    }
-    else {
-        var addGroupButton = document.getElementById("ac-add-element-group-button");
-        addGroupButton.innerHTML = "Cancel";
-        enableGroupOverlay(event);
-    }
-
-    groupOverlayIsActive = !groupOverlayIsActive;
-    selectorIsActive = !selectorIsActive;
+    var panelOverlay = document.getElementById("ac-panel-overlay");
+    panelOverlay.addEventListener("click", disableGroupOverlay);
+    panelOverlay.style.display = "block";
 }
 
 function disableGroupOverlay() {
-    var addGroupButton = document.getElementById(
-        "ac-add-element-group-button"
-    );
-    addGroupButton.innerHTML = "Add Group";
-
     selectorsContainer.innerHTML = "";
 
     document.removeEventListener("click", processGroupSelectedElements);
     document.removeEventListener("mousemove", moveGroupOverlayToElement);
     
-    groupOverlayIsActive = !groupOverlayIsActive;
-    selectorIsActive = !selectorIsActive;
-}
-
-function enableGroupOverlay(event) {
-    event.stopPropagation();
-
-    var addGroupButton = document.getElementById(
-        "ac-add-element-group-button"
-    );
-    addGroupButton.innerHTML = "Cancel";
-
-    document.addEventListener("click", processGroupSelectedElements);
-    document.addEventListener("mousemove", moveGroupOverlayToElement);
+    var panelOverlay = document.getElementById("ac-panel-overlay");
+    panelOverlay.removeEventListener("click", disableGroupOverlay);
+    panelOverlay.removeAttribute("style");
 }
 
 function moveGroupOverlayToElement(event) {
@@ -187,38 +162,29 @@ function processGroupSelectedElements() {
 }
 
 function toggleSingleSelector(event) {
-    if (groupOverlayIsActive) { return; }
-    
-    if ( selectorIsActive ) {
-        disableSingleOverlay();
-    }
-    else {
-        enableSingleOverlay(event);
-    }
-    
-    singleOverlayIsActive = !singleOverlayIsActive;
-    selectorIsActive = !selectorIsActive;
-}
-
-function enableSingleOverlay(event) {
     event.stopPropagation();
-
-    var addElementButton = document.getElementById("ac-add-element-button");
-    addElementButton.innerHTML = "Cancel";
 
     document.addEventListener("click", processSingleSelectedElement);
     document.addEventListener("mousemove", moveSingleOverlayToElement);
+
+    var panelOverlay = document.getElementById("ac-panel-overlay");
+    panelOverlay.addEventListener("click", disableSingleOverlay);
+    panelOverlay.style.display = "block";
 }
 
+
 function disableSingleOverlay() {
+    selectorsContainer.innerHTML = "";
+
     var addElementButton = document.getElementById("ac-add-element-button");
     addElementButton.innerHTML = "Add Element";
 
     document.removeEventListener("click", processSingleSelectedElement);
     document.removeEventListener("mousemove", moveSingleOverlayToElement);
 
-    groupOverlayIsActive = !groupOverlayIsActive;
-    selectorIsActive = !selectorIsActive;
+    var panelOverlay = document.getElementById("ac-panel-overlay");
+    panelOverlay.removeEventListener("click", disableSingleOverlay);
+    panelOverlay.removeAttribute("style");
 }
 
 function processSingleSelectedElement(event) {
