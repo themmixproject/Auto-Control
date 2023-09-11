@@ -203,7 +203,6 @@ function generateDeleteButton(listItem) {
     deleteButton.addEventListener("click", function () {
         listItem.remove();
     });
-    console.log(deleteButton);
 
     return deleteButton;
 }
