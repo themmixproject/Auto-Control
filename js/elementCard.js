@@ -201,7 +201,7 @@ function generateDeleteButton(listItem) {
     deleteButton.innerHTML = "Delete";
     
     deleteButton.addEventListener("click", function () {
-        listItem.remove();
+        handleListItemDeletion(listItem);
     });
 
     return deleteButton;
@@ -258,6 +258,24 @@ if (window.location.hostname === "localhost") {
         dataIdAttr: "data-id",
         onSort: handleElementListSortChange
     });
+}
+
+function handleListItemDeletion(listItem) {
+    var listItemParent = listItem.parentElement;
+    
+    var chldrenArr = [].slice.call( listItemParent.children );
+    var elementIndex = chldrenArr.indexOf(listItem);
+
+    var startIndex = 0;
+    if (elementIndex > 0) {
+        startIndex = elementIndex - 1;
+    }
+    listItem.remove();
+    updateElementListItemIndexes(listItemParent, startIndex);
+
+    var indexPath = getListIndexPath(listItemParent);
+    var proces = getProcesFromIndexPath(indexPath);
+    proces.splice(elementIndex, 1);
 }
 
 function handleElementListSortChange(event) {
