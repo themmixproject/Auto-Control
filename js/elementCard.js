@@ -1,18 +1,3 @@
-var autocontrolProces = [];
-
-function createProcesObj(element){
-    return {
-        element: element
-    };
-}
-
-function createGroupProcesObj(elements) {
-    return {
-        elements: elements,
-        proces: []
-    }
-}
-
 function generateGroupListItem(elements) {
     var listItem = document.createElement("li");
     listItem.className = "group-item";
@@ -97,7 +82,7 @@ function generateSingleListItem(elements) {
     
     elementList.appendChild(listItem);
 
-    autocontrolProces.push(createProcesObj(element));
+    autocontrolProces.push(createProcesObj(element, listItemContent));
 }
 
 function generateActionTypeFromTagName(tagName) {
@@ -248,6 +233,9 @@ if (window.location.hostname === "localhost") {
     var buttonGroup = findElementGroup(demoButton, 5);
     generateGroupListItem(buttonGroup);
 
+    var demoInput = document.querySelector("html body:nth-child(2) div#app:nth-child(2) input:nth-child(8)");
+    generateSingleListItem([demoInput]);
+
     // for(var i = 0; i < buttonGroup.length; i++) {
     //     var button = buttonGroup[i];
     //     generateSingleListItem([button]);
@@ -258,6 +246,8 @@ if (window.location.hostname === "localhost") {
         dataIdAttr: "data-id",
         onSort: handleElementListSortChange
     });
+
+    console.log(autocontrolProces);
 }
 
 function handleListItemDeletion(listItem) {
