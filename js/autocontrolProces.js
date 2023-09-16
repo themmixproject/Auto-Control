@@ -1,7 +1,11 @@
 var autocontrolProces = {
     name: "",
     proces: [],
+    originUrl: "",
 
+    init: function() {
+        autocontrolProces.originUrl = window.location.href;
+    },
     createProcesObj: function(element, listItemContent) {
         var procesObj = {};
         procesObj.procesElementType = "single";
@@ -14,7 +18,7 @@ var autocontrolProces = {
             actionType, 
             listItemContent
         );
-        
+
         if (actionElement != null)
         {
             procesObj.actionElement = actionElement;
@@ -65,3 +69,4 @@ var autocontrolProces = {
         return actionElement;
     }
 };
+autocontrolProces.init();
