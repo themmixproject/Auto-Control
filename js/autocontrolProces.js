@@ -18,10 +18,16 @@ function createProcesObj(element, listItemContent) {
 }
 
 function createGroupProcesObj(elements) {
-    return {
-        elements: elements,
-        proces: []
-    }
+    var procesObj = {};
+    procesObj.procesElementType = "group";
+
+    var actionType = generateActionType(elements[0]);
+    procesObj.actionType = actionType;
+
+
+    procesObj.elements = elements
+
+    return procesObj;
 }
 
 function generateActionType(element) {
