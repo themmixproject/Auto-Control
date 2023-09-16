@@ -69,8 +69,50 @@ var autocontrolProces = {
         return actionElement;
     },
 
+    /**
+     * how to save proces progress: create an array, every time it goes another layer "deeper" push a new integer into it
+     * then increment the integer the further you get into that layer of the process, this should work
+     */
     runAutomation: function() {
-        console.log("hello world!");
-    }
+        var proces = autocontrolProces.proces;
+        autocontrolProces.executeProces(proces)
+    },
+    executeProces: function(proces) {
+        for (var i = 0; i < proces.length; i++) {
+            var procesElement = proces[i];
+
+            if (procesElement.procesElementType == "group") {
+                autocontrolProces.runGroupProces(procesElement);
+            }
+            else {
+                autocontrolProces.executeAction(procesElement);
+            }
+        }
+    },
+
+    executeAction: function(procesElement) {
+        console.log(procesElement);
+    },
+    runGroupProces: function(groupProces) {
+        for (var i = 0; i < groupProces.elements.length; i++) {
+            var procesElement = autocontrolProces
+                .convertToProcesElement(
+                    groupProces,
+                    i
+                );
+            autocontrolProces.executeAction(procesElement);
+
+            if (groupProces.proces.length > 0) {
+                autocontrolProces.executeProces(groupProces.proces);
+            }
+        }
+    },
+    convertToProcesElement(groupProces, index) {
+        return {
+            element: groupProces.elements[index],
+            actionType: groupProces.actionType
+        };
+    },
+    
 };
 autocontrolProces.init();
