@@ -14,8 +14,8 @@
             "js": [
                 "lib/sortable.min.js",
                 "js/ui.js",
-                "js/content.js",
                 "js/autocontrolProces.js",
+                "js/content.js",
                 "js/elementCard.js"
             ],
             "css": ["css/content.css", "css/element-list.css"]

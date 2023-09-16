@@ -67,6 +67,10 @@ var autocontrolProces = {
         }
     
         return actionElement;
+    },
+
+    runAutomation: function() {
+        console.log("hello world!");
     }
 };
 autocontrolProces.init();

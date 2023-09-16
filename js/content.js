@@ -97,6 +97,10 @@ function addInitialEventListeners() {
             resizePanel(event.clientX);
         }
     });
+
+
+    document.getElementById("ac-run-button")
+    .addEventListener("click", autocontrolProces.runAutomation)
 }
 
 function setNavWidth() {
