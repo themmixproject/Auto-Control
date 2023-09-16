@@ -6,7 +6,7 @@ function generateGroupListItem(elements) {
     var groupContent = generateGroupContent();
     listItem.appendChild(groupContent);
 
-    var groupSortable = new Sortable(groupContent, {
+    new Sortable(groupContent, {
         group: "elementList",
         dataIdAttr: "ac-i"
     })
@@ -19,7 +19,7 @@ function generateGroupListItem(elements) {
     
     elementList.appendChild(listItem);
 
-    autocontrolProces.push(createGroupProcesObj(elements));
+    autocontrolProces.createGroupProcesObj(elements);
 }
 
 function generateGroupHeader(elements, listItem) {
@@ -82,7 +82,7 @@ function generateSingleListItem(elements) {
     
     elementList.appendChild(listItem);
 
-    autocontrolProces.push(createProcesObj(element, listItemContent));
+    autocontrolProces.createProcesObj(element, listItemContent);
 }
 
 function generateActionTypeFromTagName(tagName) {
@@ -217,39 +217,6 @@ function generateElementDetails(element) {
     return elementDetails;
 }
 
-if (window.location.hostname === "localhost") {
-    loadApp();
-    var demoButton = document.querySelector(
-        "html body:nth-child(2) div#app:nth-child(2) div#card-container:nth-child(10) div.card:nth-child(4) button:nth-child(5)"
-    );
-    generateSingleListItem([demoButton]);
-
-    var demoCard = document.getElementsByClassName("card")[0]
-    generateSingleListItem([demoCard]);
-
-    var demoAnchor = document.getElementById("link-container").getElementsByTagName("a")[0];
-    generateSingleListItem([demoAnchor]);
-
-    var buttonGroup = findElementGroup(demoButton, 5);
-    generateGroupListItem(buttonGroup);
-
-    var demoInput = document.querySelector("html body:nth-child(2) div#app:nth-child(2) input:nth-child(8)");
-    generateSingleListItem([demoInput]);
-
-    // for(var i = 0; i < buttonGroup.length; i++) {
-    //     var button = buttonGroup[i];
-    //     generateSingleListItem([button]);
-    // }
-
-    var mything = new Sortable(document.getElementById("ac-el-list"), {
-        group: "elementList",
-        dataIdAttr: "data-id",
-        onSort: handleElementListSortChange
-    });
-
-    console.log(autocontrolProces);
-}
-
 function handleListItemDeletion(listItem) {
     var listItemParent = listItem.parentElement;
     
@@ -317,7 +284,7 @@ function updateElementListItemIndexes(list, oldIndex, newIndex) {
 }
 
 function getProcesFromIndexPath(indexPath) {
-    var proces = autocontrolProces;
+    var proces = autocontrolProces.proces;
     for (var i = 0; i <  indexPath.length; i++) {
         proces = proces[ indexPath[i] ].proces
     }
@@ -338,4 +305,37 @@ function getListIndexPath(groupParent) {
     }
 
     return indexes.reverse();
+}
+
+if (window.location.hostname === "localhost") {
+    loadApp();
+    var demoButton = document.querySelector(
+        "html body:nth-child(2) div#app:nth-child(2) div#card-container:nth-child(10) div.card:nth-child(4) button:nth-child(5)"
+    );
+    generateSingleListItem([demoButton]);
+
+    var demoCard = document.getElementsByClassName("card")[0]
+    generateSingleListItem([demoCard]);
+
+    var demoAnchor = document.getElementById("link-container").getElementsByTagName("a")[0];
+    generateSingleListItem([demoAnchor]);
+
+    var buttonGroup = findElementGroup(demoButton, 5);
+    generateGroupListItem(buttonGroup);
+
+    var demoInput = document.querySelector("html body:nth-child(2) div#app:nth-child(2) input:nth-child(8)");
+    generateSingleListItem([demoInput]);
+
+    // for(var i = 0; i < buttonGroup.length; i++) {
+    //     var button = buttonGroup[i];
+    //     generateSingleListItem([button]);
+    // }
+
+    var mything = new Sortable(document.getElementById("ac-el-list"), {
+        group: "elementList",
+        dataIdAttr: "data-id",
+        onSort: handleElementListSortChange
+    });
+
+    console.log(autocontrolProces);
 }
