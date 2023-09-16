@@ -1,3 +1,4 @@
+var runningProcesIndexPath = [];
 var autocontrolProces = {
     name: "",
     proces: [],
@@ -78,6 +79,9 @@ var autocontrolProces = {
         autocontrolProces.executeProces(proces)
     },
     executeProces: function(proces) {
+        runningProcesIndexPath.push(0);
+        var currentProcesDepth = runningProcesIndexPath.length;
+
         for (var i = 0; i < proces.length; i++) {
             var procesElement = proces[i];
 
@@ -87,11 +91,19 @@ var autocontrolProces = {
             else {
                 autocontrolProces.executeAction(procesElement);
             }
+
+            // runningProcesIndexPath[currentProcesDepth] = i;
+            // console.log(runningProcesIndexPath);
         }
+
+        console.log("finished running proces");
+
+        runningProcesIndexPath.splice(currentProcesDepth, 1);
+        console.log(runningProcesIndexPath.length);
     },
 
     executeAction: function(procesElement) {
-        console.log(procesElement);
+        // console.log(procesElement);
     },
     runGroupProces: function(groupProces) {
         for (var i = 0; i < groupProces.elements.length; i++) {
