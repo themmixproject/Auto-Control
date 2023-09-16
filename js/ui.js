@@ -9,8 +9,6 @@ function enableSelectors(procesMethod, moveOverlayMethod) {
     document.addEventListener("click", procesMethod);
     document.addEventListener("mousemove", moveOverlayMethod);
 
-    console.log("enable selectors");
-
     var panelOverlay = document.getElementById("ac-panel-overlay");
     panelOverlay.addEventListener("click", function () { 
         disableSelectors(procesMethod, moveOverlayMethod)
