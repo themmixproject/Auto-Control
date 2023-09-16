@@ -293,18 +293,3 @@ function getHoverElement(event) {
         return hoverElement;
     }
 }
-
-function runAutomation() {
-    for (var i = 0; i < automationProcess.length; i++) {
-        var item = automationProcess[i];
-        var eventElement = document.querySelector(item.elementQuery);
-        if (item.eventType == "click") {
-            var event = new Event("click");
-            eventElement.dispatchEvent(event);
-        } else if (item.eventType == "insert") {
-            eventElement.value = item.input.value;
-        } else {
-            window.location.assign(eventElement.href);
-        }
-    }
-}

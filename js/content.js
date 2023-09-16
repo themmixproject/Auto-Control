@@ -8,8 +8,6 @@ var adaptedElementsAreLoaded = false;
 var isResizing = false;
 var resizeStart = 0;
 
-var automationProcess = [];
-
 var adaptedElements = [];
 
 var extensionId = "";
@@ -77,10 +75,6 @@ function addInitialEventListeners() {
             event.stopPropagation();
             enableSelectors(processSingleSelectedElement, moveSingleOverlayToElement);
         });
-
-    document
-        .getElementById("ac-run-button")
-        .addEventListener("click", runAutomation);
 
     document
         .getElementById("ac-panel-resizer")
