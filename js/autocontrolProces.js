@@ -23,7 +23,7 @@ function createGroupProcesObj(elements) {
 
     var actionType = generateActionType(elements[0]);
     procesObj.actionType = actionType;
-
+    procesObj.proces = [];
 
     procesObj.elements = elements
 

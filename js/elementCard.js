@@ -290,9 +290,9 @@ function updateAutoControlProces(event) {
     var newIndex = event.newIndex;
     var oldIndex = event.oldIndex;
     var transferElement = originProces[oldIndex];
-    insertElementAtIndex(targetProces, newIndex, transferElement);
-
+    
     originProces.splice(oldIndex, 1);
+    targetProces.splice(newIndex, 0, transferElement);
 }
 
 function updateElementListItemIndexes(list, oldIndex, newIndex) {
@@ -313,19 +313,6 @@ function updateElementListItemIndexes(list, oldIndex, newIndex) {
             listItems[i].children[1].setAttribute("ac-i", i);
         }
         listItems[i].setAttribute("ac-i", i);
-    }
-}
-
-
-function insertElementAtIndex(arr, index, element) {
-    if (index === 0) {
-        arr.unshift(element);
-    }
-    else if (index === arr.length - 1) {
-        arr.push(element);
-    }
-    else {
-        arr.splice(index, 0, element);
     }
 }
 
