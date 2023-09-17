@@ -1,4 +1,5 @@
 var runningProcesIndexPath = [];
+var procesDepth = -1;
 var autocontrolProces = {
     name: "",
     proces: [],
@@ -76,7 +77,17 @@ var autocontrolProces = {
      */
     runAutomation: function() {
         var proces = autocontrolProces.proces;
-        autocontrolProces.executeProces(proces)
+
+        if (loadedProcesIndexPath.length > 0) {
+            // runningProcesIndexPath = loadedProcesIndexPath;
+            autocontrolProces.loadRunningProces(proces, loadedProcesIndexPath);
+        }
+        else {
+            autocontrolProces.executeProces(proces)
+        }
+
+        procesDepth = -1;
+
     },
     executeProces: function(proces) {
         runningProcesIndexPath.push(0);
@@ -125,6 +136,53 @@ var autocontrolProces = {
             actionType: groupProces.actionType
         };
     },
+    loadRunningProces: function(proces, indexPath) {
+        if (indexPath == undefined) { indexPath = [] };
+
+        procesDepth++;
+    
+        if (procesDepth + 1 > indexPath.length) {
+            indexPath.push(0);
+        }
+
+        for (var i = indexPath[procesDepth]; i < proces.length; i++) {
+            var procesElement = proces[i];
+            
+            if (procesElement.procesElementType == "group") {
+                autocontrolProces.loadGroupProces(procesElement, indexPath);
+            }
+            else {
+                autocontrolProces.executeAction(procesElement);
+            }
+
+            indexPath[procesDepth]++;
+        }
+
+        indexPath.pop();
+        procesDepth--;
+    },
+    loadGroupProces: function(groupProces, indexPath) {
+        procesDepth++;
+        
+        for (var i = indexPath[procesDepth]; i < groupProces.elements.length; i++) {
+            if (indexPath.length > procesDepth + 1) {
+                autocontrolProces.loadRunningProces(groupProces.proces, indexPath);
+            }
+            else {
+                var procesElement = autocontrolProces.convertToProcesElement(groupProces, i);
+                autocontrolProces.executeAction(procesElement);
+
+                if (groupProces.proces.length > 0) {
+                    autocontrolProces.loadRunningProces(groupProces.proces, indexPath);
+                }
+
+                indexPath[procesDepth]++;
+            }
+        }
+
+        indexPath.pop();
+        procesDepth--;
+    }
     
 };
 autocontrolProces.init();
