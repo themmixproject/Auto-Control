@@ -80,44 +80,44 @@ var autocontrolProces = {
     },
     executeProces: function(proces) {
         runningProcesIndexPath.push(0);
-        var currentProcesDepth = runningProcesIndexPath.length;
+        var currentProcesDepth = runningProcesIndexPath.length - 1;
 
         for (var i = 0; i < proces.length; i++) {
             var procesElement = proces[i];
-
+            
             if (procesElement.procesElementType == "group") {
                 autocontrolProces.runGroupProces(procesElement);
             }
             else {
                 autocontrolProces.executeAction(procesElement);
             }
-
-            // runningProcesIndexPath[currentProcesDepth] = i;
-            // console.log(runningProcesIndexPath);
+            
+            runningProcesIndexPath[currentProcesDepth]++;
         }
 
-        console.log("finished running proces");
-
-        runningProcesIndexPath.splice(currentProcesDepth, 1);
-        console.log(runningProcesIndexPath.length);
+        runningProcesIndexPath.pop();
     },
 
     executeAction: function(procesElement) {
-        // console.log(procesElement);
+        console.log(procesElement);
     },
+
     runGroupProces: function(groupProces) {
+        runningProcesIndexPath.push(0);
+        var currentProcesDepth = runningProcesIndexPath.length - 1;
+
         for (var i = 0; i < groupProces.elements.length; i++) {
-            var procesElement = autocontrolProces
-                .convertToProcesElement(
-                    groupProces,
-                    i
-                );
+            var procesElement = autocontrolProces.convertToProcesElement(groupProces, i);
             autocontrolProces.executeAction(procesElement);
 
             if (groupProces.proces.length > 0) {
                 autocontrolProces.executeProces(groupProces.proces);
             }
+
+            runningProcesIndexPath[currentProcesDepth]++;
         }
+
+        runningProcesIndexPath.pop();
     },
     convertToProcesElement(groupProces, index) {
         return {
