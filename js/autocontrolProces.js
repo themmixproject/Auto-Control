@@ -71,64 +71,20 @@ var autocontrolProces = {
         return actionElement;
     },
 
-    /**
-     * how to save proces progress: create an array, every time it goes another layer "deeper" push a new integer into it
-     * then increment the integer the further you get into that layer of the process, this should work
-     */
     runAutomation: function() {
         var proces = autocontrolProces.proces;
 
         if (loadedProcesIndexPath.length > 0) {
-            // runningProcesIndexPath = loadedProcesIndexPath;
-            autocontrolProces.loadRunningProces(proces, loadedProcesIndexPath);
+            autocontrolProces.runProces(proces, loadedProcesIndexPath);
         }
         else {
             autocontrolProces.executeProces(proces)
         }
 
         procesDepth = -1;
-
     },
-    executeProces: function(proces) {
-        runningProcesIndexPath.push(0);
-        var currentProcesDepth = runningProcesIndexPath.length - 1;
-
-        for (var i = 0; i < proces.length; i++) {
-            var procesElement = proces[i];
-            
-            if (procesElement.procesElementType == "group") {
-                autocontrolProces.runGroupProces(procesElement);
-            }
-            else {
-                autocontrolProces.executeAction(procesElement);
-            }
-            
-            runningProcesIndexPath[currentProcesDepth]++;
-        }
-
-        runningProcesIndexPath.pop();
-    },
-
     executeAction: function(procesElement) {
         console.log(procesElement);
-    },
-
-    runGroupProces: function(groupProces) {
-        runningProcesIndexPath.push(0);
-        var currentProcesDepth = runningProcesIndexPath.length - 1;
-
-        for (var i = 0; i < groupProces.elements.length; i++) {
-            var procesElement = autocontrolProces.convertToProcesElement(groupProces, i);
-            autocontrolProces.executeAction(procesElement);
-
-            if (groupProces.proces.length > 0) {
-                autocontrolProces.executeProces(groupProces.proces);
-            }
-
-            runningProcesIndexPath[currentProcesDepth]++;
-        }
-
-        runningProcesIndexPath.pop();
     },
     convertToProcesElement(groupProces, index) {
         return {
@@ -136,7 +92,7 @@ var autocontrolProces = {
             actionType: groupProces.actionType
         };
     },
-    loadRunningProces: function(proces, indexPath) {
+    runProces: function(proces, indexPath) {
         if (indexPath == undefined) { indexPath = [] };
 
         procesDepth++;
@@ -149,7 +105,7 @@ var autocontrolProces = {
             var procesElement = proces[i];
             
             if (procesElement.procesElementType == "group") {
-                autocontrolProces.loadGroupProces(procesElement, indexPath);
+                autocontrolProces.runGroupProces(procesElement, indexPath);
             }
             else {
                 autocontrolProces.executeAction(procesElement);
@@ -161,19 +117,19 @@ var autocontrolProces = {
         indexPath.pop();
         procesDepth--;
     },
-    loadGroupProces: function(groupProces, indexPath) {
+    runGroupProces: function(groupProces, indexPath) {
         procesDepth++;
         
         for (var i = indexPath[procesDepth]; i < groupProces.elements.length; i++) {
             if (indexPath.length > procesDepth + 1) {
-                autocontrolProces.loadRunningProces(groupProces.proces, indexPath);
+                autocontrolProces.runProces(groupProces.proces, indexPath);
             }
             else {
                 var procesElement = autocontrolProces.convertToProcesElement(groupProces, i);
                 autocontrolProces.executeAction(procesElement);
 
                 if (groupProces.proces.length > 0) {
-                    autocontrolProces.loadRunningProces(groupProces.proces, indexPath);
+                    autocontrolProces.runProces(groupProces.proces, indexPath);
                 }
 
                 indexPath[procesDepth]++;
