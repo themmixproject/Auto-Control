@@ -169,26 +169,6 @@ function processSingleSelectedElement() {
     generateSingleListItem(selectedElements)
 }
 
-function createProcessObject(listItemContent) {
-    var elementQuery = elementToQuery(selectedElement);
-    var processObject = {
-        elementQuery: elementQuery,
-        eventType: "",
-    };
-
-    var elementTag = selectedElement.tagName.toLowerCase();
-    if (elementTag == "input") {
-        processObject.eventType = "insert";
-        processObject.input = listItemContent.getElementsByTagName("input")[0];
-    } else if (elementTag == "div" || elementTag == "button") {
-        processObject.eventType = "click";
-    } else if (elementTag == "a") {
-        processObject.eventType = "goto";
-    }
-
-    return processObject;
-}
-
 function elementToQuery(element) {
     let query = "";
     let current = element;
@@ -246,29 +226,6 @@ function getCssSelector(element) {
         selector += "." + element.className.trim().replace(/\s+/g, ".");
     }
     return selector;
-}
-
-function convertElementToStyledSelectorElement(element) {
-    var elementInfo = document.createElement("span");
-    elementInfo.style.fontFamily = "monospace";
-    elementInfo.style.overflow = "hidden";
-    elementInfo.style.textOverflow = "ellipsis";
-    elementInfo.style.whiteSpace = "nowrap";
-
-    elementInfo.innerHTML =
-        "<span style='color: blue'>" +
-        element.tagName.toLowerCase() +
-        "</span>";
-    if (element.id) {
-        elementInfo.innerHTML +=
-            "<span style='color: green;'>#" + element.id + "</span>";
-    }
-    if (element.className) {
-        elementInfo.innerHTML +=
-            "<span style='color: red'>." + element.className + "</span>";
-    }
-
-    return elementInfo;
 }
 
 function getHoverElement(event) {
