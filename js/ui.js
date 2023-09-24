@@ -48,12 +48,16 @@ function renderSelectors(elements, hoverElement) {
             selector.appendChild(label);
             selector.className += " has-label";
 
-            var selectorBoundingClient = selector.getBoundingClientRect();
-            if (selectorBoundingClient.width > elementBoundingClient.width) {
-                label.style.width = elementBoundingClient.width + "px";
-                selector.className += " label-overflow";
-            }
+            handleLabelOverflow(selector, label, elementBoundingClient);
         }
+    }
+}
+
+function handleLabelOverflow(selector, label, elementBoundingClient) {
+    var selectorBoundingClient = selector.getBoundingClientRect();
+    if (selectorBoundingClient.width > elementBoundingClient.width) {
+        label.style.width = elementBoundingClient.width + "px";
+        selector.className += " label-overflow";
     }
 }
 
@@ -63,6 +67,17 @@ function generateLabel(hoverElement) {
     label.innerHTML = getCssSelector(hoverElement);
 
     return label;
+}
+
+function getCssSelector(element) {
+    var selector = element.nodeName.toLowerCase();
+    if (element.id) {
+        selector += "#" + element.id;
+    }
+    if (element.className) {
+        selector += "." + element.className.trim().replace(/\s+/g, ".");
+    }
+    return selector;
 }
 
 function generateSelector(elementBoundingClient) {
@@ -227,17 +242,6 @@ function moveSingleOverlayToElement(event) {
 
     selectedElements = [hoverElement];
     renderSelectors(selectedElements, hoverElement);
-}
-
-function getCssSelector(element) {
-    var selector = element.nodeName.toLowerCase();
-    if (element.id) {
-        selector += "#" + element.id;
-    }
-    if (element.className) {
-        selector += "." + element.className.trim().replace(/\s+/g, ".");
-    }
-    return selector;
 }
 
 function getHoverElement(event) {
