@@ -1,16 +1,10 @@
 let appContainer = null;
-var selectedElement = null;
-var elementSelector = null;
-var elementSelectorLabel = null;
-var selectorsContainer = null;
 var globalOffset = 200;
-var adaptedElementsAreLoaded = false;
 var isResizing = false;
 var resizeStart = 0;
-
 var adaptedElements = [];
-
 var extensionId = "";
+var selectorsContainer;
 
 function loadApp() {
     adaptSiteContent();
@@ -226,8 +220,7 @@ function closeApp() {
     document.removeEventListener("mousemove", moveOverlayToElement);
     document.body.removeChild(appContainer);
 
-    appContainer = null;
-    selectedElement = null;
+    appContainer = undefined;
 
     resetElementsToOriginalStyle();
 }
