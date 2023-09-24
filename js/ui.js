@@ -39,37 +39,44 @@ function moveGroupOverlayToElement(event) {
 
 function renderSelectors(elements, hoverElement) {
     for (var i = 0; i < elements.length; i++) {
-        var newSelector = document.createElement("div");
-        newSelector.className = "ac-selector";
-        selectorsContainer.appendChild(newSelector);
+        var element = elements[i];
+        var elementBoundingClient = element.getBoundingClientRect;
+        var selector = generateSelector( elementBoundingClient );
+        
+        if (element == hoverElement) {
+            var label = generateLabel(hoverElement);
+            selector.appendChild(label);
+            selector.className += " has-label";
 
-        var overlayElement = elements[i];
-        var overlayBoundingClient = overlayElement.getBoundingClientRect();
-        newSelector.style.top = overlayBoundingClient.top + window.scrollY + "px";
-        newSelector.style.left =
-            overlayBoundingClient.left + window.scrollX + "px";
-        newSelector.style.height = overlayBoundingClient.height + "px";
-        newSelector.style.width = overlayBoundingClient.width + "px";
-
-        if (overlayElement == hoverElement) {
-            var selectorLabel = document.createElement("div");
-            selectorLabel.className = "ac-selector-label";
-            selectorLabel.innerHTML = getCssSelector(hoverElement);
-
-            newSelector.className += " has-label";
-
-            selectorBoundingClient = selectorLabel.getBoundingClientRect();
-            if (selectorBoundingClient.width > overlayBoundingClient.width) {
-                selectorLabel.style.width = overlayBoundingClient.width;
-
-                newSelector.className += " label-overflow";
-                
+            var selectorBoundingClient = selector.getBoundingClientRect();
+            if (selectorBoundingClient.width > elementBoundingClient.width) {
+                label.style.width = elementBoundingClient.width + "px";
+                selector.className += " label-overflow";
             }
-
-            newSelector.appendChild(selectorLabel);
         }
     }
 }
+
+function generateLabel(hoverElement) {
+    var label = document.createElement("div");
+    label.className = "ac-selector-label";
+    label.innerHTML = getCssSelector(hoverElement);
+
+    return label;
+}
+
+function generateSelector(elementBoundingClient) {
+    var selector = document.createElement("div");
+    selector.className = "ac-selector";
+
+    selector.style.top = elementBoundingClient.top + window.scrollY + "px";
+    selector.style.left = elementBoundingClient.left + window.scrollX + "px";
+    selector.style.height = elementBoundingClient.height + "px";
+    selector.style.width = elementBoundingClient.width + "px";
+
+    return selector;
+}
+
 
 function findElementGroup(originElement, maxDepth) {
     var depth = 0;
