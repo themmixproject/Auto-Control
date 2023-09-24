@@ -135,8 +135,6 @@ function getElementGroup(matchingChildren, compareChild, originElement) {
         }
     }
 
-    console.log(elementGroup);
-
     return elementGroup;
 }
 
