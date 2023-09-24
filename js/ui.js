@@ -1,9 +1,4 @@
 var selectedElements = [];
-var elementsAreSelected = false;
-var selectorIsActive = false;
-var singleOverlayIsActive = false;
-var groupOverlayIsActive = false;
-
 
 function enableSelectors(procesMethod, moveOverlayMethod) {
     document.addEventListener("click", procesMethod);
@@ -38,7 +33,6 @@ function moveGroupOverlayToElement(event) {
     selectedElements = findElementGroup(hoverElement, 5);
 
     if (selectedElements != null) {
-        elementsAreSelected = true;
         renderSelectors(selectedElements, hoverElement);
     }
 }
@@ -212,7 +206,6 @@ function moveSingleOverlayToElement(event) {
         return;
     }
 
-    elementsAreSelected = true;
     selectedElements = [hoverElement];
     renderSelectors(selectedElements, hoverElement);
 }
