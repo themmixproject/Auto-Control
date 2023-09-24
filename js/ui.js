@@ -44,13 +44,21 @@ function renderSelectors(elements, hoverElement) {
         var selector = generateSelector( elementBoundingClient );
         
         if (element == hoverElement) {
-            var label = generateLabel(hoverElement);
-            selector.appendChild(label);
-            selector.className += " has-label";
-
+            var label = renderLabel(selector, hoverElement);
             handleLabelOverflow(selector, label, elementBoundingClient);
         }
     }
+}
+
+function renderLabel(selector, hoverElement) {
+    var label = document.createElement("div");
+    label.className = "ac-selector-label";
+    label.innerHTML = getCssSelector(hoverElement);
+
+    selector.appendChild(label);
+    selector.className += " has-label";
+
+    return label;
 }
 
 function handleLabelOverflow(selector, label, elementBoundingClient) {
@@ -62,9 +70,7 @@ function handleLabelOverflow(selector, label, elementBoundingClient) {
 }
 
 function generateLabel(hoverElement) {
-    var label = document.createElement("div");
-    label.className = "ac-selector-label";
-    label.innerHTML = getCssSelector(hoverElement);
+
 
     return label;
 }
