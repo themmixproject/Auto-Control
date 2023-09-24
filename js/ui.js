@@ -78,19 +78,8 @@ function findElementGroup(originElement, maxDepth) {
     var children = parent.children;
 
     while (parent && parent != document.body && depth < maxDepth) {
-        var matchingChildren = [];
-        for (var i = 0; i < children.length; i++) {
-            var child = children[i];
+        var matchingChildren = getMatchingChildren(children, compareChild);
 
-            if (isSameElement(compareChild, child)) {
-                matchingChildren.push(child);
-            }
-        }
-
-        if (matchingChildren.length > 1) {
-            if (isSameElement(compareChild, originElement)) {
-                return matchingChildren;
-            }
 
             var elementGroup = [];
             var childQuery = getChildQuery(compareChild, originElement);
@@ -116,6 +105,19 @@ function findElementGroup(originElement, maxDepth) {
     }
 
     return null;
+}
+
+function getMatchingChildren(children, compareChild) {
+    var matchingChildren = [];
+    for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+
+        if (isSameElement(compareChild, child)) {
+            matchingChildren.push(child);
+        }
+    }
+
+    return matchingChildren;
 }
 
 function isSameElement(element1, element2) {
