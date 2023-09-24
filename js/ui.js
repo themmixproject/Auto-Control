@@ -80,49 +80,14 @@ function findElementGroup(originElement, maxDepth) {
     while (parent && parent != document.body && depth < maxDepth) {
         var matchingChildren = getMatchingChildren(children, compareChild);
 
-
-
-        /**
-         * dependant on checking if matchingchildren.length > 1
-         * checks if compareChild and originChild are the same
-         * creates new element group
-         * gets the child query
-         * loops through matching children
-        */                    
-                    
-        /**
-         * var elementGroup = getElementGroup(
-         *      matchingChildren,
-         *      compareChild, 
-         *      originElement
-         * );
-         * if (elementGroup.length > 0) {
-         *      return elementGroup;
-         * }
-         */
-
-
-        // if (matchingChildren.length > 1) {
-        //     if (isSameElement(compareChild, originElement)) {
-        //         return matchingChildren;
-        //     }
-
-        //     var elementGroup = [];
-        //     var childQuery = getChildQuery(compareChild, originElement);
-
-        //     for (var i = 0; i < matchingChildren.length; i++) {
-        //         var originParent = matchingChildren[i];
-        //         var matchingChild = originParent.querySelector(childQuery);
-                
-        //         if (matchingChild != null) {
-        //             elementGroup.push(matchingChild);
-        //         }
-        //     }
-
-        //     if (elementGroup.length > 1) {
-        //         return elementGroup;
-        //     }
-        // }
+        var elementGroup = getElementGroup(
+          matchingChildren,
+          compareChild, 
+          originElement
+        );
+        if (elementGroup.length > 1) {
+          return elementGroup;
+        }
 
         compareChild = parent;
         parent = parent.parentElement;
@@ -152,6 +117,27 @@ function isSameElement(element1, element2) {
         element1.tagName.toLowerCase() == element2.tagName.toLowerCase() &&
         element1.getAttribute("style") == element2.getAttribute("style")
     );
+}
+
+function getElementGroup(matchingChildren, compareChild, originElement) {
+    if (isSameElement(compareChild, originElement)) {
+        return matchingChildren;
+    }
+
+    var elementGroup = [];
+    var childQuery = getChildQuery(compareChild, originElement);
+    for (var i = 0; i < matchingChildren.length; i++) {
+        var originParent = matchingChildren[i];
+        var matchingChild = originParent.querySelector(childQuery);
+        
+        if (matchingChild != null) {
+            elementGroup.push(matchingChild);
+        }
+    }
+
+    console.log(elementGroup);
+
+    return elementGroup;
 }
 
 function getChildQuery(parent, child) {
