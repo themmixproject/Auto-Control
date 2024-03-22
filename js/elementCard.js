@@ -158,29 +158,25 @@ function generateInputContent(element) {
 }
 
 function generateAnchorContent (element) {
-    var anchorContent = "href: ";
-
     var anchor = document.createElement("a");
-
+    anchor.innerHTML += element.href;
+    anchor.href += element.href;
+    
     var url = new URL(element.href, window.location);
-    if (url.protocol === "http:" || url.protocol === "https:") {
-        anchor.innerHTML += element.href;
-        anchor.href += element.href;
-    }
-    else {
+    if (url.protocol != "http:" || url.protocol != "https:") {
         var root = window.location.origin;
-        anchor.innerHTML += root + element.href;
-        anchor.href += root + element.href;
+        anchor.innerHTML = root + anchor.innerHTML;
+        anchor.href = root + element.href;
     }
-    anchor.target = "_blank";
 
-    anchorContent += anchor.outerHTML;
+    anchor.target = "_blank";
+    
+    var anchorContent = "href: " + anchor.outerHTML;
 
     return anchorContent;
 }
 
 function generateDeleteButton(listItem) {
-    
     var deleteButton = document.createElement("button");
     deleteButton.className = "ac-delete-btn";
     deleteButton.innerHTML = "Delete";
