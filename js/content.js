@@ -8,7 +8,15 @@ var selectorsContainer;
 
 function loadApp() {
     adaptSiteContent();
+    appendAppContainer();
+    appendAppHTML();
+    addInitialEventListeners();
+    setNavWidth();
 
+    selectorsContainer = document.getElementById("ac-selectors-container");
+}
+
+function appendAppContainer() {
     appContainer = document.createElement("div");
     if (document.body.children.length > 0) {
         var firstChild = document.body.children[0];
@@ -17,12 +25,6 @@ function loadApp() {
         document.body.appendChild(appContainer);
     }
     appContainer.style.display = "block";
-
-    appendAppHTML();
-    addInitialEventListeners();
-    setNavWidth();
-
-    selectorsContainer = document.getElementById("ac-selectors-container");
 }
 
 function appendAppHTML() {
@@ -49,7 +51,6 @@ function appendAppHTML() {
             <button id="ac-add-element-button">Add Element</button>
             <button id="ac-run-button">Run</button>
         </div>
-
     </div>`;
 }
 
